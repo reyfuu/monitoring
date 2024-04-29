@@ -24,8 +24,12 @@ Route::get('/',[LoginController::class, 'index'])->name('login');
 Route::post('/login-proses',[LoginController::class, 'login_proses'])->name('login-proses');
 Route::get('/logout',[HomeController::class, 'logout'])->name('logout');
 
-Route::get('/proposal',[MahasiswaController::class, 'proposal'])->name('proposal');
-Route::get('/progress',[MahasiswaController::class, 'progress'])->name('progress');
+
+
+Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function(){
+    Route::get('/proposal',[MahasiswaController::class, 'proposal'])->name('proposal');
+    Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
+});
 
 Route::group(['prefix'=> 'admin', 'middleware' => ['auth'],'as'=> 'admin.'],function(){
     Route::get('/home',[HomeController::class, 'dashboard'])->name('dashboard');

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class HomeCOntroller extends Controller
+class HomeController extends Controller
 {
     public function dashboard(){
         return view('dashboard');
@@ -41,6 +41,7 @@ class HomeCOntroller extends Controller
 
     public function edit(Request $request,$id){
       $data= User::find($id);
+
       
       return view('edit',compact('data'));
     }

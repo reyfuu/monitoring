@@ -4,47 +4,71 @@
 <title>Proposal</title>
 @endsection
 @section('content')
-<div class="process-wrapper">
-    <div id="progress-bar-container">
-        <ul>
-            <li class="step step01 active"><div class="step-inner">HOME WORK</div></li>
-            <li class="step step02"><div class="step-inner">RESPONSIVE PART</div></li>
-            <li class="step step03"><div class="step-inner">Creative cREATIONS</div></li>
-            <li class="step step04"><div class="step-inner">TESTIMONIALS PART</div></li>
-            <li class="step step05"><div class="step-inner">OUR LOCATIONS</div></li>
-        </ul>
-        
-        <div id="line">
-            <div id="line-progress"></div>
-        </div>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Upload Proposal</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Proposal</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
     </div>
-    
-    <div id="progress-content-section">
-        <div class="section-content discovery active">
-            <h2>HOME SECTION</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec neque justo, consequat non fermentum ac, tempor eu turpis. Proin nulla eros, placerat non ipsum ut, dapibus ullamcorper ex. Nulla in dapibus lorem. Suspendisse vitae velit ac ante consequat placerat ut sed eros. Nullam porttitor mattis mi, id fringilla ex consequat eu. Praesent pulvinar tincidunt leo et condimentum. Maecenas volutpat turpis at felis egestas malesuada. Phasellus sem odio, venenatis at ex a, lacinia suscipit orci.</p>
+    <!-- /.content-header -->
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container">
+            <form action="{{ route('mhs.store') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="col-md-12">
+                    <div class="card card-primary">
+
+
+                <form>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="">Judul</label>
+                            <input type="text" class="form-control" name="judul" placeholder="Enter Judul" required>
+                            @error('judul')
+                                <small>{{$message}}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Deskripsi</label>
+                            <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" required></textarea>
+                            @error('email')
+                                <small>{{$message}}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="">Dokumen</label>
+                            <input type="file" class="form-control-file" name="file" required>
+                            @error('file')
+                                <small>{{$message}}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+              </div>
+             </div>
+            </form>
         </div>
-        
-        <div class="section-content strategy">
-            <h2>GALLERY SECTION</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec neque justo, consequat non fermentum ac, tempor eu turpis. Proin nulla eros, placerat non ipsum ut, dapibus ullamcorper ex. Nulla in dapibus lorem. Suspendisse vitae velit ac ante consequat placerat ut sed eros. Nullam porttitor mattis mi, id fringilla ex consequat eu. Praesent pulvinar tincidunt leo et condimentum. Maecenas volutpat turpis at felis egestas malesuada. Phasellus sem odio, venenatis at ex a, lacinia suscipit orci.</p>
-        </div>
-        
-        <div class="section-content creative">
-            <h2>Creative CREATIONS</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec neque justo, consequat non fermentum ac, tempor eu turpis. Proin nulla eros, placerat non ipsum ut, dapibus ullamcorper ex. Nulla in dapibus lorem. Suspendisse vitae velit ac ante consequat placerat ut sed eros. Nullam porttitor mattis mi, id fringilla ex consequat eu. Praesent pulvinar tincidunt leo et condimentum. Maecenas volutpat turpis at felis egestas malesuada. Phasellus sem odio, venenatis at ex a, lacinia suscipit orci.</p>
-        </div>
-        
-        <div class="section-content production">
-            <h2>TESTIMONIALS NOW</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec neque justo, consequat non fermentum ac, tempor eu turpis. Proin nulla eros, placerat non ipsum ut, dapibus ullamcorper ex. Nulla in dapibus lorem. Suspendisse vitae velit ac ante consequat placerat ut sed eros. Nullam porttitor mattis mi, id fringilla ex consequat eu. Praesent pulvinar tincidunt leo et condimentum. Maecenas volutpat turpis at felis egestas malesuada. Phasellus sem odio, venenatis at ex a, lacinia suscipit orci.</p>
-        </div>
-        
-        <div class="section-content analysis">
-            <h2>OUR LOCATIONS</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec neque justo, consequat non fermentum ac, tempor eu turpis. Proin nulla eros, placerat non ipsum ut, dapibus ullamcorper ex. Nulla in dapibus lorem. Suspendisse vitae velit ac ante consequat placerat ut sed eros. Nullam porttitor mattis mi, id fringilla ex consequat eu. Praesent pulvinar tincidunt leo et condimentum. Maecenas volutpat turpis at felis egestas malesuada. Phasellus sem odio, venenatis at ex a, lacinia suscipit orci.</p>
-        </div>
-        </div>
-    </div>
+    </section>
+    <!-- /.content -->
+  </div>
+    <!-- /.content -->
 
 @endsection

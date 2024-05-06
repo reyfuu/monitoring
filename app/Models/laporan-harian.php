@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class laporan-harian extends Model
+class laporan_harian extends Model
 {
+    public $timestamps = false;
+
     use HasFactory;
 }

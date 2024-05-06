@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ResetPasswordMail;
-use App\Models\PasswordResetToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use HasRoles;
 
 class LoginController extends Controller
 {
     public function index(){
-        return view('auth.login');
+        $data= User::get();
+        return view('auth.login',compact('data'));
     }
     public function login_proses(Request $request){
         $request->validate([
@@ -26,11 +24,12 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
 
-        
-
-        if(Auth::attempt($data)){
-            return redirect()->route('admin.dashboard');
-        }else{
+        if(Auth::guard('dosen')->attempt($data)){
+                return redirect()->route('admin.dashboard');
+        }elseif(AUth::guard('web')->attempt($data)){
+            return redirect()->route('mhs.laporan');
+        }
+        else{
             return redirect()->route('login')->with('failed','Email or password incorrect');
         }
     }

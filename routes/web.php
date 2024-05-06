@@ -26,8 +26,10 @@ Route::get('/logout',[HomeController::class, 'logout'])->name('logout');
 
 
 
-Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function(){
+Route::group(['prefix'=> 'mhs', 'middleware' => ['auth:dosen,web'],'as'=> 'mhs.'],function(){
     Route::get('/proposal',[MahasiswaController::class, 'proposal'])->name('proposal');
+    Route::get('/laporan',[MahasiswaController::class, 'laporan'])->name('laporan');
+    Route::get('/laporan2',[MahasiswaController::class, 'laporan2'])->name('laporan2');
     Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
 });
 

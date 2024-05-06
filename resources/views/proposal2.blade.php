@@ -31,9 +31,9 @@
               <li class="base-timeline__item">
                   <span class="base-timeline__summary-text">Selesai</span>
               </li>
-              {{-- <li class="base-timeline__item">
+              <li class="base-timeline__item">
                   <span class="base-timeline__summary-text">four</span>
-              </li> --}}
+              </li>
           </ul>
       </div>
     </div>
@@ -52,8 +52,8 @@
                 <form>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="">Judul</label>
-                            <input type="text" class="form-control" name="judul" placeholder="Enter Judul" required>
+                            <label for="">Dokumen</label>
+                            <button class="btn"></button>
                             @error('judul')
                                 <small>{{$message}}</small>
                             @enderror

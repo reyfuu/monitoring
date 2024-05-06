@@ -4,10 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   @yield('title')
-  <link
-  rel="stylesheet"
-  href="https://unicons.iconscout.com/release/v4.0.0/css/unicons.css"
-/>
+
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -33,10 +30,6 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{asset('lte/dist/img/AdminLTELogo.png')}}" alt="AdminLTELogo" height="60" width="60">
-  </div>
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -181,7 +174,7 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item ">
             <a href="{{ route('admin.dashboard') }}" class="nav-link">
-              <i class="fas fa-home"></i>
+             <img src="{{ asset('img/home.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Dashboard
               </p>
@@ -189,25 +182,25 @@
           </li>
           <li class="nav-item ">
             <a href="" class="nav-link">
-              <i class="fa-regular fa-file"></i>
-              <p class="mx-3">
+              <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
+              <p class="mx-2">
                 Proposal
               </p>
             </a>
           </li>
           <li class="nav-item ">
             <a href="" class="nav-link">
-              <i class="fas fa-file"></i>
-              <p class="mx-3">
+             <img src="{{ asset('img/file-text.png') }}" style="width: 20%" alt="">
+              <p class="mx-2">
                 Laporan Mingguan
               </p>
             </a>
           </li>
           <li class="nav-item ">
             <a href="" class="nav-link">
-              <i class="fas fa-file"></i>
-              <p class="mx-3">
-                Laporan AKhir
+              <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
+              <p class="mx-2">
+                Laporan Akhir
               </p>
             </a>
           </li>

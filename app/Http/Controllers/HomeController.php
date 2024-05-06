@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\dosen;
+use App\Models\laporan;
 use App\Models\User;
 // use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use HasRoles;
 
 class HomeController extends Controller
 {
     public function dashboard(){
-        return view('dashboard');
+        $data= User::get();
+        return view('dashboard',compact('data'));
     }
 
     public function index(){
@@ -33,10 +37,20 @@ class HomeController extends Controller
       $data['email']= $request->email;
       $data['name']= $request->name;
       $data['password']=Hash::make($request->password); 
+      $data['status']=$request->status;
+      $data2['tanggal_mulai']=$request->tanggal_mulai;
 
-      User::create($data);
+      $status=$request->status;
 
-      return redirect()->route('index');
+      if($status== 'dosen' || 'mentor'){
+        dosen::create($data);
+        laporan::create($data2);
+      }else{
+        User::create($data);
+      }
+
+
+      return redirect()->route('admin.dashboard');
     }
 
     public function edit(Request $request,$id){
@@ -61,7 +75,7 @@ class HomeController extends Controller
         $data['password']=Hash::make($request->password); 
       }
       User::whereId($id)->update($data);
-      return redirect()->route('index');
+      return redirect()->route('admin.dashboard');
     }
     public function delete(Request $request,$id){
       $data=User::find($id);
@@ -70,6 +84,6 @@ class HomeController extends Controller
         $data->delete();
       }
 
-      return redirect()->route('index');
+      return redirect()->route('admin.dashboard');
     }
 }

@@ -58,6 +58,24 @@
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
+                        <label for="">Status</label>
+                        <select class="form-control" name="status" aria-label="Default select example">
+                          <option value="Magang">Magang</option>
+                          <option value="Tugas Akhir">Tugas Akhir</option>
+                          <option value="Magang dan Tugas Akhir">Magang dan Tugas Akhir</option>
+                          <option value="Dosen">Dosen</option>
+                          <option value="Mentor">Mentor</option>
+                        </select>
+                        @error('status')
+                         <small>{{$message}}</small>
+                        @enderror
+                        <div class="form-group">
+                          <label for="">Start</label>
+                          <input type="date" class="form-control" name="tanggal_mulai"  required>
+                          @error('date')
+                            <small>{{$message}}</small>
+                          @enderror
+                        </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

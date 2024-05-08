@@ -26,7 +26,7 @@ class LoginController extends Controller
 
         if(Auth::guard('dosen')->attempt($data)){
                 return redirect()->route('admin.dashboard');
-        }elseif(AUth::guard('web')->attempt($data)){
+        }elseif(Auth::guard('web')->attempt($data)){
             return redirect()->route('mhs.laporan');
         }
         else{

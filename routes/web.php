@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MahasiswaController;
@@ -22,18 +23,33 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/',[LoginController::class, 'index'])->name('login');
 Route::post('/login-proses',[LoginController::class, 'login_proses'])->name('login-proses');
-Route::get('/logout',[HomeController::class, 'logout'])->name('logout');
+Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
 
 
 
 Route::group(['prefix'=> 'mhs', 'middleware' => ['auth:dosen,web'],'as'=> 'mhs.'],function(){
     Route::get('/proposal',[MahasiswaController::class, 'proposal'])->name('proposal');
+    Route::get('/proposal2',[MahasiswaController::class, 'proposal2'])->name('proposal2');
+    Route::get('/proposal3',[MahasiswaController::class, 'proposal3'])->name('proposal3');
     Route::get('/laporan',[MahasiswaController::class, 'laporan'])->name('laporan');
     Route::get('/laporan2',[MahasiswaController::class, 'laporan2'])->name('laporan2');
+    Route::get('/laporan3',[MahasiswaController::class, 'laporan3'])->name('laporan3');
+    Route::get('/ta',[MahasiswaController::class, 'ta'])->name('ta');
+    Route::get('/ta2',[MahasiswaController::class, 'ta2'])->name('ta2');
+    Route::get('/ta3',[MahasiswaController::class, 'ta3'])->name('ta3');
     Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
 });
 
 Route::group(['prefix'=> 'admin', 'middleware' => ['auth'],'as'=> 'admin.'],function(){
+    Route::get('/proposal',[DosenController::class,'proposal'])->name('proposal');
+    Route::get('/proposal2',[DosenController::class,'proposal2'])->name('proposal2');
+    Route::get('/proposal3',[DosenController::class,'proposal3'])->name('proposal3');
+    Route::get('/laporan',[DosenController::class,'laporan'])->name('laporan');
+    Route::get('/laporan2',[DosenController::class,'laporan2'])->name('laporan2');
+    Route::get('/ta',[DosenController::class,'ta'])->name('ta');
+    Route::get('/ta2',[DosenController::class,'ta2'])->name('ta2');
+    Route::get('/ta3',[DosenController::class,'ta3'])->name('ta3');
+
     Route::get('/home',[HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/user',[HomeController::class, 'index'])->name('index');
 

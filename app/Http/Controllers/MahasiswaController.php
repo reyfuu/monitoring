@@ -12,13 +12,31 @@ use HasRoles;
 class MahasiswaController extends Controller
 {
     public function proposal(){
-        return view('proposal');
+        return view('mhs-proposal');
     }
-    public function laporan2(){
-        return view('proposal2');
+    public function laporan3(){
+        return view('mhs-laporan3');
+    }   
+     public function laporan2(){
+        return view('mhs-laporan2');
     }
     public function laporan(){
-        return view('laporan');
+        return view('mhs-laporan');
+    }
+    public function proposal2(){
+        return view('mhs-proposal2');
+    }
+    public function proposal3(){
+        return view('mhs-proposal3');
+    }
+    public function ta(){
+        return view('mhs-ta');
+    }
+    public function ta2(){
+        return view('mhs-ta2');
+    }
+    public function ta3(){
+        return view('mhs-ta3');
     }
     public function store(Request $request){
         $validator= Validator::make($request->all(),[

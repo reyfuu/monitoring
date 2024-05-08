@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layout.mhs-main')
 @section('title')
 
 <title>Proposal</title>
@@ -31,9 +31,6 @@
               <li class="base-timeline__item">
                   <span class="base-timeline__summary-text">Selesai</span>
               </li>
-              <li class="base-timeline__item">
-                  <span class="base-timeline__summary-text">four</span>
-              </li>
           </ul>
       </div>
     </div>
@@ -53,8 +50,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">Dokumen</label>
-                            <button class="btn"></button>
-                            @error('judul')
+                            <input type="file" class="form-control-file" name="file" required>
+                            @error('file')
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
@@ -63,13 +60,6 @@
                             <label for="">Deskripsi</label>
                             <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" required></textarea>
                             @error('email')
-                                <small>{{$message}}</small>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="">Dokumen</label>
-                            <input type="file" class="form-control-file" name="file" required>
-                            @error('file')
                                 <small>{{$message}}</small>
                             @enderror
                         </div>

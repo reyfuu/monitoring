@@ -1,7 +1,7 @@
-@extends('layout.admin-main')
+@extends('layout.dsn-main')
 @section('title')
 
-<title>Dashboard</title>
+<title>Dashboard Tugas Akhir</title>
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -10,7 +10,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard Admin</h1>
+          <h1 class="m-0">Dashboard Tugas Akhir</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -51,51 +51,40 @@
               <table class="table table-hover text-nowrap">
                 <thead>
                   <tr>
-                    <th>No</th>
                     <th>Nama</th>
                     <th>Email</th>
-
+                    <th>Status</th>
+                    <th>Detail</th>
                   </tr>
                 </thead>
                 <tbody>
                
-                  @foreach ($data as $d )
+      
                   <tr>
-                      <td>{{$loop->iteration}}</td>
-                      <td>{{$d->name}}</td>
-                      <td>{{$d->email}}</td>
-                      <td>
-                          <a href="{{ route('admin.edit',['id' =>$d->id ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
-                          <a data-toggle="modal" data-target="#modal-delete{{ $d->id }}"  class="btn btn-danger" > <i class="fas fa-trash-alt"></i> Delete</a>
-                      </td>
-                      
-                  </tr>
-                  <div class="modal fade" id="modal-delete{{ $d->id }}">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title">Confirm delete data</h4>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <p>Are You Sure want to delete <b>{{ $d->name }}</b> ?</p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                          <form action="{{ route('admin.delete',['id'=>$d->id]) }}" method="POST">
-                            @csrf
-                            @method('delete')
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Yes</button>
-                          </form>
-                        </div>
-                      </div>
-                      <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                  </div>
-                  @endforeach
+                    <td>Audi Nathanael</td>
+                    <td>audinathanael@gmail.com</td>
+                    <td>Revisi bab 3</td>
+                    <td><a href="{{ route('admin.ta2') }}"><button class="btn btn-primary">See Detail</button></a></td>
+                </tr>
+                <tr>
+                  <td>sandhika</td>
+                  <td>sandhika@gmail.com</td>
+                  <td>laporan belum diperiksa</td>
+                  <td><a href="{{ route('admin.ta2') }}"><button class="btn btn-primary">See Detail</button></a></td>
+              </tr>
+              <tr>
+                <td>Eka</td>
+                <td>eka@gmail.com</td>
+                <td>laporan sudah fix</td>
+                <td><a href="{{ route('admin.ta2') }}"><button class="btn btn-primary">See Detail</button></a></td>
+            </tr>
+            <tr>
+              <td>Riza</td>
+              <td>riza@gmail.com</td>
+              <td>REvisi bab 1,2,3</td>
+              <td><a href="{{ route('admin.ta2') }}"><button class="btn btn-primary">See Detail</button></a></td>
+          </tr>
+
 
                
 

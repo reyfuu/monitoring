@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layout.mhs-main')
 @section('title')
 
 <title>Proposal</title>
@@ -25,7 +25,7 @@
               <li class="base-timeline__item base-timeline__item--active">
                   <span class="base-timeline__summary-text">Proposal</span>
               </li>
-              <li class="base-timeline__item base-timeline__item--active">
+              <li class="base-timeline__item base-timeline__item">
                   <span class="base-timeline__summary-text">Revisi</span>
               </li>
               <li class="base-timeline__item">
@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label for="">Deskripsi</label>
                             <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" required></textarea>
-                            @error('email')
+                            @error('deskripsi')
                                 <small>{{$message}}</small>
                             @enderror
                         </div>

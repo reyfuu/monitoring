@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   @yield('title')
 
-  <link rel="stylesheet" href="{{asset('css/app.css')}}">
+  <link rel="stylesheet" href="{{asset('css/dsn-app.css')}}">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -155,8 +155,8 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="{{asset('lte/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <img src="{{asset('img/logo.png')}}" alt="TAMP Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">TAMP</span>
     </a>
 
     <!-- Sidebar -->
@@ -173,7 +173,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item ">
-            <a href="{{ route('admin.dashboard') }}" class="nav-link">
+            <a href="{{ route('admin.laporan') }}" class="nav-link">
              <img src="{{ asset('img/home.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Dashboard
@@ -181,7 +181,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a href="" class="nav-link">
+            <a href="{{ route('admin.proposal') }}" class="nav-link">
               <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
               <p class="mx-2">
                 Proposal
@@ -189,15 +189,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a href="" class="nav-link">
-             <img src="{{ asset('img/file-text.png') }}" style="width: 20%" alt="">
-              <p class="mx-2">
-                Laporan Mingguan
-              </p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a href="" class="nav-link">
+            <a href="{{ route('admin.ta') }}" class="nav-link">
               <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Laporan Akhir

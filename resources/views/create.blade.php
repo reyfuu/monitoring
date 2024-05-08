@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layout.admin-main')
 @section('title')
 
 <title>Create</title>

@@ -58,7 +58,7 @@
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
-                        <label for="">Status</label>
+                        <label for="">Type</label>
                         <select class="form-control" name="status" aria-label="Default select example">
                           <option value="Magang">Magang</option>
                           <option value="Tugas Akhir">Tugas Akhir</option>

@@ -46,12 +46,9 @@
                 <form>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="">Dokumen</label>
-                            <input type="file" class="form-control-file" name="file" required>
-                            @error('file')
-                                <small>{{$message}}</small>
-                            @enderror
-                        </div>
+                            <label for="">Dokumen</label><br>
+                              <img src="{{ asset('img/pdf.png') }}" style="width: 5%" alt="">
+                          </div>
 
                         <div class="form-group">
                             <label for="">Komentar</label>

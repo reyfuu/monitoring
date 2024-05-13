@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class dosen extends Model
+
+class dosen extends Authenticatable
 {
     public $timestamps = false;
 

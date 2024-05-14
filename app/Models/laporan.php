@@ -10,15 +10,21 @@ class laporan extends Model
     use HasFactory;
   
     public $timestamps = false;
+    public $incrementing = false;
 
+
+    protected $primaryKey='laporan_id';
     protected $table='laporan';
 
     protected $fillable = [
+        'laporan_id',
         'judul',
         'tanggal_mulai',
         'tanggal_berakhir',
         'deskripsi',
         'id domen',
+        'dokumen',
+        'type',
         'npm',
     ];
 }

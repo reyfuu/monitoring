@@ -25,9 +25,9 @@ class LoginController extends Controller
         ];
         $status= $request->email;
         if($status === 'admin@admin'){
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.create');
         }
-        elseif(Auth::guard('dosen')->attempt($data)){
+        if(Auth::guard('dosen')->attempt($data)){
             return redirect()->route('admin.proposal');
         }elseif(Auth::guard('web')->attempt($data)){
             return redirect()->route('mhs.laporan');

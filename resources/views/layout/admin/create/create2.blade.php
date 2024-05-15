@@ -36,6 +36,13 @@
 
                 <form>
                     <div class="card-body">
+                      <div class="form-group">
+                        <label for="">NPM / NIDN</label>
+                        <input type="text" class="form-control" name="id" placeholder="Enter NPM/NIDN" required>
+                        @error('id')
+                            <small>{{$message}}</small>
+                        @enderror
+                    </div>
                         <div class="form-group">
                             <label for="">Name</label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Name" required>

@@ -54,6 +54,8 @@ Route::group(['prefix'=> 'admin', 'middleware' => ['auth'],'as'=> 'admin.'],func
     Route::get('/user',[HomeController::class, 'index'])->name('index');
 
     Route::get('/create',[HomeController::class, 'create'])->name('create');
+    Route::get('/create2',[HomeController::class, 'create2'])->name('create2');
+    Route::get('/create3',[HomeController::class, 'create2'])->name('create3');
     Route::get('/edit/{id}',[HomeController::class, 'edit'])->name('edit');
     Route::put('/update/{id}',[HomeController::class, 'update'])->name('update');
     

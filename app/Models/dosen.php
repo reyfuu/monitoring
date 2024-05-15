@@ -19,9 +19,11 @@ class dosen extends Authenticatable
     protected $guard='dosen';
 
     protected $fillable = [
+        'domen_id',
         'email',
         'name',
         'password',
+        'status',
     ];
 
     protected $hidden = [

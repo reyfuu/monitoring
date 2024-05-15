@@ -28,7 +28,7 @@ class LoginController extends Controller
             return redirect()->route('admin.create');
         }
         if(Auth::guard('dosen')->attempt($data)){
-            return redirect()->route('admin.proposal');
+            return redirect()->route('');
         }elseif(Auth::guard('web')->attempt($data)){
             return redirect()->route('mhs.laporan');
         }

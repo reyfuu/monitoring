@@ -14,31 +14,31 @@ use Illuminate\Support\Facades\Storage;
 class MahasiswaController extends Controller
 {
     public function proposal(){
-        return view('mhs-proposal');
-    }
-    public function laporan3(){
-        return view('mhs-laporan3');
-    }   
-     public function laporan2(){
-        return view('mhs-laporan2');
-    }
-    public function laporan(){
-        return view('mhs-laporan');
+        return view('layout.mhs.proposal.proposal');
     }
     public function proposal2(){
-        return view('mhs-proposal2');
+        return view('layout.mhs.proposal.proposal2');
     }
     public function proposal3(){
-        return view('mhs-proposal3');
+        return view('layout.mhs.proposal.proposal3');
+    }
+    public function laporan3(){
+        return view('layout.mhs.laporan.laporan3');
+    }   
+     public function laporan2(){
+        return view('layout.mhs.laporan.laporan2');
+    }
+    public function laporan(){
+        return view('layout.mhs.laporan.laporan3');
     }
     public function ta(){
-        return view('mhs-ta');
+        return view('layout.mhs.ta.ta');
     }
     public function ta2(){
-        return view('mhs-ta2');
+        return view('layout.mhs.ta.ta2');
     }
     public function ta3(){
-        return view('mhs-ta3');
+        return view('layout.mhs.ta.ta3');
     }
     public function store(Request $request){
         $validator= Validator::make($request->all(),[

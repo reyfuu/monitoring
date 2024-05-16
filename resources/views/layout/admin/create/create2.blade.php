@@ -37,9 +37,9 @@
                 <form>
                     <div class="card-body">
                       <div class="form-group">
-                        <label for="">NPM / NIDN</label>
-                        <input type="text" class="form-control" name="id" placeholder="Enter NPM/NIDN" required>
-                        @error('id')
+                        <label for="">NPM </label>
+                        <input type="text" class="form-control" name="npm" placeholder="Enter NPM/NIDN" required>
+                        @error('npm')
                             <small>{{$message}}</small>
                         @enderror
                     </div>
@@ -65,7 +65,7 @@
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
-                        <label for="">Type</label>
+                        <label for="">Status</label>
                         <select class="form-control" name="status" aria-label="Default select example">
                           <option value="Magang">Magang</option>
                           <option value="Tugas Akhir">Tugas Akhir</option>
@@ -76,9 +76,19 @@
                         @error('status')
                          <small>{{$message}}</small>
                         @enderror
+                        <label for="">Dosen / Mentor</label>
+                        <select class="form-control" name="dosen" aria-label="Default select example">
+                            @foreach ($data as $d)
+                                <option value="{{ $d->name }}">{{ $d->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('dosen')
+                         <small>{{$message}}</small>
+                        @enderror
                         <div class="form-group">
                           <label for="">Start</label>
-                          <input type="date" class="form-control" name="tanggal_mulai"  required>
+                          <input type="date" class="form-control" name="tanggal_mulai" 
+                            required>
                           @error('date')
                             <small>{{$message}}</small>
                           @enderror

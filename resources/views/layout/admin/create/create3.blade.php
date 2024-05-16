@@ -15,7 +15,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a href="#">Hom</a></li>
               <li class="breadcrumb-item active">add User</li>
             </ol>
           </div><!-- /.col -->
@@ -37,9 +37,9 @@
                 <form>
                     <div class="card-body">
                       <div class="form-group">
-                        <label for="">NPM / NIDN</label>
-                        <input type="text" class="form-control" name="id" placeholder="Enter NPM/NIDN" required>
-                        @error('id')
+                        <label for="">NIDN</label>
+                        <input type="text" class="form-control" name="domen_id" placeholder="Enter NIDN" required>
+                        @error('domen_id')
                             <small>{{$message}}</small>
                         @enderror
                     </div>
@@ -65,23 +65,14 @@
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
-                        <label for="">Type</label>
+                        <label for="">Status</label>
                         <select class="form-control" name="status" aria-label="Default select example">
-                          <option value="Magang">Magang</option>
-                          <option value="Tugas Akhir">Tugas Akhir</option>
-                          <option value="Magang dan Tugas Akhir">Magang dan Tugas Akhir</option>
                           <option value="Dosen">Dosen</option>
                           <option value="Mentor">Mentor</option>
                         </select>
                         @error('status')
                          <small>{{$message}}</small>
                         @enderror
-                        <div class="form-group">
-                          <label for="">Start</label>
-                          <input type="date" class="form-control" name="tanggal_mulai"  required>
-                          @error('date')
-                            <small>{{$message}}</small>
-                          @enderror
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>

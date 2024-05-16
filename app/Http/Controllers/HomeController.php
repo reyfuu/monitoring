@@ -10,13 +10,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Database\Eloquent\Model;
 use HasRoles;
 
 class HomeController extends Controller
 {
     public function dashboard(){
-        $data= User::get();
-        return view('layout.admin.dashboard',compact('data'));
+        $data=User::get();
+        $data2=dosen::get();
+        $count=user::count();
+        return view('layout.admin.dashboard',compact('data','data2','count'));
     }
 
     public function index(){
@@ -28,10 +31,13 @@ class HomeController extends Controller
         return view('layout.admin.create.create');
     }
     public function create2(){
-      return view('layout.admin.create.create2');
+      $data= dosen::get();
+      $name='LP003';
+      return view('layout.admin.create.create2',compact('data','dosen_id'));
     }
     public function create3(){
-      return view('layout.admin.create.create3');
+      $data= User::get();
+      return view('layout.admin.create.create3',compact('data'));
     }
     public function store(Request $request){
       $validator= Validator::make($request->all(),[
@@ -41,7 +47,7 @@ class HomeController extends Controller
       ]);
       if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
-      $data['id']=$request->id;
+      
       $data['email']= $request->email;
       $data['name']= $request->name;
       $data['password']=Hash::make($request->password); 
@@ -50,21 +56,32 @@ class HomeController extends Controller
       $data2['tanggal_berakhir']=date('d-m-y',strtotime("+3 months"));
       $data2['laporan_id']= IdGenerator::generate(
         ['table'=> 'laporan','field'=> 'laporan_id','length'=>5,'prefix'=>'LP']);
+      $data2['type']=$request->type;
        
-      if($data['id']= ''){
+      if($data['domen_id']= ''){
         $data['id']= IdGenerator::generate(
           ['table'=> 'domen','field'=> 'domen_id','length'=>5,'prefix'=>'MN']);
       }
       $status=$request->status;
 
-      if($status== 'dosen' || 'mentor'){
-        $data2['domen_id']=$request->id;
-      
+
+
+      if($status== 'Dosen'){
+        $data['domen_id']=$request->domen_id;
         dosen::create($data);
-        laporan::create($data2);
-      }else{
-        $data2['npm']=$request->id;
+      }elseif($status == 'Mentor'){
+        $data['domen_id']=$request->domen_id;
+        dosen::create($data);
+      }
+      else{
+        $data['npm']=$request->npm;
+        $name=$request->dosen;
+        $dosen_id=dosen::where('name','like','%'.$name.'%')->first()->domen_id;
+        $data2['type']= 'proposal';
+        $data2['domen_id']= $dosen_id;
+        $data2['npm']=$request->npm;
         User::create($data);
+        laporan::create($data2);
       }
 
 
@@ -74,7 +91,7 @@ class HomeController extends Controller
     public function edit(Request $request,$id){
       $data= User::find($id);
 
-      
+      $dosen_id=laporan::where('laporan_id','like','%'.$id.'%')->first()->tanggal_mulai;
       return view('edit',compact('data'));
     }
 

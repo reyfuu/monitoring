@@ -22,7 +22,7 @@ class laporan extends Model
         'tanggal_mulai',
         'tanggal_berakhir',
         'deskripsi',
-        'id domen',
+        'domen_id',
         'dokumen',
         'type',
         'npm',

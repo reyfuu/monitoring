@@ -38,7 +38,7 @@
                       <p class="card-text"><img src="{{asset('img/alert-circle.png')}}" class="mx-2">Revisi Laporan Harian</p>
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title">12-16 Maret 2024 <a href="{{ route('mhs.laporan3') }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
+                      <h5 class="card-title">12-16 Maret 2024 <a href="{{ route('dmn.laporan') }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
                       <p class="card-text">Minggu ke 2</p>
                     </div>
                   </div>

@@ -68,19 +68,19 @@
                   <td>sandhika</td>
                   <td>sandhika@gmail.com</td>
                   <td>laporan belum diperiksa</td>
-                  <td><a href="{{ route('admin.proposal2') }}"><button class="btn btn-primary">See Detail</button></a></td>
+                  <td><a href="{{ route('dmn.proposal') }}"><button class="btn btn-primary">See Detail</button></a></td>
               </tr>
               <tr>
                 <td>Eka</td>
                 <td>eka@gmail.com</td>
                 <td>laporan sudah fix</td>
-                <td><a href="{{ route('admin.proposal2') }}"><button class="btn btn-primary">See Detail</button></a></td>
+                <td><a href="{{ route('dmn.proposal') }}"><button class="btn btn-primary">See Detail</button></a></td>
             </tr>
             <tr>
               <td>Riza</td>
               <td>riza@gmail.com</td>
               <td>Revisi Penutup</td>
-              <td><a href="{{ route('admin.proposal2') }}"><button class="btn btn-primary">See Detail</button></a></td>
+              <td><a href="{{ route('dmn.proposal') }}"><button class="btn btn-primary">See Detail</button></a></td>
           </tr>
 
 

@@ -41,6 +41,19 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth:dosen,web'],'as'=> 'mhs.'
 });
 
 Route::group(['prefix'=> 'admin', 'middleware' => ['auth'],'as'=> 'admin.'],function(){
+    Route::get('/home',[HomeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/user',[HomeController::class, 'index'])->name('index');
+
+    Route::get('/create',[HomeController::class, 'create'])->name('create');
+    Route::get('/create2',[HomeController::class, 'create2'])->name('create2');
+    Route::get('/create3',[HomeController::class, 'create3'])->name('create3');
+    Route::get('/edit/{id}',[HomeController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}',[HomeController::class, 'update'])->name('update');
+    
+    Route::post('/store',[HomeController::class, 'store'])->name('store');
+    Route::delete('/delete/{id}',[HomeController::class, 'delete'])->name('delete');
+});
+Route::group(['prefix'=> 'domen', 'middleware' => ['auth'],'as'=> 'dmn.'],function(){
     Route::get('/proposal',[DosenController::class,'proposal'])->name('proposal');
     Route::get('/proposal2',[DosenController::class,'proposal2'])->name('proposal2');
     Route::get('/proposal3',[DosenController::class,'proposal3'])->name('proposal3');
@@ -49,18 +62,6 @@ Route::group(['prefix'=> 'admin', 'middleware' => ['auth'],'as'=> 'admin.'],func
     Route::get('/ta',[DosenController::class,'ta'])->name('ta');
     Route::get('/ta2',[DosenController::class,'ta2'])->name('ta2');
     Route::get('/ta3',[DosenController::class,'ta3'])->name('ta3');
-
-    Route::get('/home',[HomeController::class, 'dashboard'])->name('dashboard');
-    Route::get('/user',[HomeController::class, 'index'])->name('index');
-
-    Route::get('/create',[HomeController::class, 'create'])->name('create');
-    Route::get('/create2',[HomeController::class, 'create2'])->name('create2');
-    Route::get('/create3',[HomeController::class, 'create2'])->name('create3');
-    Route::get('/edit/{id}',[HomeController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}',[HomeController::class, 'update'])->name('update');
-    
-    Route::post('/store',[HomeController::class, 'store'])->name('store');
-    Route::delete('/delete/{id}',[HomeController::class, 'delete'])->name('delete');
 });
 
 

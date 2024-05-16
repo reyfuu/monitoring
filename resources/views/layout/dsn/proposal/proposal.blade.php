@@ -37,7 +37,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
-            <form action="{{ route('mhs.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('dmn.proposal') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
                     <div class="card card-primary">

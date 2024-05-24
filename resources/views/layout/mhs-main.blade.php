@@ -1,3 +1,9 @@
+@php
+        session_start();
+    if (isset($_SESSION['mahasiswa'])){
+        header("Location: auth/login.php");
+    }
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -143,6 +149,8 @@
           <i class="far fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
+          <p class="dropdown-item"></p>
+          <p class="dropdown-item"><?= $_SESSION['mahasiswa']?></p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>

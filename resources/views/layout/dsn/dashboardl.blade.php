@@ -61,7 +61,7 @@
                     <td>Audi Nathanael</td>
                     <td>audinathanael@gmail.com</td>
                     <td>REvisi bab 3</td>
-                    <td><a href="{{ route('dmn.laporan') }}"><button class="btn btn-primary">See Detail</button></a></td>
+                    <td><a href="{{ route('dmn.ta') }}"><button class="btn btn-primary">See Detail</button></a></td>
                 </tr>
                 <tr>
                   <td>sandhika</td>

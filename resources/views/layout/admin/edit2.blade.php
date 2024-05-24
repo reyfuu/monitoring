@@ -1,7 +1,7 @@
 @extends('layout.admin-main')
 @section('title')
 
-<title>Create</title>
+<title>Edit</title>
 
 @endsection
 @section('content')
@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Create User</h1>
+            <h1 class="m-0">Edit User</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Hom</a></li>
-              <li class="breadcrumb-item active">add User</li>
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Edit User</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -28,24 +28,18 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
-            <form action="{{ route('admin.store') }}" method="post">
+            <form action="{{ route('admin.update',['id'=> $id2->domen_id]) }}" method="post">
                 @csrf
+                @method('put')
                 <div class="col-md-12">
                     <div class="card card-primary">
 
 
                 <form>
                     <div class="card-body">
-                      <div class="form-group">
-                        <label for="">NIDN</label>
-                        <input type="text" class="form-control" name="domen_id" placeholder="Enter NIDN" required>
-                        @error('domen_id')
-                            <small>{{$message}}</small>
-                        @enderror
-                    </div>
                         <div class="form-group">
                             <label for="">Name</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
+                            <input type="text" class="form-control" name="name" value="{{ $id2->name }}"  required>
                             @error('name')
                                 <small>{{$message}}</small>
                             @enderror
@@ -53,14 +47,14 @@
 
                         <div class="form-group">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
+                            <input type="email" class="form-control" name="email" value="{{ $id2->email }}"  required>
                             @error('email')
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="">Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Enter Password" required>
+                            <input type="password" class="form-control" name="password" placeholder="Enter Password" >
                             @error('password')
                                 <small>{{$message}}</small>
                             @enderror
@@ -74,7 +68,6 @@
                         @error('status')
                          <small>{{$message}}</small>
                         @enderror
-                        </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

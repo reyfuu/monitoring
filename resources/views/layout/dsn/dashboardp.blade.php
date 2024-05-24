@@ -62,7 +62,7 @@
                     <td>Audi Nathanael</td>
                     <td>audinathanael@gmail.com</td>
                     <td>Revisi Bab 3</td>
-                    <td><a href="{{ route('admin.proposal2') }}"><button class="btn btn-primary">See Detail</button></a></td>
+                    <td><a href="{{ route('dmn.proposal') }}"><button class="btn btn-primary">See Detail</button></a></td>
                 </tr>
                 <tr>
                   <td>sandhika</td>

@@ -54,7 +54,7 @@
                     <th>No</th>
                     <th>Nama</th>
                     <th>Email</th>
-
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -63,13 +63,14 @@
                       <td>{{$loop->iteration}}</td>
                       <td>{{$d->name}}</td>
                       <td>{{$d->email}}</td>
+                      <td>{{$d->status}}</td>
                       <td>
                           <a href="{{ route('admin.edit',['id' =>$d->npm ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
                           <a data-toggle="modal" data-target="#modal-delete{{ $d->npm }}"  class="btn btn-danger" > <i class="fas fa-trash-alt"></i> Delete</a>
                       </td>
                       
                   </tr>
-                  <div class="modal fade" id="modal-delete{{ $d->id }}">
+                  <div class="modal fade" id="modal-delete{{ $d->npm }}">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -85,8 +86,10 @@
                           <form action="{{ route('admin.delete',['id'=>$d->npm]) }}" method="POST">
                             @csrf
                             @method('delete')
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Yes</button>
+                            <div class="text-center">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Yes</button>
+                            </div>
                           </form>
                         </div>
                       </div>
@@ -100,13 +103,15 @@
                       <td>{{$count= $count+1}}</td>
                       <td>{{$d->name}}</td>
                       <td>{{$d->email}}</td>
+                      <td>{{$d->status}}</td>
                       <td>
-                          <a href="{{ route('admin.edit',['id' =>$d->domen_id ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
+                       
+                          <a href="{{ route('admin.edit2',['id' =>$d->domen_id ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
                           <a data-toggle="modal" data-target="#modal-delete{{ $d->domen_id }}"  class="btn btn-danger" > <i class="fas fa-trash-alt"></i> Delete</a>
                       </td>
                       
                   </tr>
-                  <div class="modal fade" id="modal-delete{{ $d->id }}">
+                  <div class="modal fade" id="modal-delete{{ $d->domen_id }}">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -119,7 +124,7 @@
                           <p>Are You Sure want to delete <b>{{ $d->name }}</b> ?</p>
                         </div>
                         <div class="modal-footer justify-content-between">
-                          <form action="{{ route('admin.delete',['id'=>$d->domen_id]) }}" method="POST">
+                          <form action="{{ route('admin.delete2',['id'=>$d->domen_id]) }}" method="POST">
                             @csrf
                             @method('delete')
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

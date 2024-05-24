@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class DosenController extends Controller
 {
     public function proposal(){
-        return view('layout.dsn.dashboardp');
+        return view('layout.dsn.proposal.proposal');
     }
     public function proposal2(){
         return view('layout.dsn.proposal.proposal');

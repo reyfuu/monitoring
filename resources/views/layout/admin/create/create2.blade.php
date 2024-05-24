@@ -66,18 +66,18 @@
                             @enderror
                         </div>
                         <label for="">Status</label>
-                        <select class="form-control" name="status" aria-label="Default select example">
+                        <select class="form-control" name="status" aria-label="Default select example" required>
+                          <option hidden disabled selected value>select the value</option>
                           <option value="Magang">Magang</option>
                           <option value="Tugas Akhir">Tugas Akhir</option>
                           <option value="Magang dan Tugas Akhir">Magang dan Tugas Akhir</option>
-                          <option value="Dosen">Dosen</option>
-                          <option value="Mentor">Mentor</option>
                         </select>
                         @error('status')
                          <small>{{$message}}</small>
                         @enderror
                         <label for="">Dosen / Mentor</label>
-                        <select class="form-control" name="dosen" aria-label="Default select example">
+                        <select class="form-control" name="dosen" aria-label="Default select example" required>
+                          <option hidden disabled selected value>select the value</option>
                             @foreach ($data as $d)
                                 <option value="{{ $d->name }}">{{ $d->name }}</option>
                             @endforeach
@@ -87,9 +87,8 @@
                         @enderror
                         <div class="form-group">
                           <label for="">Start</label>
-                          <input type="date" class="form-control" name="tanggal_mulai" 
-                            required>
-                          @error('date')
+                          <input type="date" class="form-control" name="tanggal_mulai"  required>
+                          @error('tanggal_mulai')
                             <small>{{$message}}</small>
                           @enderror
                         </div>

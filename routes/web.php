@@ -4,6 +4,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MahasiswaController;
+use DebugBar\DebugBar;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,16 +22,14 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/',[LoginController::class, 'index'])->name('login');
+Route::get('/',[LoginController::class,'index'])->name('login');
 Route::post('/login-proses',[LoginController::class, 'login_proses'])->name('login-proses');
 Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
 
-
-
-Route::group(['prefix'=> 'mhs', 'middleware' => ['auth:dosen,web'],'as'=> 'mhs.'],function(){
+Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function(){
     Route::get('/proposal',[MahasiswaController::class, 'proposal'])->name('proposal');
     Route::get('/proposal2',[MahasiswaController::class, 'proposal2'])->name('proposal2');
-    Route::get('/proposal3',[MahasiswaController::class, 'proposal3'])->name('proposal3');
+    Route::get('/proposal3',[MahasiswaController::class,'proposal3'])->name('proposal3');
     Route::get('/laporan',[MahasiswaController::class, 'laporan'])->name('laporan');
     Route::get('/laporan2',[MahasiswaController::class, 'laporan2'])->name('laporan2');
     Route::get('/laporan3',[MahasiswaController::class, 'laporan3'])->name('laporan3');
@@ -40,20 +39,7 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth:dosen,web'],'as'=> 'mhs.'
     Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
 });
 
-Route::group(['prefix'=> 'admin', 'middleware' => ['auth'],'as'=> 'admin.'],function(){
-    Route::get('/home',[HomeController::class, 'dashboard'])->name('dashboard');
-    Route::get('/user',[HomeController::class, 'index'])->name('index');
-
-    Route::get('/create',[HomeController::class, 'create'])->name('create');
-    Route::get('/create2',[HomeController::class, 'create2'])->name('create2');
-    Route::get('/create3',[HomeController::class, 'create3'])->name('create3');
-    Route::get('/edit/{id}',[HomeController::class, 'edit'])->name('edit');
-    Route::put('/update/{id}',[HomeController::class, 'update'])->name('update');
-    
-    Route::post('/store',[HomeController::class, 'store'])->name('store');
-    Route::delete('/delete/{id}',[HomeController::class, 'delete'])->name('delete');
-});
-Route::group(['prefix'=> 'domen', 'middleware' => ['auth'],'as'=> 'dmn.'],function(){
+Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],function(){
     Route::get('/proposal',[DosenController::class,'proposal'])->name('proposal');
     Route::get('/proposal2',[DosenController::class,'proposal2'])->name('proposal2');
     Route::get('/proposal3',[DosenController::class,'proposal3'])->name('proposal3');
@@ -64,6 +50,24 @@ Route::group(['prefix'=> 'domen', 'middleware' => ['auth'],'as'=> 'dmn.'],functi
     Route::get('/ta3',[DosenController::class,'ta3'])->name('ta3');
 });
 
+Route::group(['prefix'=> 'admin', 'middleware' => ['auth:admin'],'as'=> 'admin.'],function(){
+
+
+    Route::get('/home',[HomeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/user',[HomeController::class, 'index'])->name('index');
+
+    Route::get('/create',[HomeController::class, 'create'])->name('create');
+    Route::get('/create2',[HomeController::class, 'create2'])->name('create2');
+    Route::get('/create3',[HomeController::class, 'create3'])->name('create3');
+    Route::get('/edit/{id}',[HomeController::class, 'edit'])->name('edit');
+    Route::get('/edit2/{id}',[HomeController::class, 'edit2'])->name('edit2');
+    Route::put('/update/{id}',[HomeController::class, 'update'])->name('update');
+    Route::put('/update2/{id}',[HomeController::class, 'update2'])->name('update2');
+    
+    Route::post('/store',[HomeController::class, 'store'])->name('store');
+    Route::delete('/delete/{id}',[HomeController::class, 'delete'])->name('delete');
+    Route::delete('/delete2/{id}',[HomeController::class, 'delete2'])->name('delete2');
+});
 
 
 

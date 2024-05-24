@@ -24,11 +24,10 @@
     </div>
     <!-- /.content-header -->
 
-
     <!-- Main content -->
     <section class="content">
         <div class="container">
-            <form action="{{ route('admin.update',['id'=> $data->id]) }}" method="post">
+            <form action="{{ route('admin.update',['id'=> $id2->npm]) }}" method="post">
                 @csrf
                 @method('put')
                 <div class="col-md-12">
@@ -37,9 +36,16 @@
 
                 <form>
                     <div class="card-body">
+                      <div class="form-group">
+                        <label for="">NPM</label>
+                        <input type="text" class="form-control" name="npm" value="{{ $id2->npm }}"  required>
+                        @error('npm')
+                            <small>{{$message}}</small>
+                        @enderror
+                    </div>
                         <div class="form-group">
                             <label for="">Name</label>
-                            <input type="text" class="form-control" name="name" value="{{ $data->name }}"  required>
+                            <input type="text" class="form-control" name="name" value="{{ $id2->name }}"  required>
                             @error('name')
                                 <small>{{$message}}</small>
                             @enderror
@@ -47,7 +53,7 @@
 
                         <div class="form-group">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="email" value="{{ $data->email }}"  required>
+                            <input type="email" class="form-control" name="email" value="{{ $id2->email }}"  required>
                             @error('email')
                                 <small>{{$message}}</small>
                             @enderror
@@ -59,8 +65,33 @@
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
+                        <label for="">Status</label>
+                        <select class="form-control" name="status" wire:model="selectedClass" aria-label="Default select example" required>
+                          <option hidden disabled selected value>select the value</option>
+                          <option value="Magang">Magang</option>
+                          <option value="Tugas Akhir">Tugas Akhir</option>
+                          <option value="Magang dan Tugas Akhir">Magang dan Tugas Akhir</option>
+                        </select>
+                        @error('status')
+                         <small>{{$message}}</small>
+                         @enderror
+                        <div class="form-group">
+                          <label for="">Start</label>
+                          <input type="date" class="form-control" name="tanggal_mulai" 
+                           value="{{ $tanggal_mulai }}" required>
+                          @error('tanggal_mulai')
+                            <small>{{$message}}</small>
+                          @enderror
+                        </div>
+                        <div class="form-group">
+                          <label for="">End</label>
+                          <input type="date" class="form-control" name="tanggal_berakhir" 
+                           value="{{ $tanggal_berakhir }}" required>
+                          @error('tanggal_berakhir')
+                            <small>{{$message}}</small>
+                          @enderror
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" wire:Loading.attr="disabled">Submit</button>
                         </div>
                     </div>
                 </form>

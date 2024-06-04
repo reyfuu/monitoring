@@ -58,13 +58,47 @@
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
         </a>
+        <div class="chat-container dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <header class="chat-header">
+            <div class="d-flex">
+              {{-- <img src="avatar_dosen.png" alt="Dosen Pembimbing Avatar" class="avatar"> --}}
+              <span>Dosen Pembimbing</span>
+            </div>
+          </header>
+          <main class="chat-history">
+            <div class="message sent">
+              <div class="message-content">
+                <span class="">Selamat siang, saya ada di kampus hingga pukul 12 siang.</span>
+              </div>
+            </div>
+            <div class="message received">
+              <div class="message-content">
+                <span class="">Selamat siang pak, saya mau bimbingan...</span>
+              </div>
+            </div>
+          </main>
+          <div class="d-flex justify-content-between">
+            <div>
+              <textarea name="message" id="message" class="form-control" placeholder="Write a message..."></textarea>
+            </div>
+            <div class="d-flex align-items-center">
+              <button type="button" class="send_button">
+                <img src="{{asset('img/paperclip.png')}}" height="15" width="15" alt="paperclip">
+              </button>
+              <button type="button" class="send_button">
+                <img src="{{asset('img/send.png')}}" height="15" width="15" alt="send">
+              </button>
+            </div>
+          </div>
+        </div>
+      </li>
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-warning navbar-badge">15</span>
+        </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <div class="image">
-            <img src="{{asset('lte/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
-          </div>
-          <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
-          </div>
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
@@ -116,40 +150,14 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
       </li>
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
-      </li>
+
 
       <li class="nav-item dropdown">
         <a href="" class="nav-link" data-toggle="dropdown">
           <i class="far fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
-          <p class="dropdown-item"><?= $_SESSION['domen']?></p>
+          <p class="dropdown-item"><?= 'test'?></p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>

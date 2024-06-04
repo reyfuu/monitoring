@@ -46,8 +46,7 @@
                 <form>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="">Dokumen</label><br>
-                              <img src="{{ asset('img/pdf.png') }}" style="width: 5%" alt="">
+                              <img src="{{ asset('img/pdf.png') }}" style="width: 4%" alt="">
                           </div>
 
                         <div class="form-group">

@@ -24,34 +24,37 @@
         <div class="container">
           <div class="col-md-12">
             <div class="card card-primary">
-                <div class="card">
-                    <div class="card-header">
-                      <p class="card-text"><img src="{{asset('img/wait.png')}}" class="mx-2">Menunggu Persetujuan Mentor</p>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">4-9 Maret 2024 <a href="{{ route('mhs.laporan3') }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
-                      <p class="card-text">Minggu ke 1</p>
-                    </div>
+            
+   
+                  @if (isset($weekends) && count($weekends) > 0)
+
+                      @foreach ($weekends as $weekend)
+                      <div class="card">
+                        <div class="card-header">
+                          <p class="card-text"><img src="{{asset('img/wait.png')}}" class="mx-2">Menunggu Persetujuan Mentor</p>
+                        </div>
+                        <div class="card-body">
+                      <h5 class="card-title">{{ $weekend['start_date'] }}
+                        @if ($weekend['start_month'] != $weekend['end_month'])
+                            {{ $weekend['start_month'] }}
+                      @endif-{{ $weekend['end_date'] }} 
+                      @if ($weekend['start_month'] == $weekend['end_month'])
+                          {{ $weekend['start_month'] }}
+                      @else
+                          {{ $weekend['end_month'] }}
+                      @endif
+                       <a href="{{ route('mhs.laporan3') }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
+                      <p class="card-text">Minggu ke {{ $loop->iteration }}</p>
+                      
                   </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <p class="card-text"><img src="{{asset('img/alert-circle.png')}}" class="mx-2">Revisi Laporan Harian</p>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">12-16 Maret 2024 <a href="{{ route('mhs.laporan3') }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
-                      <p class="card-text">Minggu ke 2</p>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <p class="card-text"><img src="{{asset('img/check.png')}}" class="mx-2">Disetujui Mentor</p>
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">18-23 Maret 2024 <a href="{{ route('mhs.laporan3') }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
-                      <p class="card-text">Minggu ke 3</p>
-                    </div>
-                  </div>
-            </div>
+                </div>
+                      @endforeach
+                @else
+                  <p>No captured weekend data found.</p>
+                @endif
+                
+
+    
           </div>
         </div>
     </section>

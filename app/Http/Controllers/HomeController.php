@@ -33,12 +33,11 @@ class HomeController extends Controller
         return view('layout.admin.create.create');
     }
     public function create2(){
-      $data= dosen::get();
+      $data=dosen::get();
       return view('layout.admin.create.create2',compact('data'));
     }
     public function create3(){
-      $data= User::get();
-      return view('layout.admin.create.create3',compact('data'));
+      return view('layout.admin.create.create3');
     }
     public function store(Request $request){
       $validator= Validator::make($request->all(),[
@@ -57,7 +56,6 @@ class HomeController extends Controller
       $data2['tanggal_berakhir']=date('d-m-y',strtotime("+3 months"));
       $data2['laporan_id']= IdGenerator::generate(
         ['table'=> 'laporan','field'=> 'laporan_id','length'=>5,'prefix'=>'LP']);
-      $data2['type']=$request->type;
        
       $status=$request->status;
 
@@ -72,8 +70,8 @@ class HomeController extends Controller
       else{
         $data['npm']=$request->npm;
         $name=$request->dosen;
-        $dosen_id=dosen::where('name','like','%'.$name.'%')->first()->domen_id;
-        $data2['type']= 'proposal';
+        $dosen_id=dosen::select('domen_id')->where('name','like','%'.$name.'%')->first()->domen_id;
+        $data2['type']= 'Proposal';
         $data2['domen_id']= $dosen_id;
         $data2['npm']=$request->npm;
         User::create($data);
@@ -86,9 +84,9 @@ class HomeController extends Controller
 
     public function edit(Request $request,$id){
       $id2= User::find($id);
-      $npm= User::where('npm','like','%'.$id.'%')->first()->npm;
-      $tanggal_mulai=laporan::where('npm','like','%'.$npm.'%')->first()->tanggal_mulai;
-      $tanggal_berakhir=laporan::where('npm','like','%'.$npm.'%')->first()->tanggal_berakhir;
+      $npm= User::select('npm')->where('npm','like','%'.$id.'%')->first()->npm;
+      $tanggal_mulai=laporan::select('tanggal_mulai')->where('npm','like','%'.$npm.'%')->first()->tanggal_mulai;
+      $tanggal_berakhir=laporan::select('tanggal_berakhir')->where('npm','like','%'.$npm.'%')->first()->tanggal_berakhir;
       return view('layout.admin.edit',compact('id2','tanggal_mulai','tanggal_berakhir'));
     }
     public function edit2(Request $request,$id){

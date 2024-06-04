@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messaging App</title>
+<style>
+ body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  margin: 0 auto;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chat-header {
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.chat-history {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: scroll;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.message.sent {
+  justify-content: flex-end;
+}
+
+.message.received {
+  justify-content: flex-start;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.message-content {
+  background-color: #eee;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.name {
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+}
+
+.text {
+  font-size: 0.8rem;
+}
+
+.chat-footer {
+  display: flex;
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+}
+
+textarea {
+  flex: 1;
+  height: 50px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 0.5rem;
+  resize: none;
+}
+
+button {
+  background-color: #333;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #444;
+}
+
+
+</style>
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+          <h2>Chat</h2>
+        </header>
+        <main class="chat-history">
+          <div class="message sent">
+            <img src="avatar_dosen.png" alt="Dosen Pembimbing Avatar" class="avatar">
+            <div class="message-content">
+              <span class="name">Dosen Pembimbing</span>
+              <span class="text">Selamat siang, saya ada di kampus hingga pukul 12 siang.</span>
+            </div>
+          </div>
+          <div class="message received">
+            <img src="avatar_you.png" alt="Your Avatar" class="avatar">
+            <div class="message-content">
+              <span class="name">Pak Andi</span>
+              <span class="text">Selamat siang pak, saya mau bimbingan...</span>
+            </div>
+          </div>
+        </main>
+        <footer class="chat-footer">
+          <textarea name="message" id="message" placeholder="Write a message..."></textarea>
+          <button type="button">Send</button>
+        </footer>
+      </div>
+</body>
+</html>

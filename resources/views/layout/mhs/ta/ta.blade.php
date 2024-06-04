@@ -70,6 +70,7 @@
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
+                        <input type="hidden"  name="status" value="Laporan">
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

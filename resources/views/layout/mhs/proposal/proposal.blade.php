@@ -4,6 +4,7 @@
 <title>Proposal</title>
 @endsection
 @section('content')
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -48,7 +49,6 @@
                 <div class="col-md-12">
                     <div class="card card-primary">
 
-
                 <form>
                     <div class="card-body">
                         <div class="form-group">
@@ -73,6 +73,7 @@
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
+                        <input type="hidden"  name="status" value="Proposal">
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

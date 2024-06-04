@@ -30,13 +30,17 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::get('/proposal',[MahasiswaController::class, 'proposal'])->name('proposal');
     Route::get('/proposal2',[MahasiswaController::class, 'proposal2'])->name('proposal2');
     Route::get('/proposal3',[MahasiswaController::class,'proposal3'])->name('proposal3');
+
     Route::get('/laporan',[MahasiswaController::class, 'laporan'])->name('laporan');
     Route::get('/laporan2',[MahasiswaController::class, 'laporan2'])->name('laporan2');
     Route::get('/laporan3',[MahasiswaController::class, 'laporan3'])->name('laporan3');
+
     Route::get('/ta',[MahasiswaController::class, 'ta'])->name('ta');
     Route::get('/ta2',[MahasiswaController::class, 'ta2'])->name('ta2');
     Route::get('/ta3',[MahasiswaController::class, 'ta3'])->name('ta3');
+
     Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
+    Route::post('/update',[MahasiswaController::class, 'update'])->name('update');
 });
 
 Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],function(){

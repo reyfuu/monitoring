@@ -29,7 +29,6 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
-          <a href="{{ route('admin.create') }}" class="btn btn-primary mb-3">Create</a>
           <div class="card"> 
             <div class="card-header">
 
@@ -64,25 +63,25 @@
                     <td>Audi Nathanael</td>
                     <td>audinathanael@gmail.com</td>
                     <td>Revisi bab 3</td>
-                    <td><a href="{{ route('dmn.ta') }}"><button class="btn btn-primary">See Detail</button></a></td>
+                    <td><a href="{{ route('dmn.ta2') }}"><button class="btn btn-primary">See Detail</button></a></td>
                 </tr>
                 <tr>
                   <td>sandhika</td>
                   <td>sandhika@gmail.com</td>
                   <td>laporan belum diperiksa</td>
-                  <td><a href="{{ route('dmn.ta') }}"><button class="btn btn-primary">See Detail</button></a></td>
+                  <td><a href="{{ route('dmn.ta2') }}"><button class="btn btn-primary">See Detail</button></a></td>
               </tr>
               <tr>
                 <td>Eka</td>
                 <td>eka@gmail.com</td>
                 <td>laporan sudah fix</td>
-                <td><a href="{{ route('dmn.ta') }}"><button class="btn btn-primary">See Detail</button></a></td>
+                <td><a href="{{ route('dmn.ta2') }}"><button class="btn btn-primary">See Detail</button></a></td>
             </tr>
             <tr>
               <td>Riza</td>
               <td>riza@gmail.com</td>
               <td>REvisi bab 1,2,3</td>
-              <td><a href="{{ route('dmn.ta') }}"><button class="btn btn-primary">See Detail</button></a></td>
+              <td><a href="{{ route('dmn.ta2') }}"><button class="btn btn-primary">See Detail</button></a></td>
           </tr>
 
 

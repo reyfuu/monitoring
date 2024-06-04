@@ -40,7 +40,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
-            <form action="{{ route('mhs.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('mhs.update') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
                     <div class="card card-primary">
@@ -63,6 +63,7 @@
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
+                        <input type="hidden"  name="status" value="Proposal">
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

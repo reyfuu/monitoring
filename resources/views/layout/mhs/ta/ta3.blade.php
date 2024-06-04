@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Upload Proposal</h1>
+            <h1 class="m-0">Upload Tugas Akhir</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -28,7 +28,7 @@
               <li class="base-timeline__item base-timeline__item--active">
                   <span class="base-timeline__summary-text">Revisi</span>
               </li>
-              <li class="base-timeline__item">
+              <li class="base-timeline__item base-timeline__item--active">
                   <span class="base-timeline__summary-text">Selesai</span>
               </li>
           </ul>
@@ -40,37 +40,16 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
-            <form action="{{ route('mhs.store') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="col-md-12">
-                    <div class="card card-primary">
-
-
-                <form>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label for="">Dokumen</label>
-                            <input type="file" class="form-control-file" name="file" required>
-                            @error('file')
-                                <small>{{$message}}</small>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Deskripsi</label>
-                            <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" required></textarea>
-                            @error('email')
-                                <small>{{$message}}</small>
-                            @enderror
-                        </div>
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
+            <div class="container">
+                <form action="{{ route('mhs.store') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                        <h3 class="text-center py-lg-5">Selamat Laporan Akhir sudah Selesai</h3>
+                  </div>
+                 </div>
                 </form>
-              </div>
-             </div>
-            </form>
+            </div>
         </div>
     </section>
     <!-- /.content -->

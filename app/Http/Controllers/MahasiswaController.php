@@ -6,15 +6,12 @@ namespace App\Http\Controllers;
 
 use App\Models\comment;
 use App\Models\laporan;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
-use Iiluminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Session as FacadesSession;
-use HasRoles;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
@@ -38,13 +35,13 @@ class MahasiswaController extends Controller
      
     }
     public function proposal2(){
-        $npm=FacadesSession::get('npm');
-        $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('status','Finish')->exists();
-        if(!$dokumen){
+        // $npm=FacadesSession::get('npm');
+        // $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('status','Finish')->exists();
+        // if(!$dokumen){
             return view('layout.mhs.proposal.proposal2');
-        }else{
-            return view('layout.mhs.proposal.proposal3');
-        }
+        // }else{
+        //     return view('layout.mhs.proposal.proposal3');
+        // }
 
     }
     public function proposal3(){
@@ -88,8 +85,8 @@ class MahasiswaController extends Controller
         return view('layout.mhs.laporan.laporan2',compact('weekends'));
     }
 
-    public function laporan3(){
-        return view('layout.mhs.laporan.laporan3');
+    public function laporan3( String $startDate,String $endDate){
+        return view('layout.mhs.laporan.laporan3',compact('startDate','endDate'));
     }   
 
 

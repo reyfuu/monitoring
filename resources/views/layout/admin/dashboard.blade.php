@@ -15,7 +15,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item active">Dashboard </li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -29,7 +29,7 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
-          <a href="{{ route('admin.create') }}" class="btn btn-primary mb-3">Create</a>
+          <a href="{{ route('admin.create') }}" class="btn btn-primary mb-3">Buat Akun</a>
           <div class="card"> 
             <div class="card-header">
 
@@ -74,13 +74,13 @@
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h4 class="modal-title">Confirm delete data</h4>
+                          <h4 class="modal-title">Yakin Hapus data ?</h4>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>Are You Sure want to delete <b>{{ $d->name }}</b> ?</p>
+                          <p>Apakah Anda yakin ingin menghapus <b>{{ $d->name }}</b> ?</p>
                         </div>
                         <div class="modal-footer justify-content-between">
                           <form action="{{ route('admin.delete',['id'=>$d->npm]) }}" method="POST">
@@ -115,13 +115,13 @@
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h4 class="modal-title">Confirm delete data</h4>
+                          <h4 class="modal-title">Yakin Hapus data ?</h4>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>Are You Sure want to delete <b>{{ $d->name }}</b> ?</p>
+                          <p>Apakah Anda yakin ingin menghapus<b>{{ $d->name }}</b> ?</p>
                         </div>
                         <div class="modal-footer justify-content-between">
                           <form action="{{ route('admin.delete2',['id'=>$d->domen_id]) }}" method="POST">

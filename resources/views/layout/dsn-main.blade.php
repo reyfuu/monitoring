@@ -157,7 +157,7 @@
           <i class="far fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
-          <p class="dropdown-item"><?= 'test'?></p>
+          <p class="dropdown-item disabled"><?= $_SESSION['domen']?></p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>

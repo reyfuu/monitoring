@@ -150,7 +150,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
           <p class="dropdown-item"></p>
-          <p class="dropdown-item"><?= $_SESSION['admin']?></p>
+          <p class="dropdown-item disabled"><?= $_SESSION['admin']?></p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>

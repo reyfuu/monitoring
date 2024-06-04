@@ -304,3 +304,7 @@ ul li .active .uil{
   button:hover {
     background-color: #444;
   }
+
+  .disabled{
+    pointer-events: none;
+  }

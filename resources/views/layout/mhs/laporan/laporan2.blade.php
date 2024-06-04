@@ -43,7 +43,10 @@
                       @else
                           {{ $weekend['end_month'] }}
                       @endif
-                       <a href="{{ route('mhs.laporan3') }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
+                      @php
+                          session()->put('Laporan Mingguan',$weekend['start_month']);
+                      @endphp
+                       <a href="{{ route('mhs.laporan3',['startDate'=>$weekend['start_date'],'endDate'=>$weekend['end_date']]) }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
                       <p class="card-text">Minggu ke {{ $loop->iteration }}</p>
                       
                   </div>

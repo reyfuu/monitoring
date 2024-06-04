@@ -63,6 +63,6 @@ class LoginController extends Controller
         session_destroy();
         Auth::logout();
 
-        return redirect()->route('login')->with('success','Logout Success');
+        return redirect()->route('login');
     }
 }

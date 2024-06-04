@@ -25,6 +25,7 @@
           <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card">
+                  {{ $startDate }} {{ $endDate }}
 
                     <div class="card-body">
                       <h5 class="card-title">Senin 4 Februari 2024</h5>

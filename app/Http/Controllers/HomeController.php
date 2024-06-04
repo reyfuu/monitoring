@@ -6,12 +6,12 @@ use App\Http\Middleware\Domen;
 use App\Models\dosen;
 use App\Models\laporan;
 use App\Models\User;
-use GuzzleHttp\Promise\Create;
 // use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\DB;
 
 use HasRoles;
 
@@ -136,11 +136,8 @@ class HomeController extends Controller
       return redirect()->route('admin.dashboard');
     }
     public function delete2(Request $request,$id){
-      $data=dosen::find($id);
+      DB::table('domen')->where('domen_id',$id)->delete();
 
-      if($data){
-        $data->delete();
-      }
 
       return redirect()->route('admin.dashboard');
     }

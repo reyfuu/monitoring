@@ -6,6 +6,7 @@
   <title>Login</title>
 
   <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="{{asset('css/dsn-app.css')}}">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
@@ -14,13 +15,19 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css')}}">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page " id="background">
 <div class="login-box">
   <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
+  <div class="card card-outline card-primary py-3">
+    <div class="card-header text-center  ">
       <a href="{{ route('login') }}" class="h1"><b>TAMP</b></a>
+      <img src="{{asset('img/logo_IF.png')}}" class="" style="width: 30%; margin-bottom:20px" alt="">
+
     </div>
+    <div class="text-right">
+   
+    </div>
+
     <div class="card-body">
 
       <form action="{{ route('login-proses') }}" method="post">

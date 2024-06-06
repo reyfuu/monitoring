@@ -121,7 +121,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>Apakah Anda yakin ingin menghapus<b>{{ $d->name }}</b> ?</p>
+                          <p>Apakah Anda yakin ingin menghapus <b>{{ $d->name }}</b> ?</p>
                         </div>
                         <div class="modal-footer justify-content-between">
                           <form action="{{ route('admin.delete2',['id'=>$d->domen_id]) }}" method="POST">

@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Create User</h1>
+            <h1 class="m-0">Buat Akun</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">add User</li>
+              <li class="breadcrumb-item active">Buat Akun</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -38,14 +38,14 @@
                     <div class="card-body">
                       <div class="form-group">
                         <label for="">NIDN</label>
-                        <input type="text" class="form-control" name="domen_id" placeholder="Enter NIDN" required>
+                        <input type="text" class="form-control" name="domen_id" placeholder="NIDN" required>
                         @error('domen_id')
                             <small>{{$message}}</small>
                         @enderror
                     </div>
                         <div class="form-group">
-                            <label for="">Name</label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
+                            <label for="">Nama</label>
+                            <input type="text" class="form-control" name="name" placeholder="Name" required>
                             @error('name')
                                 <small>{{$message}}</small>
                             @enderror
@@ -53,7 +53,7 @@
 
                         <div class="form-group">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
+                            <input type="email" class="form-control" name="email" placeholder="Email" required>
                             @error('email')
                                 <small>{{$message}}</small>
                             @enderror
@@ -76,7 +76,7 @@
                         @enderror
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                 </form>

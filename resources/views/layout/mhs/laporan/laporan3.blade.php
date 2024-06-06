@@ -24,24 +24,36 @@
         <div class="container">
           <div class="col-md-12">
             <div class="card card-primary">
-                <div class="card">
-                  {{ $startDate }} {{ $endDate }}
 
-                    <div class="card-body">
-                      <h5 class="card-title">Senin 4 Februari 2024</h5>
-                      <p class="card-text">Hari ini mengerjakan code lab dasar-dasar compose</p>
+                  @foreach ($days as $d =>$day)
+                  <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ $day }}</h5>
+                    <br>
+                    <div class="text-center">
+                      @foreach ($isi[$d]  as $i)
+
+  
+                        @if ($i->tanggal == $day)
+   
+                          <p>{{ $i->isi }}</p>
+                        @elseif (empty($isi[$d]))
+                            <button type="button" class="btn btn-primary activity-button " data-toggle="modal" data-target="#exampleModal"
+                            data-date="{{ $d }}">
+                              Buat Laporan Harian
+                            </button>
+                        @endif
+
+                      @endforeach
+
+
                     </div>
                   </div>
-                  <div class="card">
+                </div>
 
-                    <div class="card-body">
-                      <h5 class="card-title">Selasa 5 Februari 2024 </h5>
-                      <br>
-                      <div class="text-center">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                          Buat Laporan Harian
-                        </button>
-                      </div>
+                  @endforeach
+
+                  
                       <!-- Button trigger modal -->
 
 
@@ -50,63 +62,33 @@
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Masukkan Kegiatan</h5>
+                                <p id="modalDate"></p>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
-                              <div class="modal-body">
+                              <form action="{{ route('mhs.store2') }}" method="post">
+                                @csrf
                                 <textarea class="form-control" rows="5" name="isi"></textarea>
-                              </div>
+                                <input type="input" name="date" id="eDate" hidden>
+    
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                               </div>
+                              </form>
                             </div>
                           </div>
                         </div>
                     </div>
                   </div>
-                  <div class="card">
-
-                    <div class="card-body">
-                      <h5 class="card-title">Rabu 6 Februari 2024 </h5>
-                      <br>
-                      <div class="text-center">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal2">
-                          Buat Laporan Harian
-                        </button>
-                      </div>
-                      <!-- Button trigger modal -->
 
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <textarea class="form-control" rows="5" name="isi"></textarea>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
                   </div>
             </div>
-          </div>
-        </div>
-    </section>
-</div>
 
-</section>
+
+
+
 @endsection

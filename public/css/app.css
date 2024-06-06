@@ -195,11 +195,7 @@
   }
   
   /* hover element */
-  .base-timeline__item:hover::before {
-       background-color: rgba( 225, 114, 114, .9);
-       transform: scale(2);
-  
-  }
+
   
   .base-timeline__item--active::before {
         background-color: rgba( 225, 114, 114, .9);

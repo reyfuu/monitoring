@@ -145,7 +145,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
           <p class="dropdown-item"></p>
-          <p class="dropdown-item disabled"><?= $_SESSION['mahasiswa']?></p>
+          <p class="dropdown-item disabled">Hello, <?= $_SESSION['mahasiswa']?></p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>
@@ -157,7 +157,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="{{ route('mhs.laporan') }}" class="brand-link">
       <img src="{{asset('img/logo.png')}}" alt="TAMP Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">TAMP</span>
     </a>
@@ -228,39 +228,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
-    
-  $(".step").click( function() {
-$(this).addClass("active").prevAll().addClass("active");
-$(this).nextAll().removeClass("active");
-});
-
-$(".step01").click( function() {
-$("#line-progress").css("width", "3%");
-$(".discovery").addClass("active").siblings().removeClass("active");
-});
-
-$(".step02").click( function() {
-$("#line-progress").css("width", "25%");
-$(".strategy").addClass("active").siblings().removeClass("active");
-});
-
-$(".step03").click( function() {
-$("#line-progress").css("width", "50%");
-$(".creative").addClass("active").siblings().removeClass("active");
-});
-
-$(".step04").click( function() {
-$("#line-progress").css("width", "75%");
-$(".production").addClass("active").siblings().removeClass("active");
-});
-
-$(".step05").click( function() {
-$("#line-progress").css("width", "100%");
-$(".analysis").addClass("active").siblings().removeClass("active");
-});
-
-
-  </script>
+  $(document).ready(function() {
+    $('.activity-button').click(function() {
+      var date = $(this).data('date');
+      $('#eDate').val(date);
+    });
+  });
+</script>
 <!-- jQuery -->
 <script src="{{asset('lte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->

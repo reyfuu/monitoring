@@ -9,7 +9,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Laporan Mingguan</h1>
+              <h1 class="m-0">Laporan Harian</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -24,44 +24,62 @@
         <div class="container">
           <div class="col-md-12">
             <div class="card card-primary">
-            
-   
-                  @if (isset($weekends) && count($weekends) > 0)
 
-                      @foreach ($weekends as $weekend)
-                      <div class="card">
-                        <div class="card-header">
-                          <p class="card-text"><img src="{{asset('img/wait.png')}}" class="mx-2">Menunggu Persetujuan Mentor</p>
-                        </div>
-                        <div class="card-body">
-                      <h5 class="card-title">{{ $weekend['start_date'] }}
-                        @if ($weekend['start_month'] != $weekend['end_month'])
-                            {{ $weekend['start_month'] }}
-                      @endif-{{ $weekend['end_date'] }} 
-                      @if ($weekend['start_month'] == $weekend['end_month'])
-                          {{ $weekend['start_month'] }}
-                      @else
-                          {{ $weekend['end_month'] }}
+                  @foreach ($days as $d)
+                  <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ $d }}</h5>
+                    <br>
+                    <div class="text-center">
+                      @if (!isset($activities[$d]))
+                      <button type="button" class="btn btn-primary activity-button " data-toggle="modal" data-target="#exampleModal"
+                      data-date="{{ $d }}">
+                        Buat Laporan Harian
+                      </button>
                       @endif
-                      @php
-                          session()->put('Laporan Mingguan',$weekend['start_month']);
-                      @endphp
-                       <a href="{{ route('mhs.laporan3',['startDate'=>$weekend['start_date'],'endDate'=>$weekend['end_date']]) }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
-                      <p class="card-text">Minggu ke {{ $loop->iteration }}</p>
-                      
+
+                    </div>
                   </div>
                 </div>
-                      @endforeach
-                @else
-                  <p>No captured weekend data found.</p>
-                @endif
-                
 
+                  @endforeach
+
+                  
+                      <!-- Button trigger modal -->
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Masukkan Kegiatan</h5>
+                                <p id="modalDate"></p>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <form action="{{ route('mhs.store2') }}" method="post">
+                                @csrf
+                                <textarea class="form-control" rows="5" name="isi"></textarea>
+                                <input type="input" name="date" id="eDate" hidden>
     
-          </div>
-        </div>
-    </section>
-</div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                              </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
 
-</section>
+
+                  </div>
+            </div>
+
+
+
+
 @endsection

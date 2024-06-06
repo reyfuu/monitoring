@@ -195,11 +195,7 @@ ul li .active .uil{
 }
 
 /* hover element */
-.base-timeline__item:hover::before {
-     background-color: rgba( 225, 114, 114, .9);
-     transform: scale(2);
 
-}
 
 .base-timeline__item--active::before {
       background-color: rgba( 225, 114, 114, .9);
@@ -307,4 +303,17 @@ ul li .active .uil{
 
   .disabled{
     pointer-events: none;
+  }
+
+  .this_week_column{
+    position: sticky;
+    left: 0; /* Pin the column to the left edge */
+    background-color: #fff; /* Optional: Set background color */
+    padding: 5px; /* Optional: Add padding */
+  }
+  #background{
+    background-image: url('../img/background.jpg') ;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
   }

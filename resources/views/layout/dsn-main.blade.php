@@ -157,7 +157,7 @@
           <i class="far fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
-          <p class="dropdown-item disabled"><?= $_SESSION['domen']?></p>
+          <p class="dropdown-item disabled">Hello, <?= $_SESSION['domen']?></p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>
@@ -169,7 +169,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="{{ route('dmn.laporan') }}" class="brand-link">
       <img src="{{asset('img/logo.png')}}" alt="TAMP Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">TAMP</span>
     </a>

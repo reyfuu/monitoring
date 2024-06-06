@@ -24,10 +24,6 @@ class HomeController extends Controller
         return view('layout.admin.dashboard',compact('data','data2','count'));
     }
 
-    public function index(){
-        $data= User::get();
-        return view('layout.admin.index',compact('data'));
-    }
 
     public function create(){
         return view('layout.admin.create.create');

@@ -30,10 +30,16 @@
         <div class="text-center">
                 <div class="row">
                   <div class="col">
-                    <a href="{{ route('admin.create2') }}"><button class="btn btn-primary">Mahasiswa</button></a>
+                    <a href="{{ route('admin.create2') }}">
+                      <button class="btn btn-light">
+                        <img src="{{ asset('img/mahasiswa.png') }}" alt="">
+                        </button></a>
                   </div>
                   <div class="col">
-                    <a href="{{ route('admin.create3') }}"><button class="btn btn-primary">Dosen</button></a>
+                    <a href="{{ route('admin.create3') }}">
+                      <button class="btn btn-light">
+                        <img src="{{ asset('img/Dosen.png') }}" style="width:70%">
+                      </button></a>
                   </div>
                 </div>
               </div>

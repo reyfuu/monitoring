@@ -57,31 +57,19 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Audi Nathanael</td>
-                    <td>audinathanael@gmail.com</td>
-                    <td>REvisi bab 3</td>
-                    <td><a href="{{ route('dmn.laporan2') }}"><button class="btn btn-primary">See Detail</button></a></td>
-                </tr>
-                <tr>
-                  <td>sandhika</td>
-                  <td>sandhika@gmail.com</td>
-                  <td>laporan belum diperiksa</td>
-                  <td><a href="{{ route('dmn.laporan2') }}"><button class="btn btn-primary">See Detail</button></a></td>
-              </tr>
-              <tr>
-                <td>Eka</td>
-                <td>eka@gmail.com</td>
-                <td>laporan sudah fix</td>
-                <td><a href="{{ route('dmn.laporan2') }}"><button class="btn btn-primary">See Detail</button></a></td>
-            </tr>
-            <tr>
-              <td>Riza</td>
-              <td>riza@gmail.com</td>
-              <td>Revisi penutup</td>
-              <td><a href="{{ route('dmn.laporan2') }}"><button class="btn btn-primary">See Detail</button></a></td>
-          </tr>
-
+                  @foreach ($combinedData as $data)
+                  @if ($data['isi']=='-')
+                  <tr ><td colspan='4'class="text-center">Tidak ada mahasiswa</td></tr>
+           
+                  @else
+                  <td>{{ $data['name']}}</td>
+                  <td>{{ $data['email'] }}</td>
+                  <td>{{ $data['isi'] }}</td>
+                  <td><a href="{{ route('dmn.laporan2') }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
+                  @endif
+                     
+                  @endforeach
+                 
 
                
 

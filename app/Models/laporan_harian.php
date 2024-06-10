@@ -24,4 +24,8 @@ class laporan_harian extends Model
     ];
 
     use HasFactory;
+
+    public function mahasiswa(){
+        return $this->belongsTo(User::class);
+    }
 }

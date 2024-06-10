@@ -37,7 +37,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
-            <form action="{{ route('mhs.store') }}" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
                     <div class="card card-primary">
@@ -59,7 +59,7 @@
                         </div>
 
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                           <a href="{{ route('dmn.ta3') }}"> <button type="button" class="btn btn-primary">Submit</button></a>
                         </div>
                     </div>
                 </form>

@@ -1,7 +1,7 @@
-@extends('layout.dsn-main')
+@extends('layout.mhs-main')
 @section('title')
 
-<title>Dashboard Proposal</title>
+<title>Dashboard</title>
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -10,12 +10,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard Proposal</h1>
+          <h1 class="m-0">Bimbingan</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item active">Bimbingan </li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -29,6 +29,7 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
+          <a href="{{ route('mhs.create') }}" class="btn btn-primary mb-3">Buat laporan bimbingan</a>
           <div class="card"> 
             <div class="card-header">
 
@@ -50,25 +51,30 @@
               <table class="table table-hover text-nowrap">
                 <thead>
                   <tr>
-                    <th>Nama</th>
-                    <th>Email</th>
+                    <th>No</th>
+                    <th>Tanggal</th>
+                    <th>Dosen</th>
                     <th>Status</th>
-                    <th>Detail</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($combinedData as $data)
-                  @if ($data['dokumen']=='-')
-                      <td class="text-center">Tidak ada mahasiswa</td>
-                  @else
-                  <td>{{ $data['name']}}</td>
-                  <td>{{ $data['email'] }}</td>
-                  <td>{{ $data['dokumen'] }}</td>
-                  <td><a href="{{ route('dmn.proposal2') }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
-                  @endif
-                     
+                  @foreach ($bimbingan as $d )
+                  <tr>
+                      <td>{{$loop->iteration}}</td>
+                      <td>{{$d->tanggal}}</td>
+                      <td>{{$d->domen_id}}</td>
+                      <td>{{$d->status}}</td>
+                      <td>
+                          <a href="{{ route('mhs.edit',['id' =>$d->npm ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
+                      </td>   
+                  </tr>
+                 
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
                   @endforeach
-                  
+                
                
 
                 </tbody>

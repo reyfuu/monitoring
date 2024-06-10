@@ -33,4 +33,8 @@ class dosen extends Authenticatable
     protected $casts= [
         'password' =>'hashed',
     ];
+    public function laporanHarian()
+    {
+        return $this->hasMany(dosen::class);
+    }
 }

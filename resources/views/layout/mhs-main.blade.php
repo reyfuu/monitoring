@@ -192,10 +192,10 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a href="{{ route('mhs.laporan') }}" class="nav-link">
+            <a href="{{ route('mhs.bimbingan') }}" class="nav-link">
              <img src="{{ asset('img/file-text.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
-                Laporan Mingguan
+                Bimbingan
               </p>
             </a>
           </li>

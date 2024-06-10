@@ -31,20 +31,18 @@
                     <h5 class="card-title">{{ $day }}</h5>
                     <br>
                     <div class="text-center">
-                      @foreach ($isi[$d]  as $i)
+                      @foreach ($isi[$d] ?? []  as $i)
 
-  
                         @if ($i->tanggal == $day)
-   
                           <p>{{ $i->isi }}</p>
-                        @elseif (empty($isi[$d]))
+                        @else
                             <button type="button" class="btn btn-primary activity-button " data-toggle="modal" data-target="#exampleModal"
                             data-date="{{ $d }}">
                               Buat Laporan Harian
                             </button>
                         @endif
-
                       @endforeach
+                          
 
 
                     </div>

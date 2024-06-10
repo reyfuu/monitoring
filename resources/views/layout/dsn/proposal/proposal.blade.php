@@ -37,7 +37,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
-            <form action="{{ route('dmn.proposal') }}" method="post" enctype="multipart/form-data">
+            <form action="" method="get" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
                     <div class="card card-primary">
@@ -51,13 +51,13 @@
 
                         <div class="form-group">
                             <label for="">Komentar</label>
-                            <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" required></textarea>
+                            <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" ></textarea>
                             @error('komentar')
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                          <a href="{{ route('dmn.proposal3')  }}"> <button type="button" class="btn btn-primary">Submit</button></a> 
                         </div>
                     </div>
                 </form>

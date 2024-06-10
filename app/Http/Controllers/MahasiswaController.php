@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 // use Dotenv\Validator;
 
+use App\Models\Bimbingan;
 use App\Models\comment;
+use App\Models\dosen;
 use App\Models\laporan;
 use App\Models\laporan_harian;
 use DB;
@@ -161,6 +163,10 @@ class MahasiswaController extends Controller
     public function ta3(){
         return view('layout.mhs.ta.ta3');
     }
+    public function bimbingan(){
+        $bimbingan = Bimbingan::get();
+        return view('layout.mhs.bimbingan.bimbingan',compact('bimbingan'));
+    }
     public function store(Request $request){
         $validator= Validator::make($request->all(),[
             "file"=> "required|mimes:pdf|max:5120"
@@ -196,6 +202,15 @@ class MahasiswaController extends Controller
             return redirect()->route('mhs.ta');
         }
     }
+    public function create(Request $request){
+        $data= dosen::get();
+        return view('layout.mhs.bimbingan.create',compact('data'));
+    }
+    public function edit(Request $request,$id){
+        $data = Bimbingan::where('npm',$id)->first();
+
+        return view('layout.mhs.bimbingan.edit',compact('data'));
+    }
     public function store2(Request $request){
 
 
@@ -214,6 +229,19 @@ class MahasiswaController extends Controller
         laporan_harian::create($data);
             return redirect()->route('mhs.laporan3');
         }
+    public function store3(Request $request){
+        $data['tanggal']= $request->tanggal;
+        $data['domen']= $request->dosen;
+        $data['topik']= $request->topik;
+        $data['isi']= $request->isi ;
+        $data['domen_id']= dosen::select('domen_id')->where('name','like','%'.$data['domen'].'%')->first()->domen_id;
+        $data['bimbingan_id']= IdGenerator::generate(
+            ['table'=> 'bimbingan','field'=> 'bimbingan_id','length'=>5,'prefix'=>'BM']);
+        $data['npm']= FacadesSession::get('npm');
+        $data['status']= 'submit';
+        bimbingan::create($data);
+        return redirect()->route('mhs.bimbingan');
+    }
 
     public function update(Request $request){
         $validator= Validator::make($request->all(),[
@@ -246,9 +274,15 @@ class MahasiswaController extends Controller
  
             laporan::create($data);
             return redirect()->route('mhs.ta');
-        }
-
-
-       
+        }     
+    }
+    public function update2(Request $request,$id){
+   
+        
+        $data['isi']= $request->isi;
+        $data['tanggal']= $request->tanggal;
+        $data['topik']= $request->topik;
+        Bimbingan::where('npm',$id)->where('tanggal',$data['tanggal'])->update($data);
+        return redirect()->route('mhs.bimbingan');
     }
 }

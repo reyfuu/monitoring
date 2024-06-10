@@ -39,9 +39,17 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::get('/ta2',[MahasiswaController::class, 'ta2'])->name('ta2');
     Route::get('/ta3',[MahasiswaController::class, 'ta3'])->name('ta3');
 
+    Route::get('/bimbingan',[MahasiswaController::class, 'bimbingan'])->name('bimbingan');
+    Route::get('/create',[MahasiswaController::class, 'create'])->name('create');
+    Route::get('/edit/{id}',[MahasiswaController::class, 'edit'])->name('edit');
+    Route::put('/update2/{id}',[MahasiswaController::class, 'update2'])->name('update2');
+
     Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
     Route::post('/store2',[MahasiswaController::class, 'store2'])->name('store2');
+    Route::post('/store3',[MahasiswaController::class, 'store3'])->name('store3');
+
     Route::post('/update',[MahasiswaController::class, 'update'])->name('update');
+
 });
 
 Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],function(){

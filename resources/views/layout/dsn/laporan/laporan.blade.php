@@ -66,7 +66,7 @@
                       @enderror
                   </div>
                   <div class="form-group text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                   <a href="{{ route('dmn.laporan') }}"><button type="button" class="btn btn-primary">Submit</button></a> 
                 </div>
                   </div>
                  

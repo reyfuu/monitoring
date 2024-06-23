@@ -34,24 +34,32 @@
                           <p class="card-text"><img src="{{asset('img/wait.png')}}" class="mx-2">Menunggu Persetujuan Mentor</p>
                         </div>
                         <div class="card-body">
-                      <h5 class="card-title">{{ $weekend['start_date'] }}
-                        @if ($weekend['start_month'] != $weekend['end_month'])
+
+
+
+                       <form action="{{ route('mhs.laporan2') }}" method="POST">
+                        @csrf
+                        @method('put')
+                        <h5 class="card-title">{{ $weekend['start_date'] }}
+                          @if ($weekend['start_month'] != $weekend['end_month'])
+                              {{ $weekend['start_month'] }}
+                        @endif-{{ $weekend['end_date'] }} 
+                        @if ($weekend['start_month'] == $weekend['end_month'])
                             {{ $weekend['start_month'] }}
-                      @endif-{{ $weekend['end_date'] }} 
-                      @if ($weekend['start_month'] == $weekend['end_month'])
-                          {{ $weekend['start_month'] }}
-                      @else
-                          {{ $weekend['end_month'] }}
-                      @endif
+                        @else
+                            {{ $weekend['end_month'] }}
+                        @endif
+  
+                            {{ $weekend['start_year'] }}
+                            &nbsp;
+                        <input type="hidden" name="mulai" value="{{ $weekend['start_date']."-".$weekend['start_month']."-".$weekend['start_year'] }}">
+                        <input type="hidden" name="selesai" value="{{ $weekend['end_date']."-".$weekend['end_month']."-".$weekend['end_year'] }}">
+                        <input type="image" src="{{asset('img/next.png')}}" alt="Submit button" name="submit">
+                      </form>
 
-                          {{ $weekend['start_year'] }}
-
-
-                       <a href="{{ route('mhs.laporan2',['startDate'=>$weekend['start_date'],'endDate'=>$weekend['end_date'],
-                       'startMonth'=>$weekend['start_month'],'endMonth'=>$weekend['end_month'],'startYear'=>$weekend['start_year'],'endYear'=>$weekend['end_year']]) }}"><img src="{{asset('img/next.png')}}" class="mx-2"></a></h5>
                       <p class="card-text">Minggu ke {{ $loop->iteration }}</p>
                       
-                  </div>
+                  </div> 
                 </div>
                       @endforeach
                 @else

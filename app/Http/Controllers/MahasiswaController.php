@@ -69,6 +69,32 @@ class MahasiswaController extends Controller
       
         return $weekNumber;
       }
+  function getcurrentMonth($tanggal){
+    $datePart = explode("-",$tanggal);
+    $day= $datePart[0];
+    $month= $datePart[1];
+    $year= $datePart[2];
+        $bulan = array(
+            'Januari'=> 'January',
+            'Februari'=> 'February',
+            'Maret'=> 'March',
+            'April'=> 'April',
+            'Mei'=> 'May',
+            'Juni'=> 'June',
+            'Juli'=> 'July',
+            'Agustus'=> 'August',
+            'September'=> 'September',
+            'Oktober'=> 'October',
+            'November'=> 'November',
+            'Desember'=> 'December'
+        );
+ 
+        $englishMonth = $bulan[$month];
+        
+        $englishDate = $day.'-'.$englishMonth.'-'.$year;
+
+        return $englishDate;
+      }
     public function laporan(){
         $npm=FacadesSession::get('npm');
         $tanggal_mulai= laporan::select('tanggal_mulai')->where('npm','like','%'.$npm.'%')->first()->tanggal_mulai;
@@ -81,17 +107,17 @@ class MahasiswaController extends Controller
         $currentMonth= $startDate->month;
         $endMonth= $endDate->month;
         $currentWeek = (new MahasiswaController)->getCurrentWeekNumber();
-
+        
         // Loop through each month (February to July)
         for($currentMonth ;$currentMonth<=$endMonth;$currentMonth++) {
           
             while ($startDate<=$endDate) {
                 $weekend = [
                   'start_date' => $startDate->startOfWeek()->format('d'),  // Extract only day
-                  'start_month' => $startDate->startOfWeek()->format('F'),  // Extract only day
+                  'start_month' => $startDate->startOfWeek()->translatedFormat('F'),  // Extract only day
                   'start_year' => $startDate->startOfWeek()->format('Y'),  // Extract only day
                   'end_date' => $startDate->copy()->endOfWeek(Carbon::SATURDAY)->format('d'),
-                  'end_month' => $startDate->copy()->endOfWeek(Carbon::SATURDAY)->format('F'),
+                  'end_month' => $startDate->copy()->endOfWeek(Carbon::SATURDAY)->translatedFormat('F'),
                   'end_year' => $startDate->copy()->endOfWeek(Carbon::SATURDAY)->format('Y'),
                 ];
     
@@ -104,12 +130,13 @@ class MahasiswaController extends Controller
                 $startDate = $startDate->addWeek();
 
         }
+
  
         return view('layout.mhs.laporan.laporan',compact('weekends'));
     }
 }
    
-    public function laporan2(String $startDate,String $endDate,String $startMonth,String $endMonth,String $startYear,String $endYear){
+    public function laporan3(String $startDate,String $endDate,String $startMonth,String $endMonth,String $startYear,String $endYear){
         // Get the start of the current week (Sunday)
         $startDate = Carbon::parse($startDate.'-'.$startMonth.'-'.$startYear);
         $endDate = Carbon::parse($endDate.'-'.$endMonth.'-'.$endYear);
@@ -122,24 +149,26 @@ class MahasiswaController extends Controller
 
           return view('layout.mhs.laporan.laporan2',compact('days'));
         }
-    public function laporan3(){
-        $startDate= FacadesSession::get('tanggal');
-        $startDate= Carbon::parse($startDate);
+    public function laporan2(Request $request){
+        $startDate= $request->mulai;
+        $startDate= (new MahasiswaController)->getcurrentMonth($startDate);
+
+        $startDate= Carbon::createFromFormat('d-F-Y',$startDate);
         $startDate= $startDate->startOfWeek();
         $endDate= $startDate->copy()->endOfWeek(Carbon::SATURDAY);
         $npm=FacadesSession::get('npm');
         $days= [];
         for($day=$startDate;$day <=$endDate;$day->addDay()){
             $startDate= Carbon::parse($startDate);
-            $days[] = $day->locale('id')->format('l d F Y');
-
-            $isi[]=  laporan_harian::select(DB::raw('isi'), DB::raw('DATE_FORMAT(tanggal, "%W %d %M %Y") AS tanggal'))
-            ->where('npm', 'like', '%'.$npm.'%')
-            ->where('tanggal', 'like', '%'.$day->format('Y-m-d').'%')
-            ->get();
-        
+            $isi = laporan_harian::where('npm','like','%'.$npm.'%')->where('tanggal','like','%'.$day->format('Y-m-d').'%')->first();
+            $days[$day->format('d')] = [
+               'date'=> $day->translatedFormat('l d F Y'),
+               'has_report'=> !is_null($isi),
+               'isi'=> $isi
+                
+            ];
         }
-        // dd($isi);
+
 
         return view('layout.mhs.laporan.laporan3',compact('days','isi'));
     }

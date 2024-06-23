@@ -32,7 +32,7 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::get('/proposal3',[MahasiswaController::class,'proposal3'])->name('proposal3');
 
     Route::get('/laporan',[MahasiswaController::class, 'laporan'])->name('laporan');
-    Route::get('/laporan2/{startDate}/{endDate}/{startMonth}/{endMonth}/{startYear}/{endYear}',[MahasiswaController::class, 'laporan2'])->name('laporan2');
+    Route::put('/laporan2',[MahasiswaController::class, 'laporan2'])->name('laporan2');
     Route::get('/laporan3',[MahasiswaController::class, 'laporan3'])->name('laporan3');
 
     Route::get('/ta',[MahasiswaController::class, 'ta'])->name('ta');

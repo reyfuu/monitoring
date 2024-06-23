@@ -25,23 +25,23 @@
           <div class="col-md-12">
             <div class="card card-primary">
 
-                  @foreach ($days as $d =>$day)
+                  @foreach ($days as $day)
                   <div class="card">
                   <div class="card-body">
-                    <h5 class="card-title">{{ $day }}</h5>
+                    <h5 class="card-title">{{ $day['date'] }}</h5>
                     <br>
                     <div class="text-center">
-                      @foreach ($isi[$d] ?? []  as $i)
-
-                        @if ($i->tanggal == $day)
-                          <p>{{ $i->isi }}</p>
-                        @else
-                            <button type="button" class="btn btn-primary activity-button " data-toggle="modal" data-target="#exampleModal"
-                            data-date="{{ $d }}">
-                              Buat Laporan Harian
-                            </button>
-                        @endif
-                      @endforeach
+                      @if ($day['has_report'])
+                        @foreach ($day['isi'] as $isi)
+                        <p>{{ $i->isi }}</p>
+                        @endforeach
+                      @else
+                      <button type="button" class="btn btn-primary activity-button " data-toggle="modal" data-target="#exampleModal"
+                      data-date="{{ $day['date'] }}">
+                        Buat Laporan Harian
+                      </button>
+                      @endif
+                      
                           
 
 
@@ -69,7 +69,7 @@
                               <form action="{{ route('mhs.store2') }}" method="post">
                                 @csrf
                                 <textarea class="form-control" rows="5" name="isi"></textarea>
-                                <input type="input" name="date" id="eDate" hidden>
+                                <input type="input" name="date" id="eDate" >
     
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

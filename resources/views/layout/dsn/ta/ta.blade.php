@@ -2,6 +2,7 @@
 @section('title')
 
 <title>Tugas Akhir</title>
+{{-- revisi tugas akhir --}}
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -37,6 +38,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
+          {{-- form start --}}
             <form action="" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
@@ -66,6 +68,7 @@
               </div>
              </div>
             </form>
+            {{-- end form --}}
         </div>
     </section>
     <!-- /.content -->

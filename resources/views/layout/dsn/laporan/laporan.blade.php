@@ -2,13 +2,14 @@
 @section('title')
 
 <title>Revisi</title>
-
+{{-- show laporan --}}
 @endsection
 @section('content')
 <section class="content">
           <div class="row">
             <div class="col">
               <div class="card card-primary  ">
+                {{-- show data --}}
                 <form>
                     <div class="card-body rounded rounded shadow-lg ">
                       <div class="form-group">
@@ -38,6 +39,8 @@
                 </form>
               </div>
             </div>
+            {{-- end show data --}}
+            {{-- form start --}}
             <div class="col">
               <form action="{{ route('dmn.laporan') }}" method="post">
                 <div class="card card-primary">
@@ -73,11 +76,13 @@
 
                 </div>
               </form>
+
             </div>
           </div>
         </div>
        </div>
       </form>
+      {{-- form end --}}
   </div>
 </section>
 

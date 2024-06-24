@@ -15,11 +15,13 @@ class LoginController extends Controller
 
 
     use AuthenticatesUsers;
-
+    // function to show form login
     public function index(){
         $data= User::get();
         return view('auth.login',compact('data'));
     }
+
+    // function to auth login
     public function login_proses(Request $request){
         $request->validate([
             'email'=> 'required',
@@ -54,7 +56,7 @@ class LoginController extends Controller
         }
     }
 
-
+    // function to logout
     public function logout(){
   
         session_start();

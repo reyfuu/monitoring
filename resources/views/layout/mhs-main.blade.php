@@ -4,6 +4,7 @@
         header("Location: auth/login.php");
     }
 @endphp
+{{-- mahasiswa template --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,9 +51,8 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
-     
-
-      <!-- Messages Dropdown Menu -->
+  
+      <!-- chat menu need add  -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
@@ -138,7 +138,7 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
-
+      {{-- Logout & user --}}
       <li class="nav-item dropdown">
         <a href="" class="nav-link" data-toggle="dropdown">
           <i class="far fa-user"></i>

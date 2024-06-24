@@ -2,6 +2,7 @@
 @section('title')
 
 <title>Dashboard Laporan</title>
+
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -45,7 +46,7 @@
                 </div>
               </div>
             </div>
-            <!-- /.card-header -->
+            <!-- show data-->
             <div class="card-body table-responsive p-0">
               <table class="table table-hover text-nowrap">
                 <thead>
@@ -58,23 +59,21 @@
                 </thead>
                 <tbody>
                   @foreach ($combinedData as $data)
-                  @if ($data['isi']=='-')
-                  <tr ><td colspan='4'class="text-center">Tidak ada mahasiswa</td></tr>
-           
-                  @else
+                  @if ($data['has_laporan'])
+                  <tr>
                   <td>{{ $data['name']}}</td>
                   <td>{{ $data['email'] }}</td>
                   <td>{{ $data['isi'] }}</td>
                   <td><a href="{{ route('dmn.laporan2') }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
+                  </tr>
+                  @else
+                  <tr ><td colspan='4'class="text-center">Tidak ada mahasiswa</td></tr>
                   @endif
                      
                   @endforeach
-                 
-
-               
-
                 </tbody>
               </table>
+              {{-- end show data --}}
             </div>
             <!-- /.card-body -->
           </div>

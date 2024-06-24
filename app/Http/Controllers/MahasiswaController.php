@@ -24,6 +24,7 @@ use Carbon\CarbonPeriod;
 
 class MahasiswaController extends Controller
 {
+    // function show proposal when  submit
     public function proposal(){
         // $npm=FacadesSession::get('npm');
         // $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('type','Proposal')->exists();
@@ -39,6 +40,7 @@ class MahasiswaController extends Controller
         // }
      
     }
+    // function show proposal when revisi
     public function proposal2(){
         // $npm=FacadesSession::get('npm');
         // $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('status','Finish')->exists();
@@ -49,9 +51,11 @@ class MahasiswaController extends Controller
         // }
 
     }
+    // function show proposal when finish
     public function proposal3(){
         return view('layout.mhs.proposal.proposal3');
     }
+    // function to get minggu ini
     function getCurrentWeekNumber(Carbon $targetDate = null) {
         // If no target date provided, use today
         if (!$targetDate) {
@@ -69,6 +73,7 @@ class MahasiswaController extends Controller
       
         return $weekNumber;
       }
+    //   function to translate month to english
   function getcurrentMonth($tanggal){
     $datePart = explode("-",$tanggal);
     $day= $datePart[0];
@@ -95,6 +100,7 @@ class MahasiswaController extends Controller
 
         return $englishDate;
       }
+    //   function to show weekly laporan
     public function laporan(){
         $npm=FacadesSession::get('npm');
         $tanggal_mulai= laporan::select('tanggal_mulai')->where('npm','like','%'.$npm.'%')->first()->tanggal_mulai;
@@ -135,20 +141,7 @@ class MahasiswaController extends Controller
         return view('layout.mhs.laporan.laporan',compact('weekends'));
     }
 }
-   
-    public function laporan3(String $startDate,String $endDate,String $startMonth,String $endMonth,String $startYear,String $endYear){
-        // Get the start of the current week (Sunday)
-        $startDate = Carbon::parse($startDate.'-'.$startMonth.'-'.$startYear);
-        $endDate = Carbon::parse($endDate.'-'.$endMonth.'-'.$endYear);
-            $days= [];
-            for($day=$startDate;$day<=$endDate;$day->addDay()){
-
-                $days[] = $day->format('l d F Y');
-            }
-          // Loop through each week within the month
-
-          return view('layout.mhs.laporan.laporan2',compact('days'));
-        }
+    // function to show daily report
     public function laporan2(Request $request){
         $startDate= $request->mulai;
         $startDate= (new MahasiswaController)->getcurrentMonth($startDate);
@@ -170,13 +163,9 @@ class MahasiswaController extends Controller
         }
 
 
-        return view('layout.mhs.laporan.laporan3',compact('days','isi'));
+        return view('layout.mhs.laporan.laporan2',compact('days','isi'));
     }
-
-
-
-
-
+    // function to show tugas akhir when submit
     public function ta(){
         // $npm=FacadesSession::get('npm');
         // $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('type','Laporan')->first()->dokumen;
@@ -186,16 +175,20 @@ class MahasiswaController extends Controller
             return view('layout.mhs.ta.ta');
         // }
     }
+    // function to show tugas akhir when revisi
     public function ta2(){
         return view('layout.mhs.ta.ta2');
     }
+    // function to show tugas akhir when finish
     public function ta3(){
         return view('layout.mhs.ta.ta3');
     }
+    // function to show report bimbingan
     public function bimbingan(){
         $bimbingan = Bimbingan::get();
         return view('layout.mhs.bimbingan.bimbingan',compact('bimbingan'));
     }
+    // function to store proposal or laporan
     public function store(Request $request){
         $validator= Validator::make($request->all(),[
             "file"=> "required|mimes:pdf|max:5120"
@@ -231,23 +224,62 @@ class MahasiswaController extends Controller
             return redirect()->route('mhs.ta');
         }
     }
+    // function to create report bimbingan
     public function create(Request $request){
         $data= dosen::get();
         return view('layout.mhs.bimbingan.create',compact('data'));
     }
+    // function to edit report bimbingan
     public function edit(Request $request,$id){
         $data = Bimbingan::where('npm',$id)->first();
 
         return view('layout.mhs.bimbingan.edit',compact('data'));
     }
+    // function to convert to english month for function convertIndonesianDateToYmd
+    function convertIndonesianMonthToEnglish($month) {
+        $englishMonth=[
+            'Januari' => 'January',
+            'Februari' => 'February',
+            'Maret' => 'March',
+            'April' => 'April',
+            'Mei' => 'May',
+            'Juni' => 'June',
+            'Juli' => 'July',
+            'Agustus' => 'August',
+            'September' => 'September',
+            'Oktober' => 'October',
+            'November' => 'November',
+            'Desember' => 'December'
+        ];
+
+        return $englishMonth[$month];
+
+    }
+    // function to convert to ymd format
+    function convertIndonesianDateToYmd($indonesianDate) {
+        $dateParts = explode(' ', $indonesianDate); // Split by spaces
+
+      
+        $day = $dateParts[1];  // Day name is at index 1
+        $month = $this->convertIndonesianMonthToEnglish($dateParts[2]); // Convert month name
+        $year = $dateParts[3];
+      
+        // Create a Carbon object with the extracted parts
+        $dateObject = Carbon::parse($year.'-'.$month.'-'.$day);
+      
+        // Return the date in YMD format
+        return $dateObject;
+      }
+      
+    // function to store daily report
     public function store2(Request $request){
 
 
         $data['isi']= $request->isi;
         $data['tanggal']= $request->date;
-        $data['tanggal']= Carbon::parse($data['tanggal']);
-        
-        FacadesSession::put('tanggal',$request->date);
+        $tanggal= $this->convertIndonesianDateToYmd($data['tanggal']);
+        $data['tanggal']= Carbon::parse($tanggal);
+
         $npm=FacadesSession::get('npm');
         $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
         $laporan_harian_id= IdGenerator::generate(
@@ -256,8 +288,9 @@ class MahasiswaController extends Controller
         $data['domen_id']=$domen_id;
         $data['laporan_harian_id']=$laporan_harian_id;
         laporan_harian::create($data);
-            return redirect()->route('mhs.laporan3');
+            return redirect()->route('mhs.laporan2');
         }
+    // function to store bimbingan
     public function store3(Request $request){
         $data['tanggal']= $request->tanggal;
         $data['domen']= $request->dosen;
@@ -271,7 +304,7 @@ class MahasiswaController extends Controller
         bimbingan::create($data);
         return redirect()->route('mhs.bimbingan');
     }
-
+    // function to update proposal or laporan
     public function update(Request $request){
         $validator= Validator::make($request->all(),[
             "file"=> "required|mimes:pdf|max:5120"
@@ -305,9 +338,8 @@ class MahasiswaController extends Controller
             return redirect()->route('mhs.ta');
         }     
     }
+    // function to update bimbingan
     public function update2(Request $request,$id){
-   
-        
         $data['isi']= $request->isi;
         $data['tanggal']= $request->tanggal;
         $data['topik']= $request->topik;

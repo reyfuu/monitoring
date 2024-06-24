@@ -2,6 +2,7 @@
 @section('title')
 
 <title>Proposal</title>
+{{-- revisi proposal --}}
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -37,12 +38,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
+          {{-- form start --}}
             <form action="" method="get" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
                     <div class="card card-primary">
-
-
                 <form>
                     <div class="card-body">
                         <div class="form-group">
@@ -64,6 +64,7 @@
               </div>
              </div>
             </form>
+            {{-- end form --}}
         </div>
     </section>
     <!-- /.content -->

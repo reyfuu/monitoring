@@ -29,6 +29,7 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
+          {{-- button create --}}
           <a href="{{ route('admin.create') }}" class="btn btn-primary mb-3">Buat Akun</a>
           <div class="card"> 
             <div class="card-header">
@@ -46,7 +47,7 @@
                 </div>
               </div>
             </div>
-            <!-- /.card-header -->
+            <!-- display data -->
             <div class="card-body table-responsive p-0">
               <table class="table table-hover text-nowrap">
                 <thead>
@@ -58,6 +59,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                  {{-- display data mahasiswa --}}
                   @foreach ($data as $d )
                   <tr>
                       <td>{{$loop->iteration}}</td>
@@ -98,6 +100,7 @@
                     <!-- /.modal-dialog -->
                   </div>
                   @endforeach
+                  {{-- display data dosen --}}
                   @foreach ($data2 as $d )
                   <tr>
                       <td>{{$count= $count+1}}</td>

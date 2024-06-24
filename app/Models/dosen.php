@@ -35,6 +35,9 @@ class dosen extends Authenticatable
     ];
     public function laporanHarian()
     {
-        return $this->hasMany(dosen::class);
+        return $this->hasMany(laporan_harian::class);
+    }
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

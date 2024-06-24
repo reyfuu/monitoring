@@ -2,6 +2,7 @@
 @section('title')
 
 <title>Proposal</title>
+{{-- finish tugas akhir --}}
 @endsection
 @section('content')
 <div class="content-wrapper">

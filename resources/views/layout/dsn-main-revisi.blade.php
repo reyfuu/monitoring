@@ -4,6 +4,7 @@
         header("Location: auth/login.php");
     }
 @endphp
+{{-- dosen revisi template --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -17,24 +17,28 @@ use HasRoles;
 
 class HomeController extends Controller
 {
+  // function to show dashboard
     public function dashboard(){
         $data=User::get();
         $data2=dosen::get();
         $count=user::count();
         return view('layout.admin.dashboard',compact('data','data2','count'));
     }
-
-
+    // function to choose mahasiswa or dosen
     public function create(){
         return view('layout.admin.create.create');
     }
+    //  function to navigate to create mahaiswa
     public function create2(){
       $data=dosen::get();
       return view('layout.admin.create.create2',compact('data'));
     }
+    // function to navigate to create dosen
     public function create3(){
       return view('layout.admin.create.create3');
     }
+
+    // function to store user
     public function store(Request $request){
       $validator= Validator::make($request->all(),[
         "email"=> "required|email",
@@ -42,7 +46,6 @@ class HomeController extends Controller
         "password"=> "required",
       ]);
       if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
-
       
       $data['email']= $request->email;
       $data['name']= $request->name;
@@ -77,7 +80,7 @@ class HomeController extends Controller
 
       return redirect()->route('admin.dashboard');
     }
-
+    // function to navigate edit mahasiswa
     public function edit(Request $request,$id){
       $id2= User::find($id);
       $npm= User::select('npm')->where('npm','like','%'.$id.'%')->first()->npm;
@@ -85,11 +88,12 @@ class HomeController extends Controller
       $tanggal_berakhir=laporan::select('tanggal_berakhir')->where('npm','like','%'.$npm.'%')->first()->tanggal_berakhir;
       return view('layout.admin.edit',compact('id2','tanggal_mulai','tanggal_berakhir'));
     }
+    // function to navigate edit dosen
     public function edit2(Request $request,$id){
       $id2= dosen::find($id);
       return view('layout.admin.edit2',compact('id2'));
     }
-
+    // function to update user
     public function update(Request $request,$id){
 
       $validator= Validator::make($request->all(),[
@@ -121,7 +125,7 @@ class HomeController extends Controller
       return redirect()->route('admin.dashboard');
       }
     }
-    
+    // function to delete mahasiswa
     public function delete(Request $request,$id){
       $data=User::find($id);
 
@@ -131,6 +135,7 @@ class HomeController extends Controller
 
       return redirect()->route('admin.dashboard');
     }
+    // function to delete dosen
     public function delete2(Request $request,$id){
       DB::table('domen')->where('domen_id',$id)->delete();
 

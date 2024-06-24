@@ -44,15 +44,19 @@ class DosenController extends Controller
 
         $combinedData=[];
         foreach($mahasiswa as $mhs){
-            $laporan= $laporanHarian->where('npm',$mhs->npm)->where('domen_id',$domen_id)->first();
+ 
+            $laporan= $laporanHarian->where('npm',$mhs->npm)->where('domen_id',$domen_id);
+            foreach($laporan as $l){
+                $combinedData[] = [
+                    'name' => $mhs->name,
+                    'email' => $mhs->email,
+                    'has_laporan'=> !is_null($laporan),
+                    'isi'=> $l->isi ? $l->isi : '-',
+                ];
+            }
 
-            $combinedData[] = [
-                'name' => $mhs->name,
-                'email' => $mhs->email,
-                'isi'=> $laporan ? $laporan->isi : '-',
-            ];
         }
-        
+
         return view('layout.dsn.dashboardl',compact('combinedData'));
     }
     public function laporan2(){

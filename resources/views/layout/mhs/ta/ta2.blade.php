@@ -2,6 +2,7 @@
 @section('title')
 
 <title>Tugas Akhir</title>
+{{-- revisi tugas akhir --}}
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -40,12 +41,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
+          {{-- start form --}}
             <form action="{{ route('mhs.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
                     <div class="card card-primary">
-
-
                 <form>
                     <div class="card-body">
                         <div class="form-group">
@@ -71,6 +71,7 @@
               </div>
              </div>
             </form>
+            {{-- form end --}}
         </div>
     </section>
     <!-- /.content -->

@@ -50,4 +50,12 @@ class User extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function laporanHarian()
+    {
+        return $this->hasMany(laporan_harian::class,'npm');
+    }
+    public function dosen(){
+        return $this->belongsTo(dosen::class);
+    }
 }

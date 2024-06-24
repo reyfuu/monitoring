@@ -26,6 +26,9 @@ class laporan_harian extends Model
     use HasFactory;
 
     public function mahasiswa(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'npm');
+    }
+    public function dosen(){
+        return $this->belongsTo(dosen::class);
     }
 }

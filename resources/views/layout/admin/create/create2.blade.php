@@ -28,6 +28,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
+          {{-- form start --}}
             <form action="{{ route('admin.store') }}" method="post">
                 @csrf
                 <div class="col-md-12">
@@ -100,6 +101,7 @@
               </div>
              </div>
             </form>
+            {{-- form end --}}
         </div>
     </section>
     <!-- /.content -->

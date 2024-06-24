@@ -4,6 +4,7 @@
         header("Location: auth/login.php");
     }
 @endphp
+{{-- dosen template --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +53,8 @@
       <!-- Navbar Search -->
      
 
-      <!-- Messages Dropdown Menu -->
+ 
+      <!-- chat menu need fix and it is the template --> 
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
@@ -150,8 +152,7 @@
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
       </li>
-
-
+      {{-- Logout & user --}}
       <li class="nav-item dropdown">
         <a href="" class="nav-link" data-toggle="dropdown">
           <i class="far fa-user"></i>

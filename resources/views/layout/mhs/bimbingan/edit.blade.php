@@ -2,7 +2,7 @@
 @section('title')
 
 <title>Edit</title>
-
+{{-- edit bimbingan --}}
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -27,6 +27,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
+          {{-- form start --}}
             <form action="{{ route('mhs.update2',['id'=> $data->npm]) }}" method="post">
                 @csrf
                 @method('put')
@@ -67,6 +68,7 @@
               </div>
              </div>
             </form>
+            {{-- end form --}}
         </div>
     </section>
     <!-- /.content -->

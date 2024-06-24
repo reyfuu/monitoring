@@ -2,7 +2,7 @@
 @section('title')
 
 <title>Create</title>
-
+{{-- create bimbingan --}}
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -28,15 +28,13 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
+             {{-- form start --}}
             <form action="{{ route('mhs.store3') }}" method="post">
                 @csrf
                 <div class="col-md-12">
                     <div class="card card-primary">
-
-
                 <form>
                     <div class="card-body">
-
                         <div class="form-group">
                             <label for="">Topik</label>
                             <input type="text" class="form-control" name="topik" placeholder="Topik" required>
@@ -78,6 +76,7 @@
               </div>
              </div>
             </form>
+            {{-- end form --}}
         </div>
     </section>
     <!-- /.content -->

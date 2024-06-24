@@ -45,7 +45,7 @@
                 </div>
               </div>
             </div>
-            <!-- /.card-header -->
+            <!-- show data -->
             <div class="card-body table-responsive p-0">
               <table class="table table-hover text-nowrap">
                 <thead>
@@ -69,12 +69,10 @@
                      
                   @endforeach
                   
-               
-
                 </tbody>
               </table>
             </div>
-            <!-- /.card-body -->
+            <!-- end show data -->
           </div>
           <!-- /.card -->
         </div>

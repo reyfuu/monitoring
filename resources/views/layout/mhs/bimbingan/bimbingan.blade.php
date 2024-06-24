@@ -2,6 +2,7 @@
 @section('title')
 
 <title>Dashboard</title>
+{{-- dashboard bimbingan  --}}
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -29,6 +30,7 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
+          {{-- button create bimbingan --}}
           <a href="{{ route('mhs.create') }}" class="btn btn-primary mb-3">Buat laporan bimbingan</a>
           <div class="card"> 
             <div class="card-header">
@@ -46,7 +48,7 @@
                 </div>
               </div>
             </div>
-            <!-- /.card-header -->
+      
             <div class="card-body table-responsive p-0">
               <table class="table table-hover text-nowrap">
                 <thead>
@@ -58,6 +60,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <!-- show data -->
                   @foreach ($bimbingan as $d )
                   <tr>
                       <td>{{$loop->iteration}}</td>
@@ -68,15 +71,12 @@
                           <a href="{{ route('mhs.edit',['id' =>$d->npm ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
                       </td>   
                   </tr>
-                 
-                      <!-- /.modal-content -->
-                    </div>
+                  <!-- end show data -->
+              </div>
                     <!-- /.modal-dialog -->
-                  </div>
+            </div>
                   @endforeach
-                
-               
-
+            
                 </tbody>
               </table>
             </div>
@@ -86,8 +86,5 @@
         </div>
       </div>
       <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
   </section>
-  <!-- /.content -->
-</div>
 @endsection

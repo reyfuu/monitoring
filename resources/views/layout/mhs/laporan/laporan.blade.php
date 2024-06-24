@@ -24,8 +24,7 @@
         <div class="container">
           <div class="col-md-12">
             <div class="card card-primary">
-            
-   
+            {{-- show all week --}}
                   @if (isset($weekends) && count($weekends) > 0)
 
                       @foreach ($weekends as $weekend)
@@ -65,9 +64,7 @@
                 @else
                   <p>No captured weekend data found.</p>
                 @endif
-                
-
-    
+          {{-- end show all week --}}
           </div>
         </div>
     </section>

@@ -36,7 +36,7 @@
 
 
 
-                       <form action="{{ route('mhs.laporan2') }}" method="POST">
+                       <form action="{{ route('mhs.laporan2',['id'=>$loop->iteration]) }}" method="POST">
                         @csrf
                         @method('put')
                         <h5 class="card-title">{{ $weekend['start_date'] }}

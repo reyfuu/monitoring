@@ -9,6 +9,7 @@ use App\Models\comment;
 use App\Models\dosen;
 use App\Models\laporan;
 use App\Models\laporan_harian;
+use App\Models\laporan_mingguan;
 use DB;
 use App\Models\User;
 use Barryvdh\Debugbar\Facade;
@@ -55,24 +56,6 @@ class MahasiswaController extends Controller
     public function proposal3(){
         return view('layout.mhs.proposal.proposal3');
     }
-    // function to get minggu ini
-    function getCurrentWeekNumber(Carbon $targetDate = null) {
-        // If no target date provided, use today
-        if (!$targetDate) {
-          $targetDate = Carbon::today();
-        }
-        
-        // Set the first day of the year to January 1st
-        $oneJan = Carbon::createFromDate($targetDate->year, 1, 1);
-      
-        // Calculate days since the first day of the year, including current day
-        $days = $targetDate->diffInDays($oneJan);
-      
-        // Calculate the week number (considering ISO 8601 standard with Mondays as start)
-        $weekNumber = ceil(($days + $oneJan->dayOfWeek) / 7);
-      
-        return $weekNumber;
-      }
     //   function to translate month to english
   function getcurrentMonth($tanggal){
     $datePart = explode("-",$tanggal);
@@ -112,7 +95,7 @@ class MahasiswaController extends Controller
         
         $currentMonth= $startDate->month;
         $endMonth= $endDate->month;
-        $currentWeek = (new MahasiswaController)->getCurrentWeekNumber();
+
         
         // Loop through each month (February to July)
         for($currentMonth ;$currentMonth<=$endMonth;$currentMonth++) {
@@ -127,11 +110,9 @@ class MahasiswaController extends Controller
                   'end_year' => $startDate->copy()->endOfWeek(Carbon::SATURDAY)->format('Y'),
                 ];
     
-                if ($startDate->weekOfYear == $currentWeek) {
-                    array_unshift($weekends, $weekend);
-                  } else {
+       
                     $weekends[] = $weekend;
-                  }
+   
 
                 $startDate = $startDate->addWeek();
 
@@ -142,7 +123,7 @@ class MahasiswaController extends Controller
     }
 }
     // function to show daily report
-    public function laporan2(Request $request){
+    public function laporan2(Request $request,$id){
         $startDate= $request->mulai;
         $startDate= (new MahasiswaController)->getcurrentMonth($startDate);
 
@@ -157,13 +138,14 @@ class MahasiswaController extends Controller
             $days[$day->format('d')] = [
                'date'=> $day->translatedFormat('l d F Y'),
                'has_report'=> !is_null($isi),
-               'isi'=> $isi
+               'isi'=> $isi,
+               'id'=> $isi->laporan_harian_id
                 
             ];
         }
+        $week= laporan_mingguan::where('npm','like','%'.$npm.'%')->where('week','like','%'.$id.'%')->first();
 
-
-        return view('layout.mhs.laporan.laporan2',compact('days','isi'));
+        return view('layout.mhs.laporan.laporan2',compact('days','week','id'));
     }
     // function to show tugas akhir when submit
     public function ta(){
@@ -240,7 +222,7 @@ class MahasiswaController extends Controller
         $englishMonth=[
             'Januari' => 'January',
             'Februari' => 'February',
-            'Maret' => 'March',
+            'Maret' => '03',
             'April' => 'April',
             'Mei' => 'May',
             'Juni' => 'June',
@@ -265,8 +247,10 @@ class MahasiswaController extends Controller
         $year = $dateParts[3];
       
         // Create a Carbon object with the extracted parts
-        $dateObject = Carbon::parse($year.'-'.$month.'-'.$day);
-      
+        $dateString=$year.'-'.$month.'-'.$day;
+
+        $dateObject = Carbon::parse($dateString);
+
         // Return the date in YMD format
         return $dateObject;
       }
@@ -278,6 +262,7 @@ class MahasiswaController extends Controller
         $data['isi']= $request->isi;
         $data['tanggal']= $request->date;
         $tanggal= $this->convertIndonesianDateToYmd($data['tanggal']);
+
         $data['tanggal']= Carbon::parse($tanggal);
 
         $npm=FacadesSession::get('npm');
@@ -288,7 +273,7 @@ class MahasiswaController extends Controller
         $data['domen_id']=$domen_id;
         $data['laporan_harian_id']=$laporan_harian_id;
         laporan_harian::create($data);
-            return redirect()->route('mhs.laporan2');
+            return redirect()->route('mhs.laporan');
         }
     // function to store bimbingan
     public function store3(Request $request){
@@ -303,6 +288,21 @@ class MahasiswaController extends Controller
         $data['status']= 'submit';
         bimbingan::create($data);
         return redirect()->route('mhs.bimbingan');
+    }
+    public function store4(Request $request){
+        $data['isi']= $request->isi;
+        $data['week']= $request->week;
+
+        $npm= FacadesSession::get('npm');
+        $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
+        $laporan_mingguan_id= IdGenerator::generate(
+            ['table'=> 'laporan_mingguan','field'=> 'laporan_mingguan_id','length'=>5,'prefix'=>'LM']);
+        $data['npm']=$npm;
+        $data['domen_id']=$domen_id;
+        $data['laporan_mingguan_id']=$laporan_mingguan_id;
+        $data['status']= 'menunggu persetujuan mentor';
+        laporan_mingguan::create($data);
+        return redirect()->route('mhs.laporan');
     }
     // function to update proposal or laporan
     public function update(Request $request){
@@ -345,5 +345,15 @@ class MahasiswaController extends Controller
         $data['topik']= $request->topik;
         Bimbingan::where('npm',$id)->where('tanggal',$data['tanggal'])->update($data);
         return redirect()->route('mhs.bimbingan');
+    }
+    public function update3(Request $request,$id){
+        $data['isi']= $request->isi;
+        laporan_harian::find($id)->update($data);
+        return redirect()->route('mhs.laporan');
+    }
+    public function update4(Request $request,$id){
+        $data['isi']= $request->isi;
+        laporan_mingguan::find($id)->update($data);
+        return redirect()->route('mhs.laporan');
     }
 }

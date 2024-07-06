@@ -57,16 +57,22 @@
                   </tr>
                 </thead>
                 <tbody>
+                  
                   @foreach ($combinedData as $data)
-                  @if ($data['dokumen']=='-')
-                      <td class="text-center">Tidak ada mahasiswa</td>
-                  @else
-                  <td>{{ $data['name']}}</td>
-                  <td>{{ $data['email'] }}</td>
-                  <td>{{ $data['dokumen'] }}</td>
-                  <td><a href="{{ route('dmn.ta2') }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
-                  @endif
+                  <tr>
+                  @if ($data['ta'])
+                      
+                      <td>{{ $data['name']}}</td>
+                      <td>{{ $data['email'] }}</td>
+                      <td>{{ $data['dokumen'] }}</td>
+                      <td><a href="{{ route('dmn.ta2',
+                      ['id'=>$data['ta_id']]) }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
+
                      
+                  @elseif(!$data['ta'])
+                  <td class="text-center">Tidak ada mahasiswa</td>
+                  @endif
+                </tr>
                   @endforeach
 
                 </tbody>

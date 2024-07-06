@@ -57,16 +57,20 @@
                   </tr>
                 </thead>
                 <tbody>
+                  
                   @foreach ($combinedData as $data)
-                  @if ($data['dokumen']=='-')
-                      <td class="text-center">Tidak ada mahasiswa</td>
-                  @else
+                  <tr>
+                  @if ($data['proposal'])
                   <td>{{ $data['name']}}</td>
                   <td>{{ $data['email'] }}</td>
+                  
                   <td>{{ $data['dokumen'] }}</td>
                   <td><a href="{{ route('dmn.proposal2') }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
+
+                  @elseif(!$data['has_proposal'])
+                  <td class="text-center">Tidak ada mahasiswa</td>
                   @endif
-                     
+                </tr>
                   @endforeach
                   
                 </tbody>

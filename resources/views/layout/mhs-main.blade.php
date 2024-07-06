@@ -232,6 +232,8 @@
     $('.activity-button').click(function() {
       var date = $(this).data('date');
       $('#eDate').val(date);
+      var isi = $(this).data('isi');
+      $('#eIsi').val(isi);
     });
   });
 </script>

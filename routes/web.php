@@ -32,11 +32,12 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::get('/proposal3',[MahasiswaController::class,'proposal3'])->name('proposal3');
 
     Route::get('/laporan',[MahasiswaController::class, 'laporan'])->name('laporan');
-    Route::put('/laporan2',[MahasiswaController::class, 'laporan2'])->name('laporan2');
+    Route::put('/laporan2/{id}',[MahasiswaController::class, 'laporan2'])->name('laporan2');
 
     Route::get('/ta',[MahasiswaController::class, 'ta'])->name('ta');
     Route::get('/ta2',[MahasiswaController::class, 'ta2'])->name('ta2');
     Route::get('/ta3',[MahasiswaController::class, 'ta3'])->name('ta3');
+
 
     Route::get('/bimbingan',[MahasiswaController::class, 'bimbingan'])->name('bimbingan');
     Route::get('/create',[MahasiswaController::class, 'create'])->name('create');
@@ -44,10 +45,13 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::put('/update2/{id}',[MahasiswaController::class, 'update2'])->name('update2');
 
     Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
-    Route::post('/store2',[MahasiswaController::class, 'store2'])->name('store2');
+    Route::put('/store2',[MahasiswaController::class, 'store2'])->name('store2');
     Route::post('/store3',[MahasiswaController::class, 'store3'])->name('store3');
+    Route::post('/store4',[MahasiswaController::class, 'store4'])->name('store4');
 
     Route::post('/update',[MahasiswaController::class, 'update'])->name('update');
+    Route::put('/update3/{id}',[MahasiswaController::class, 'update3'])->name('update3');
+    Route::put('/update4/{id}',[MahasiswaController::class, 'update4'])->name('update4');
 
 });
 
@@ -55,11 +59,19 @@ Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],fu
     Route::get('/proposal',[DosenController::class,'proposal'])->name('proposal');
     Route::get('/proposal2',[DosenController::class,'proposal2'])->name('proposal2');
     Route::get('/proposal3',[DosenController::class,'proposal3'])->name('proposal3');
+    Route::get('/viewProposal/{id}',[DosenController::class,'viewProposal'])->name('viewProposal');
+
     Route::get('/laporan',[DosenController::class,'laporan'])->name('laporan');
     Route::get('/laporan2',[DosenController::class,'laporan2'])->name('laporan2');
+
     Route::get('/ta',[DosenController::class,'ta'])->name('ta');
     Route::get('/ta2',[DosenController::class,'ta2'])->name('ta2');
     Route::get('/ta3',[DosenController::class,'ta3'])->name('ta3');
+    Route::get('/viewTa/{id}',[DosenController::class,'viewTa'])->name('viewTa');
+
+    Route::post('/store',[DosenController::class,'store'])->name('store');
+    Route::post('/store2',[DosenController::class,'store2'])->name('store2');
+
 });
 
 Route::group(['prefix'=> 'admin', 'middleware' => ['auth:admin'],'as'=> 'admin.'],function(){

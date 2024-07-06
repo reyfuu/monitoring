@@ -68,7 +68,7 @@
               </div>
              </div>
             </form>
-            {{-- end form --}}
+            {{-- end form  --}}
         </div>
     </section>
     <!-- /.content -->

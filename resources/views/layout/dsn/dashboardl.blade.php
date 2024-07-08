@@ -60,20 +60,23 @@
                 <tbody>
 
                   @foreach ($combinedData as $data)
-                    @foreach ($data as $dataWeek)
-                        
-       
-                  @if ($dataWeek['has_laporan'])
+ 
+                  <form action="{{ route('dmn.laporan2') }}" method="post">  
+                    @csrf
+                    @method('put')
+                  @if ($data['has_laporan'])
                   <tr>
-                  <td>{{ $dataWeek['name']}}</td>
-                  <td>{{ $dataWeek['email'] }}</td>
-                  <td>{{ $dataWeek['isi'] }}</td>
-                  <td><a href="{{ route('dmn.laporan2') }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
+                  <td>{{ $data['name']}}</td>
+                  <td>{{ $data['email'] }}</td>
+                  <td>{{ $data['status'] }}</td>
+                    <input type="text" name="week" value="{{ $data['week'] }}" hidden>
+                    <input type="text" name="npm" value="{{ $data['npm'] }}" hidden>
+                  <td><a ><button class="btn btn-primary" name="submit">Lihat Detail</button></a></td>
+                </form> 
                   </tr>
                   @else
                   <tr ><td colspan='4'class="text-center">Tidak ada mahasiswa</td></tr>
                   @endif
-                  @endforeach
                   @endforeach
 
                 

@@ -26,7 +26,7 @@ Route::get('/',[LoginController::class,'index'])->name('login');
 Route::post('/login-proses',[LoginController::class, 'login_proses'])->name('login-proses');
 Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
 
-Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function(){
+Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function(){ 
     Route::get('/proposal',[MahasiswaController::class, 'proposal'])->name('proposal');
     Route::get('/proposal2',[MahasiswaController::class, 'proposal2'])->name('proposal2');
     Route::get('/proposal3',[MahasiswaController::class,'proposal3'])->name('proposal3');
@@ -62,7 +62,7 @@ Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],fu
     Route::get('/viewProposal/{id}',[DosenController::class,'viewProposal'])->name('viewProposal');
 
     Route::get('/laporan',[DosenController::class,'laporan'])->name('laporan');
-    Route::get('/laporan2',[DosenController::class,'laporan2'])->name('laporan2');
+    Route::put('/laporan2',[DosenController::class,'laporan2'])->name('laporan2');
 
     Route::get('/ta',[DosenController::class,'ta'])->name('ta');
     Route::get('/ta2',[DosenController::class,'ta2'])->name('ta2');
@@ -71,6 +71,7 @@ Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],fu
 
     Route::post('/store',[DosenController::class,'store'])->name('store');
     Route::post('/store2',[DosenController::class,'store2'])->name('store2');
+    Route::post('/update',[DosenController::class,'update'])->name('update');
 
 });
 

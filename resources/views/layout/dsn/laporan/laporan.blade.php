@@ -13,27 +13,12 @@
                 <form>
                     <div class="card-body rounded rounded shadow-lg ">
                       <div class="form-group">
-                          <h5>Senin 4 Maret 2024</h3>
-                          <p>Hari ini saya mengerjakan figma</p>
-
-                          <h5>Selasa 5 Maret 2024</h3>
-                          <p>Hari ini saya mengerjakan laravel</p>
-                            
-                          <h5>Rabu 6 Maret 2024</h3>
-                          <p>Hari ini saya mengerjakan x11</p>
-
-                          <h5>Kamis 7 Maret 2024</h3>
-                          <p>Hari ini saya mengerjakan adnroid</p>
-
-                          <h5>Jumat 8 Maret 2024</h3>
-                          <p>Hari ini saya lanjut mengerjakan android</p>
-
-                          <h5>Sabtu 9 Maret 2024</h3>
-                          <p>Hari ini saya mengerjakan google cloud</p>
-
-                          <h5>Rangkuman</h3>
-                          <p>Minggu ini saya mengerjakan figma,laravel,x11,codelabs,android 
-                                dan google cloud</p>
+                        @foreach ($days as $d)
+                            <h5>{{ $d['date'] }}</h5>
+                            <p>{{ $d['isi'] }}</p>
+                        @endforeach
+                        <h5>Rangkuman minggu ini</h5>
+                        <p>{{ $laporan_mingguan->isi }}</p>
                       </div>
                     </div>
                 </form>
@@ -42,34 +27,29 @@
             {{-- end show data --}}
             {{-- form start --}}
             <div class="col">
-              <form action="{{ route('dmn.laporan') }}" method="post">
+              <form action="{{ route('dmn.update') }}" method="post">
+                @csrf
                 <div class="card card-primary">
                   <div class="card-body rounded shadow-lg">
                     <div class="form-group">
                       <div class="text-center">
                         <p>Apakah Laporan ini perlu revisi ?</p>
-                        <input type="radio" name="status" value="Yes">
+                        <input type="radio" name="status" value="Revisi">
                         <label for="">Yes</label>
                         &nbsp;
-                        <input type="radio" name="status" value="No">
+                        <input type="radio" name="status" value="Finish">
                         <label for="">No</label>
                       </div>
                     </div>
                     <div class="form-group">
-                      <textarea class="form-control" name="komentar" placeholder="Enter Komentar" required></textarea>
+                      <textarea class="form-control" name="comment" placeholder="Enter Komentar" required></textarea>
                       @error('komentar')
                           <small>{{$message}}</small>
                       @enderror
                     </div>
-                    <div class="form-group">
-                      <label for="">Dokumen</label>
-                      <input type="file" class="form-control-file" name="file" required>
-                      @error('file')
-                          <small>{{$message}}</small>
-                      @enderror
-                  </div>
+                    <input type="text" name="id" value="{{ $laporan_mingguan->laporan_mingguan_id }}" hidden>
                   <div class="form-group text-center">
-                   <a href="{{ route('dmn.laporan') }}"><button type="button" class="btn btn-primary">Submit</button></a> 
+                   <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
                   </div>
                  

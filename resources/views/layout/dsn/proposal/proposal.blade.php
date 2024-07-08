@@ -39,25 +39,38 @@
     <section class="content">
         <div class="container">
           {{-- form start --}}
-            <form action="" method="get" enctype="multipart/form-data">
+            <form action="{{ route('dmn.store2') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
                     <div class="card card-primary">
                 <form>
                     <div class="card-body">
                         <div class="form-group">
-                              <img src="{{ asset('img/pdf.png') }}" style="width: 4%" alt="">
-                          </div>
+                              <a href="{{ route('dmn.viewTa',['id' => $proposal]) }}">
+                                <img src="{{ asset('img/pdf.png') }}" style="width: 4%" alt="">
+                              </a>
+                            </div>
 
                         <div class="form-group">
                             <label for="">Komentar</label>
-                            <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" ></textarea>
+                            <textarea class="form-control" name="comment" placeholder="Enter Comment" ></textarea>
                             @error('komentar')
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
                         <div class="form-group text-center">
-                          <a href="{{ route('dmn.proposal3')  }}"> <button type="button" class="btn btn-primary">Submit</button></a> 
+                          <h4>Apa laporan perlu direvisi ?</h4>
+                        </div>
+                        <div class="form-group text-center">
+                          <input type="radio" name="status" value="Selesai">
+                          <label for="">No</label>
+                          &nbsp;
+                          <input type="radio" name="status" value="Revisi">
+                          <label for="">Yes</label>
+                        </div>
+                        <input type="text" name="laporan_id" value="{{ $id }}" hidden>
+                        <div class="form-group text-center">
+                          <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </div>
                 </form>

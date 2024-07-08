@@ -20,11 +20,12 @@ use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\Session as FacadesSession;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
+
 
 
 class MahasiswaController extends Controller
 {
+
     // function show proposal when  submit
     public function proposal(){
         // $npm=FacadesSession::get('npm');
@@ -83,6 +84,7 @@ class MahasiswaController extends Controller
 
         return $englishDate;
       }
+
     //   function to show weekly laporan
     public function laporan(){
         $npm=FacadesSession::get('npm');
@@ -95,12 +97,13 @@ class MahasiswaController extends Controller
         
         $currentMonth= $startDate->month;
         $endMonth= $endDate->month;
+        $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
 
-        
         // Loop through each month (February to July)
         for($currentMonth ;$currentMonth<=$endMonth;$currentMonth++) {
-          
+
             while ($startDate<=$endDate) {
+
                 $weekend = [
                   'start_date' => $startDate->startOfWeek()->format('d'),  // Extract only day
                   'start_month' => $startDate->startOfWeek()->translatedFormat('F'),  // Extract only day
@@ -110,39 +113,41 @@ class MahasiswaController extends Controller
                   'end_year' => $startDate->copy()->endOfWeek(Carbon::SATURDAY)->format('Y'),
                 ];
     
-       
-                    $weekends[] = $weekend;
-   
+                $weekends[] = $weekend;
+              $startDate = $startDate->addWeek();
+      
+        } 
 
-                $startDate = $startDate->addWeek();
+        return view('layout.mhs.laporan.laporan',compact('weekends','comment'));
 
-        }
-
- 
-        return view('layout.mhs.laporan.laporan',compact('weekends'));
     }
 }
     // function to show daily report
     public function laporan2(Request $request,$id){
         $startDate= $request->mulai;
+
         $startDate= (new MahasiswaController)->getcurrentMonth($startDate);
 
         $startDate= Carbon::createFromFormat('d-F-Y',$startDate);
         $startDate= $startDate->startOfWeek();
         $endDate= $startDate->copy()->endOfWeek(Carbon::SATURDAY);
         $npm=FacadesSession::get('npm');
+
         $days= [];
         for($day=$startDate;$day <=$endDate;$day->addDay()){
             $startDate= Carbon::parse($startDate);
+  
             $isi = laporan_harian::where('npm','like','%'.$npm.'%')->where('tanggal','like','%'.$day->format('Y-m-d').'%')->first();
+
             $days[$day->format('d')] = [
                'date'=> $day->translatedFormat('l d F Y'),
                'has_report'=> !is_null($isi),
-               'isi'=> $isi,
-               'id'=> $isi->laporan_harian_id
+               'isi'=> $isi ? $isi->isi : '-',
+               'id'=> $isi ? $isi->laporan_harian_id : '0',
                 
             ];
         }
+  
         $week= laporan_mingguan::where('npm','like','%'.$npm.'%')->where('week','like','%'.$id.'%')->first();
 
         return view('layout.mhs.laporan.laporan2',compact('days','week','id'));
@@ -220,18 +225,18 @@ class MahasiswaController extends Controller
     // function to convert to english month for function convertIndonesianDateToYmd
     function convertIndonesianMonthToEnglish($month) {
         $englishMonth=[
-            'Januari' => 'January',
-            'Februari' => 'February',
+            'Januari' => '01',
+            'Februari' => '02',
             'Maret' => '03',
-            'April' => 'April',
-            'Mei' => 'May',
-            'Juni' => 'June',
-            'Juli' => 'July',
-            'Agustus' => 'August',
-            'September' => 'September',
-            'Oktober' => 'October',
-            'November' => 'November',
-            'Desember' => 'December'
+            'April' => '04',
+            'Mei' => '05',
+            'Juni' => '06',
+            'Juli' => '07',
+            'Agustus' => '08',
+            'September' => '09',
+            'Oktober' => '10',
+            'November' => '11',
+            'Desember' => '12'
         ];
 
         return $englishMonth[$month];
@@ -248,7 +253,7 @@ class MahasiswaController extends Controller
       
         // Create a Carbon object with the extracted parts
         $dateString=$year.'-'.$month.'-'.$day;
-
+  
         $dateObject = Carbon::parse($dateString);
 
         // Return the date in YMD format
@@ -257,7 +262,6 @@ class MahasiswaController extends Controller
       
     // function to store daily report
     public function store2(Request $request){
-
 
         $data['isi']= $request->isi;
         $data['tanggal']= $request->date;
@@ -272,6 +276,7 @@ class MahasiswaController extends Controller
         $data['npm']=$npm;
         $data['domen_id']=$domen_id;
         $data['laporan_harian_id']=$laporan_harian_id;
+        $data['minggu']=$request->week;
         laporan_harian::create($data);
             return redirect()->route('mhs.laporan');
         }

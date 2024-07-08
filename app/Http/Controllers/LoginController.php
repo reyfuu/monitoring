@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\comment;
 use App\Models\dosen;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Session as FacadesSession;
 
@@ -34,6 +35,7 @@ class LoginController extends Controller
         ];
         $email= $request->email;
         session_start();
+       
         if(Auth::guard('dosen')->attempt($data)){
             $username= dosen::select('name')->where('email','like','%'.$email.'%')->first()->name;
             $domen_id= dosen::select('domen_id')->where('email','like','%'.$email.'%')->first()->domen_id;
@@ -45,7 +47,7 @@ class LoginController extends Controller
             $npm= User::select('npm')->where('email','like','%'.$email.'%')->first()->npm;
             FacadesSession::put('npm',$npm);
             $_SESSION['mahasiswa']=$username;
-            return redirect()->route('mhs.laporan');
+            return redirect()->route('mhs.laporan',compact('comment'));
         }
         elseif(Auth::guard('admin')->attempt($data)){
             $_SESSION['admin']='admin';

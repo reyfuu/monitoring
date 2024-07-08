@@ -23,6 +23,5 @@ class comment extends Authenticatable
         'npm',
         'tanggal',
         'isi',
-        'dokumen',
     ];
 }

@@ -64,10 +64,10 @@
                           <h4>Apa laporan perlu direvisi ?</h4>
                         </div>
                         <div class="form-group text-center">
-                          <input type="radio" name="status" value="Revisi">
+                          <input type="radio" name="status" value="Selesai">
                           <label for="">No</label>
                           &nbsp;
-                          <input type="radio" name="status" value="Selesai">
+                          <input type="radio" name="status" value="Revisi">
                           <label for="">Yes</label>
                         </div>
                         <input type="text" name="laporan_id" value="{{ $id }}" hidden>

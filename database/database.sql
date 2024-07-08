@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table belajar.admin: ~0 rows (approximately)
+-- Dumping data for table belajar.admin: ~1 rows (approximately)
 INSERT INTO `admin` (`id`, `email`, `password`) VALUES
 	('1', 'admin@admin', '$2y$12$P9hybvsmXXHr5TL/lR5xLuMRPH6STRS1P/2LqJpYDD30qFLuSKDba');
 
@@ -59,7 +59,6 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `npm` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tanggal` datetime NOT NULL,
   `isi` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `dokumen` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`comment_id`),
   KEY `comment_domen_FK` (`domen_id`),
   KEY `comment_mahasiswa_FK` (`npm`),
@@ -67,7 +66,9 @@ CREATE TABLE IF NOT EXISTS `comment` (
   CONSTRAINT `comment_mahasiswa_FK` FOREIGN KEY (`npm`) REFERENCES `mahasiswa` (`npm`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table belajar.comment: ~0 rows (approximately)
+-- Dumping data for table belajar.comment: ~1 rows (approximately)
+INSERT INTO `comment` (`comment_id`, `domen_id`, `npm`, `tanggal`, `isi`) VALUES
+	('CM001', '9', '123er', '2024-07-07 00:00:00', 'test');
 
 -- Dumping structure for table belajar.domen
 CREATE TABLE IF NOT EXISTS `domen` (
@@ -106,21 +107,22 @@ CREATE TABLE IF NOT EXISTS `laporan` (
   CONSTRAINT `laporan_mahasiswa_FK` FOREIGN KEY (`npm`) REFERENCES `mahasiswa` (`npm`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table belajar.laporan: ~2 rows (approximately)
+-- Dumping data for table belajar.laporan: ~4 rows (approximately)
 INSERT INTO `laporan` (`laporan_id`, `judul`, `tanggal_mulai`, `tanggal_berakhir`, `deskripsi`, `domen_id`, `npm`, `dokumen`, `status`, `type`, `comment`) VALUES
-	('LP001', 'sistem informasi', '2024-03-06', '2024-05-20', 'isi', '9', '123er', 'laporan.pdf', 'submit', 'Proposal', ''),
-	('LP002', NULL, '2024-06-10', '2010-09-24', NULL, '12345', '123rt', 'idk.pdf', NULL, 'Proposal', NULL);
+	('LP002', NULL, '2024-06-10', '2024-09-24', NULL, '12345', '123er', 'coba.pdf', NULL, 'Proposal', NULL),
+	('LP003', 'ai', '2024-03-06', '2024-05-20', 'test', '9', '123er', 'coba.pdf', 'perlu direvisi', 'Proposal', NULL),
+	('LP004', 'hello', '2024-04-05', '2024-05-23', 'test', '9', '123er', 'coba.pdf', 'perlu direvisi', 'Laporan', NULL),
+	('LP005', 'hai', '2024-03-07', '2024-05-21', 'test2', '9', '123rt', 'laporan.pdf', 'perlu direvisi', 'Laporan', NULL);
 
 -- Dumping structure for table belajar.laporan_harian
 CREATE TABLE IF NOT EXISTS `laporan_harian` (
   `laporan_harian_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isi` varchar(75) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
-  `dokumen` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `domen_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `npm` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `comment` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `minggu` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`laporan_harian_id`),
   KEY `laporan_harian_domen_FK` (`domen_id`),
   KEY `laporan_harian_mahasiswa_FK` (`npm`),
@@ -128,15 +130,37 @@ CREATE TABLE IF NOT EXISTS `laporan_harian` (
   CONSTRAINT `laporan_harian_mahasiswa_FK` FOREIGN KEY (`npm`) REFERENCES `mahasiswa` (`npm`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table belajar.laporan_harian: ~7 rows (approximately)
-INSERT INTO `laporan_harian` (`laporan_harian_id`, `status`, `isi`, `tanggal`, `dokumen`, `domen_id`, `npm`, `comment`) VALUES
-	('LH001', NULL, 'jello', '2024-10-10', NULL, '12345', '123er', NULL),
-	('LH002', NULL, 'sdadsd', '2024-06-04', NULL, '12345', '123er', NULL),
-	('LH003', NULL, 'dfds', '2024-06-03', NULL, '12345', '123er', NULL),
-	('LH004', NULL, 'uygygj', '2024-03-04', NULL, '9', '123er', NULL),
-	('LH005', NULL, NULL, '2024-03-04', NULL, '9', '123er', NULL),
-	('LH006', NULL, 'fgfg', '2024-03-04', NULL, '9', '123er', NULL),
-	('LH007', NULL, 'hello', '2024-05-06', NULL, '9', '123er', NULL);
+-- Dumping data for table belajar.laporan_harian: ~9 rows (approximately)
+INSERT INTO `laporan_harian` (`laporan_harian_id`, `isi`, `tanggal`, `domen_id`, `npm`, `comment`, `minggu`) VALUES
+	('LH001', 'jello', '2024-10-10', '12345', '123er', NULL, NULL),
+	('LH002', 'sdadsd', '2024-06-04', '12345', '123er', NULL, NULL),
+	('LH003', 'dfds', '2024-06-03', '12345', '123er', NULL, NULL),
+	('LH006', 'test100', '2024-06-10', '12345', '123er', NULL, '1'),
+	('LH007', 'test2', '2024-06-11', '12345', '123er', NULL, '1'),
+	('LH008', 'test30', '2024-06-12', '12345', '123er', NULL, '1'),
+	('LH009', 'test 4', '2024-06-13', '12345', '123er', NULL, '1'),
+	('LH010', 'test 5', '2024-06-14', '12345', '123er', NULL, '1'),
+	('LH011', 'test 6', '2024-06-15', '12345', '123er', NULL, '1');
+
+-- Dumping structure for table belajar.laporan_mingguan
+CREATE TABLE IF NOT EXISTS `laporan_mingguan` (
+  `laporan_mingguan_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isi` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `domen_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `npm` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `week` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`laporan_mingguan_id`),
+  KEY `newtable_domen_FK` (`domen_id`),
+  KEY `newtable_mahasiswa_FK` (`npm`),
+  CONSTRAINT `newtable_domen_FK` FOREIGN KEY (`domen_id`) REFERENCES `domen` (`domen_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `newtable_mahasiswa_FK` FOREIGN KEY (`npm`) REFERENCES `mahasiswa` (`npm`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for table belajar.laporan_mingguan: ~2 rows (approximately)
+INSERT INTO `laporan_mingguan` (`laporan_mingguan_id`, `isi`, `domen_id`, `npm`, `week`, `status`) VALUES
+	('LM001', 'rangkuman12', '9', '123er', '1', 'perlu direvisi'),
+	('LM002', 'rangkuman2', '9', '123er', '2', 'menunggu persetujuan mentor');
 
 -- Dumping structure for table belajar.mahasiswa
 CREATE TABLE IF NOT EXISTS `mahasiswa` (

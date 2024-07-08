@@ -34,10 +34,11 @@
                     <div class="text-center">
                       @if ($day['has_report'])
 
-                        <p >{{ $day['isi']->isi }}</p>
+                        <p >{{ $day['isi'] }}</p>
                         <a class="btn btn-secondary activity-button" data-toggle="modal" data-target="#modalHarianEdit{{ $day['id'] }}" 
-                        data-isi="{{ $day['isi']->isi }}"> <i class="fas fa-pen"></i> Edit</a>
-
+                        data-isi="{{ $day['isi'] }}"> <i class="fas fa-pen"></i> Edit</a>
+               
+                  
                       @else
                       <button type="button" class="btn btn-primary activity-button " data-toggle="modal" data-target="#modalHarian"
                       data-date="{{ $day['date'] }}">
@@ -49,7 +50,7 @@
                   </div>
                 </div>
                 {{-- modal Harian edit --}}
-                <div class="modal fade" id="modalHarianEdit{{ $day['id'] }}" tabindex="-1" aria-labelledby="modalHarianEdit" aria-hidden="true">
+                <div class="modal fade" id="modalHarianEdit{{ $day['id'] }}" tabindex="-1" aria-labelledby="modalHarianEdit{{ $day['id'] }}" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -61,8 +62,8 @@
                       <form action="{{ route('mhs.update3',['id'=> $day['id']]) }}" method="post">
                         @csrf
                         @method('put')
-                        <textarea class="form-control" rows="5" name="isi" id="eIsi"></textarea>
-     
+                        <textarea class="form-control" rows="5" name="isi" >{{ $day['isi'] }}</textarea>
+              
 
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,7 +113,8 @@
                                 @csrf
                                 @method('put')
                                 <textarea class="form-control" rows="5" name="isi"></textarea>
-                                <input type="input" name="date" id="eDate" >
+                                <input type="input" name="date" id="eDate" hidden >
+                                <input type="text" name="week" value="{{ $id }}"  hidden>
     
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -149,7 +151,7 @@
                             </div>
                           </div>
                         </div>
-                         {{-- modal Rangkuman --}}
+                         {{-- modal Rangkuman edit --}}
                         
                          <div class="modal fade" id="modalRangkumanEdit" tabindex="-1" aria-labelledby="modalRangkumanEdit" aria-hidden="true">
                           <div class="modal-dialog">

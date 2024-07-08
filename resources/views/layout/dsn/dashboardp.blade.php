@@ -65,7 +65,8 @@
                   <td>{{ $data['email'] }}</td>
                   
                   <td>{{ $data['dokumen'] }}</td>
-                  <td><a href="{{ route('dmn.proposal2') }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
+                  <td><a href="{{ route('dmn.proposal2'
+                  ,['id'=>$data['proposal_id']]) }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
 
                   @elseif(!$data['has_proposal'])
                   <td class="text-center">Tidak ada mahasiswa</td>

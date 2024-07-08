@@ -21,6 +21,7 @@ class laporan_harian extends Model
         'dokumen',
         'domen_id',
         'npm',
+        'minggu',
     ];
 
     use HasFactory;

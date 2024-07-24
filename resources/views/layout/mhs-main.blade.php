@@ -13,14 +13,13 @@
   @yield('title')
 
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('lte/plugins/fontawesome-free/css/all.min.css')}}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="{{asset('lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{asset('lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- JQVMap -->
@@ -61,9 +60,14 @@
           <span class="badge badge-warning navbar-badge">15</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a class="dropdown-item">
+            <div class="media-body"> 
           @foreach ($comment as $c)
-              <td>{{ $c->isi }}</td>
+            <h3 class="dropdown-item-title">Edwin</h3>
+              <p class="text-sm">{{ $c->isi }}</p>
           @endforeach
+        </div>
+        </a>
         </div>
       </li>
       {{-- Logout & user --}}
@@ -73,7 +77,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
           <p class="dropdown-item"></p>
-          <p class="dropdown-item disabled">Hello, <?= $_SESSION['mahasiswa']?></p>
+          <p class="dropdown-item disabled">Hello, </p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>
@@ -155,16 +159,6 @@
 <!-- ./wrapper -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-  $(document).ready(function() {
-    $('.activity-button').click(function() {
-      var date = $(this).data('date');
-      $('#eDate').val(date);
-      var isi = $(this).data('isi');
-      $('#eIsi').val(isi);
-    });
-  });
-</script>
 <!-- jQuery -->
 <script src="{{asset('lte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->

@@ -56,13 +56,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="">Komentar</label>
-                            <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" required></textarea>
-                            @error('komentar')
-                                <small>{{$message}}</small>
-                            @enderror
-                        </div>
+  
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

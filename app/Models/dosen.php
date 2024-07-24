@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+
 class dosen extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable,HasRoles;
@@ -40,4 +41,5 @@ class dosen extends Authenticatable
     public function user(){
         return $this->belongsTo(User::class);
     }
+
 }

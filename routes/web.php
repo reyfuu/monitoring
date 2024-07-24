@@ -53,6 +53,8 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::put('/update3/{id}',[MahasiswaController::class, 'update3'])->name('update3');
     Route::put('/update4/{id}',[MahasiswaController::class, 'update4'])->name('update4');
 
+    Route::delete('/delete/{id}',[MahasiswaController::class, 'delete'])->name('delete');
+
 });
 
 Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],function(){

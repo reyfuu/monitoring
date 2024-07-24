@@ -38,7 +38,9 @@ class MahasiswaController extends Controller
         //         return view('layout.mhs.proposal.proposal2');
         //     }
         // }else{
-            return view('layout.mhs.proposal.proposal');
+            $npm=FacadesSession::get('npm');
+            $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+            return view('layout.mhs.proposal.proposal',compact('comment'));
         // }
      
     }
@@ -47,7 +49,9 @@ class MahasiswaController extends Controller
         // $npm=FacadesSession::get('npm');
         // $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('status','Finish')->exists();
         // if(!$dokumen){
-            return view('layout.mhs.proposal.proposal2');
+            $npm=FacadesSession::get('npm');
+            $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+            return view('layout.mhs.proposal.proposal2',compact('comment'));
         // }else{
         //     return view('layout.mhs.proposal.proposal3');
         // }
@@ -55,7 +59,9 @@ class MahasiswaController extends Controller
     }
     // function show proposal when finish
     public function proposal3(){
-        return view('layout.mhs.proposal.proposal3');
+        $npm=FacadesSession::get('npm');
+        $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+        return view('layout.mhs.proposal.proposal3',compact('comment'));
     }
     //   function to translate month to english
   function getcurrentMonth($tanggal){
@@ -132,7 +138,7 @@ class MahasiswaController extends Controller
         $startDate= $startDate->startOfWeek();
         $endDate= $startDate->copy()->endOfWeek(Carbon::SATURDAY);
         $npm=FacadesSession::get('npm');
-
+        $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
         $days= [];
         for($day=$startDate;$day <=$endDate;$day->addDay()){
             $startDate= Carbon::parse($startDate);
@@ -150,7 +156,7 @@ class MahasiswaController extends Controller
   
         $week= laporan_mingguan::where('npm','like','%'.$npm.'%')->where('week','like','%'.$id.'%')->first();
 
-        return view('layout.mhs.laporan.laporan2',compact('days','week','id'));
+        return view('layout.mhs.laporan.laporan2',compact('days','week','id','comment'));
     }
     // function to show tugas akhir when submit
     public function ta(){
@@ -159,21 +165,31 @@ class MahasiswaController extends Controller
         // if($dokumen){
         //     return view('layout.mhs.ta.ta2');
         // }else{
-            return view('layout.mhs.ta.ta');
+            $npm=FacadesSession::get('npm');
+            $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+            return view('layout.mhs.ta.ta',compact('comment'));
         // }
     }
     // function to show tugas akhir when revisi
     public function ta2(){
-        return view('layout.mhs.ta.ta2');
+        $npm=FacadesSession::get('npm');
+        $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+        return view('layout.mhs.ta.ta2',compact('comment'));
     }
     // function to show tugas akhir when finish
     public function ta3(){
-        return view('layout.mhs.ta.ta3');
+        $npm=FacadesSession::get('npm');
+        $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+        return view('layout.mhs.ta.ta3',compact('comment'));
     }
     // function to show report bimbingan
     public function bimbingan(){
+        $npm=FacadesSession::get('npm');
         $bimbingan = Bimbingan::get();
-        return view('layout.mhs.bimbingan.bimbingan',compact('bimbingan'));
+        $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
+        $name= dosen::select('name')->where('domen_id',$domen_id)->first()->name;
+        $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+        return view('layout.mhs.bimbingan.bimbingan',compact('bimbingan','comment','name'));
     }
     // function to store proposal or laporan
     public function store(Request $request){
@@ -212,15 +228,18 @@ class MahasiswaController extends Controller
         }
     }
     // function to create report bimbingan
-    public function create(Request $request){
+    public function create(Request $request){ 
         $data= dosen::get();
-        return view('layout.mhs.bimbingan.create',compact('data'));
+        $npm=FacadesSession::get('npm');
+        $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+        return view('layout.mhs.bimbingan.create',compact('data','comment'));
     }
     // function to edit report bimbingan
     public function edit(Request $request,$id){
         $data = Bimbingan::where('npm',$id)->first();
-
-        return view('layout.mhs.bimbingan.edit',compact('data'));
+        $npm=FacadesSession::get('npm');
+        $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+        return view('layout.mhs.bimbingan.edit',compact('data','comment'));
     }
     // function to convert to english month for function convertIndonesianDateToYmd
     function convertIndonesianMonthToEnglish($month) {
@@ -324,18 +343,11 @@ class MahasiswaController extends Controller
         $npm=FacadesSession::get('npm');
         Storage::disk('public')->put($path,file_get_contents($dokumen));
         $data['dokumen']=$filename;
-        $comment_id= IdGenerator::generate(
-            ['table'=> 'laporan','field'=> 'comment_id','length'=>5,'prefix'=>'CM']);
-        $data2['comment_id']=$comment_id;
-        $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
-        $data2['domen_id']=$domen_id;
-        $data2['npm']=$npm;
-        $data2['tanggal']= new DateTime();
-        $data2['isi']= $request->komentar;
+  
 
         if($status== 'Proposal'){
             laporan::where('npm',$npm)->where('type',$status)->update($data);
-            comment::create($data2);
+   
             return redirect()->route('mhs.proposal2');
         }else{
  
@@ -360,5 +372,12 @@ class MahasiswaController extends Controller
         $data['isi']= $request->isi;
         laporan_mingguan::find($id)->update($data);
         return redirect()->route('mhs.laporan');
+    }
+    public function delete($id){
+        $data= Bimbingan::find($id);
+        if($data){
+            $data->delete();
+        }
+        return redirect()->route('mhs.bimbingan');
     }
 }

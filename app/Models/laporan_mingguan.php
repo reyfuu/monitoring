@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class laporan_mingguan extends Model
 {
     public $timestamps = false;
@@ -23,4 +24,6 @@ class laporan_mingguan extends Model
     ];
 
     use HasFactory;
+
+
 }

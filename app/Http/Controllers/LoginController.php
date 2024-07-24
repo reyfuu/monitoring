@@ -47,7 +47,7 @@ class LoginController extends Controller
             $npm= User::select('npm')->where('email','like','%'.$email.'%')->first()->npm;
             FacadesSession::put('npm',$npm);
             $_SESSION['mahasiswa']=$username;
-            return redirect()->route('mhs.laporan',compact('comment'));
+            return redirect()->route('mhs.laporan');
         }
         elseif(Auth::guard('admin')->attempt($data)){
             $_SESSION['admin']='admin';

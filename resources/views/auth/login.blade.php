@@ -20,7 +20,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary py-3">
     <div class="card-header text-center  ">
-      <a href="{{ route('login') }}" class="h1"><b>TAMP</b></a>
+      <a href="{{ route('login') }}'}}" class="h1"><b>TAMP</b></a>
       <img src="{{asset('img/logo_IF.png')}}" class="" style="width: 30%; margin-bottom:20px" alt="">
 
     </div>

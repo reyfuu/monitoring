@@ -19,11 +19,13 @@ class HomeController extends Controller
 {
   // function to show dashboard
     public function dashboard(){
+
         $data=User::get();
         $data2=dosen::get();
         $count=user::count();
         return view('layout.admin.dashboard',compact('data','data2','count'));
     }
+
     // function to choose mahasiswa or dosen
     public function create(){
         return view('layout.admin.create.create');

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class laporan extends Model
 {
     use HasFactory;
@@ -27,4 +28,5 @@ class laporan extends Model
         'type',
         'npm',
     ];
+
 }

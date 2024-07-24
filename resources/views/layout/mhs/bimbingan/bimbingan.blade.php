@@ -55,8 +55,7 @@
                   <tr>
                     <th>No</th>
                     <th>Tanggal</th>
-                    <th>Dosen</th>
-                    <th>Status</th>
+                    <th>Dosen</th>   
                   </tr>
                 </thead>
                 <tbody>
@@ -65,13 +64,39 @@
                   <tr>
                       <td>{{$loop->iteration}}</td>
                       <td>{{$d->tanggal}}</td>
-                      <td>{{$d->domen_id}}</td>
-                      <td>{{$d->status}}</td>
+                      <td>{{$name}}</td>
+     
                       <td>
                           <a href="{{ route('mhs.edit',['id' =>$d->npm ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
+                          <a data-toggle="modal" data-target="#modal-delete{{ $d->bimbingan_id }}" href="{{ route('mhs.delete',['id' => $d->bimbingan_id ]) }}" class="btn btn-danger" > <i class="fas fa-trash"></i> Hapus</a>
                       </td>   
                   </tr>
                   <!-- end show data -->
+              </div>
+              <div class="modal fade" id="modal-delete{{ $d->bimbingan_id }}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Yakin Hapus data ?</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Apakah Anda yakin ingin menghapus ?</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                      <form action="{{ route('mhs.delete',['id'=>$d->bimbingan_id]) }}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Yes</button>
+                      </form>
+                    </div>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
               </div>
                     <!-- /.modal-dialog -->
             </div>

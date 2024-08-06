@@ -34,12 +34,14 @@
                       <button class="btn btn-light">
                         <img src="{{ asset('img/mahasiswa.png') }}" alt="">
                         </button></a>
+                        <h3>Mahasiswa</h3>
                   </div>
                   <div class="col">
                     <a href="{{ route('admin.create3') }}">
                       <button class="btn btn-light">
                         <img src="{{ asset('img/Dosen.png') }}" style="width:70%">
                       </button></a>
+                      <h3>Dosen / Mentor</h3>
                   </div>
                 </div>
               </div>

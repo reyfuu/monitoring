@@ -10,6 +10,7 @@ use App\Models\dosen;
 use App\Models\laporan;
 use App\Models\laporan_harian;
 use App\Models\laporan_mingguan;
+use App\Models\syarat;
 use DB;
 use App\Models\User;
 use Barryvdh\Debugbar\Facade;
@@ -25,36 +26,48 @@ use Carbon\Carbon;
 
 class MahasiswaController extends Controller
 {
+    public function home(){
+        $npm=FacadesSession::get('npm');
+        $bimbingan=Bimbingan::where('npm','like','%'.$npm.'%')
+        ->where('status','Approve')->get();
+        $count= count($bimbingan);
+        $judul= laporan::select('judul')->where('npm',$npm)->where('type','Laporan')->first();
+        return view('layout.mhs.dashboard',compact('count','judul'));
+    }
 
     // function show proposal when  submit
     public function proposal(){
-        // $npm=FacadesSession::get('npm');
-        // $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('type','Proposal')->exists();
-        // $status= laporan::select('dokumen')->where('npm',$npm)->where('status','Finish')->exists();
-        // if($dokumen){
-        //     if($status){
-        //         return view('layout.mhs.proposal.proposal3');
-        //     }else{
-        //         return view('layout.mhs.proposal.proposal2');
-        //     }
-        // }else{
+        $npm=FacadesSession::get('npm');
+        $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('type','Proposal')->exists();
+        $status= laporan::select('dokumen')->where('npm',$npm)->where('status','Finish')->exists();
+
+
+        if($dokumen){
+            if($status == 'Finish'){
+                return view('layout.mhs.proposal.proposal3');
+            }else{
+                $comment= comment::where('npm','like','%'.$npm.'%')->get();
+                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first()->status;
+                $judul= laporan::select('judul')->where('npm',$npm)->where('type','Proposal')->first()->judul;
+                return view('layout.mhs.proposal.proposal2',compact('comment','status','judul'));
+            }
+        }else{
             $npm=FacadesSession::get('npm');
-            $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
             return view('layout.mhs.proposal.proposal',compact('comment'));
-        // }
+        }
      
     }
     // function show proposal when revisi
     public function proposal2(){
-        // $npm=FacadesSession::get('npm');
-        // $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('status','Finish')->exists();
-        // if(!$dokumen){
+        $npm=FacadesSession::get('npm');
+        $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('status','Finish')->exists();
+        if(!$dokumen){
             $npm=FacadesSession::get('npm');
-            $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+            $comment= comment::where('npm','like','%'.$npm.'%')->get();
             return view('layout.mhs.proposal.proposal2',compact('comment'));
-        // }else{
-        //     return view('layout.mhs.proposal.proposal3');
-        // }
+        }else{
+            return view('layout.mhs.proposal.proposal3');
+        }
 
     }
     // function show proposal when finish
@@ -92,6 +105,11 @@ class MahasiswaController extends Controller
       }
 
     //   function to show weekly laporan
+    public function syarat(){
+    
+        $status= 'disetujui';
+        return view('layout.mhs.proposal.syarat',compact('status'));
+    }
     public function laporan(){
         $npm=FacadesSession::get('npm');
         $tanggal_mulai= laporan::select('tanggal_mulai')->where('npm','like','%'.$npm.'%')->first()->tanggal_mulai;
@@ -160,15 +178,22 @@ class MahasiswaController extends Controller
     }
     // function to show tugas akhir when submit
     public function ta(){
-        // $npm=FacadesSession::get('npm');
-        // $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('type','Laporan')->first()->dokumen;
-        // if($dokumen){
-        //     return view('layout.mhs.ta.ta2');
-        // }else{
+        $npm=FacadesSession::get('npm');
+        $dokumen= laporan::select('dokumen')->where('npm',$npm)->where('type','Laporan')->first()->dokumen;
+        $status= laporan::select('dokumen')->where('npm',$npm)->where('status','Finish')->exists();
+        if($dokumen){
+            if($status == 'Finish'){
+                return view('layout.mhs.ta.ta3');
+            }else{
+                $comment= comment::where('npm','like','%'.$npm.'%')->get();
+                $status= laporan::select('status')->where('npm',$npm)->where('type','Laporan')->first()->status;
+                $judul= laporan::select('judul')->where('npm',$npm)->where('type','Laporan')->first()->judul;
+                return view('layout.mhs.ta.ta2',compact('comment','status','judul'));
+            }
+        }else{
             $npm=FacadesSession::get('npm');
-            $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
             return view('layout.mhs.ta.ta',compact('comment'));
-        // }
+        }
     }
     // function to show tugas akhir when revisi
     public function ta2(){
@@ -179,16 +204,17 @@ class MahasiswaController extends Controller
     // function to show tugas akhir when finish
     public function ta3(){
         $npm=FacadesSession::get('npm');
-        $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
-        return view('layout.mhs.ta.ta3',compact('comment'));
+       
+        return view('layout.mhs.ta.ta3');
     }
     // function to show report bimbingan
     public function bimbingan(){
         $npm=FacadesSession::get('npm');
-        $bimbingan = Bimbingan::get();
+        $bimbingan = Bimbingan::where('npm','like','%'.$npm.'%')->get();
         $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
         $name= dosen::select('name')->where('domen_id',$domen_id)->first()->name;
         $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
+
         return view('layout.mhs.bimbingan.bimbingan',compact('bimbingan','comment','name'));
     }
     // function to store proposal or laporan
@@ -229,10 +255,12 @@ class MahasiswaController extends Controller
     }
     // function to create report bimbingan
     public function create(Request $request){ 
-        $data= dosen::get();
+
         $npm=FacadesSession::get('npm');
+        $data= laporan::select('domen_id')->where('npm','like','%'.$npm.'%')->first();
+        $name= dosen::select('name')->where('domen_id',$data->domen_id)->first()->name;
         $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
-        return view('layout.mhs.bimbingan.create',compact('data','comment'));
+        return view('layout.mhs.bimbingan.create',compact('name','comment'));
     }
     // function to edit report bimbingan
     public function edit(Request $request,$id){
@@ -327,6 +355,37 @@ class MahasiswaController extends Controller
         $data['status']= 'menunggu persetujuan mentor';
         laporan_mingguan::create($data);
         return redirect()->route('mhs.laporan');
+    }
+    public function store5(Request $request){
+
+
+        $npm= FacadesSession::get('npm');
+        $files= $request->allFiles();
+        $laporan_id= IdGenerator::generate(
+            ['table'=> 'laporan','field'=> 'laporan_id','length'=>5,'prefix'=>'LP']);
+        foreach ($files as $file) {
+            $data['id_syarat']= $laporan_id;
+            $data['file']= $file->getClientOriginalName();
+            $data['name']= $request->file();
+            $data['dateupload']= Carbon::now();
+            $data['npm']= $npm;
+            $data['status']= 'submit';
+            syarat::create($data);
+        }
+      
+
+        $validator= Validator::make($request->all(),[
+            "file"=> "required|file|max:2048|mimes:png,jpg,jpeg,pdf"
+        ]);
+        if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+
+  
+       
+        return redirect()->route('mhs.dashboard');
+
+        
+
+
     }
     // function to update proposal or laporan
     public function update(Request $request){

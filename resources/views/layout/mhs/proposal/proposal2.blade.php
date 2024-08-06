@@ -36,7 +36,7 @@
       </div>
     </div>
     <!-- /.content-header -->
-
+ 
 
     <!-- Main content -->
     <section class="content">
@@ -50,8 +50,18 @@
 
                 <form>
                     <div class="card-body">
+
+                      <div class="form-group">
+                        <a data-toggle="modal" data-target="#modalInfo" class="btn btn-info">Lihat Status Proposal</a>
+                      </div>
+ 
                         <div class="form-group">
-                            <label for="">Dokumen</label>
+                            <label for="">Judul</label>
+                            <input type="text" class="form-control" value="{{ $judul }}" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Upload Revisi</label>
                             <input type="file" class="form-control-file" name="file" required>
                             @error('file')
                                 <small>{{$message}}</small>
@@ -70,8 +80,31 @@
             {{-- end form --}}
         </div>
     </section>
+
+
+    <!-- /.content -->
+    @foreach ($comment as $c)
+        
+
+    <div class="modal fade " id="modalInfo" tabindex="-1" aria-labelledby="modalRevisi" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventModalLabel">Status Proposal</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="">Status Proposal</label>
+          <p>{{ $status }}</p>
+          <label for="">Daftar Revisi</label>
+            <p>{{ $c->isi }}</p>
+          </table>
+      </div>
+    </div>
+    @endforeach
     <!-- /.content -->
   </div>
-    <!-- /.content -->
-
+    </div>
 @endsection

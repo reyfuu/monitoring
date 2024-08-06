@@ -45,10 +45,10 @@
 
                         <label for="">Dosen / Mentor</label>
                         <select class="form-control" name="dosen" aria-label="Default select example" required>
-                          <option hidden disabled selected value>Pilih Opsi</option>
-                            @foreach ($data as $d)
-                                <option value="{{ $d->name }}">{{ $d->name }}</option>
-                            @endforeach
+                          <option hidden disabled selected value>{{ $name }}</option>
+                    
+                                <option value="{{ $name }}">{{ $name }}</option>
+
                         </select>
                         @error('dosen')
                          <small>{{$message}}</small>

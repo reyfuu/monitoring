@@ -20,10 +20,31 @@ class HomeController extends Controller
   // function to show dashboard
     public function dashboard(){
 
-        $data=User::get();
-        $data2=dosen::get();
-        $count=user::count();
-        return view('layout.admin.dashboard',compact('data','data2','count'));
+        $data=laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
+        ->join('domen','domen.domen_id','=','laporan.domen_id')
+        ->where('laporan.type','Proposal')
+        ->get(['mahasiswa.name as mahasiswa','domen.name as domen','laporan.laporan_id as id',
+        'laporan.judul as judul','laporan.tanggal_mulai as mulai','laporan.status as status']);
+        
+
+        return view('layout.admin.dashboard',compact('data'));
+    }
+    public function ta(){
+      $data=laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
+      ->join('domen','domen.domen_id','=','laporan.domen_id')
+      ->where('laporan.type','Laporan')
+      ->get(['mahasiswa.name as mahasiswa','domen.name as domen','laporan.laporan_id as id',
+      'laporan.judul as judul','laporan.tanggal_mulai as mulai','laporan.status as status']);
+
+      return view('layout.admin.ta',compact('data'));
+    }
+    public function mahasiswa(){
+      $data=User::get();
+      return view('layout.admin.mahasiswa',compact('data'));
+    }
+    public function domen(){
+      $data=dosen::get();
+      return view('layout.admin.domen',compact('data'));
     }
 
     // function to choose mahasiswa or dosen

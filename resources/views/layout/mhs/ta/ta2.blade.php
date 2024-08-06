@@ -48,6 +48,13 @@
                     <div class="card card-primary">
                 <form>
                     <div class="card-body">
+                      <div class="form-group">
+                        <a data-toggle="modal" data-target="#modalInfo" class="btn btn-info">Lihat Status Proposal</a>
+                      </div>
+                      <div class="form-group">
+                        <label for="">Judul</label>
+                        <input type="text" class="form-control" value="{{ $judul }}" readonly>
+                    </div>
                         <div class="form-group">
                             <label for="">Dokumen</label>
                             <input type="file" class="form-control-file" name="file" required>
@@ -68,6 +75,30 @@
             {{-- form end --}}
         </div>
     </section>
+    @foreach ($comment as $c)
+        
+
+    <div class="modal fade " id="modalInfo" tabindex="-1" aria-labelledby="modalRevisi" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventModalLabel">Status Laporan TA</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label for="">Status Proposal</label>
+          <p>{{ $status }}</p>
+          <label for="">Daftar Revisi</label>
+            <p>{{ $c->isi }}</p>
+          </table>
+      </div>
+    </div>
+    @endforeach
+    <!-- /.content -->
+  </div>
+    </div>
     <!-- /.content -->
   </div>
     <!-- /.content -->

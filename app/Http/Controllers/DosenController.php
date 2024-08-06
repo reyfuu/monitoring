@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bimbingan;
 use App\Models\comment;
 use App\Models\dosen;
 use App\Models\laporan;
@@ -15,6 +16,16 @@ use Carbon\Carbon;
 
 class DosenController extends Controller
 {
+    public function dashboard(){
+        $domen_id= FacadesSession::get('domen_id');
+        $bimbingan= Bimbingan::
+        join('mahasiswa','mahasiswa.npm','=','bimbingan.npm')
+        ->where('domen_id',$domen_id)->get(['mahasiswa.status as status2','mahasiswa.name as nama','bimbingan.topik as topik'
+        ,'Bimbingan.bimbingan_id as id','bimbingan.isi as isi' ]);
+
+        return view('layout.dsn.dashboard',compact('bimbingan'));
+    }
+
     public function proposal(){
         $mahasiswa = user::all();
         $proposal= laporan::all();
@@ -164,6 +175,7 @@ class DosenController extends Controller
             ['table' => 'comment', 'field' => 'comment_id', 'length' => 10, 'prefix' => 'CM']);
         $data['domen_id']= FacadesSession::get('domen_id');
         $data['isi']= $request->comment;
+        $data['type']= 'Proposal';
         comment::create($data);
 
         if($status== 'Revisi'){
@@ -196,6 +208,22 @@ class DosenController extends Controller
             $status2 = 'selesai';
             laporan_mingguan::find($id)->update(['status'=>$status2]);
             return redirect()->route('dmn.laporan');
+        }
+    }
+    public function update2(Request $request){
+        $status= $request->status;
+        $id= $request->laporan_id;
+
+
+        if($status== 'Revisi'){
+            $status2 = 'perlu direvisi';
+            Bimbingan::find($id)->update(['status'=>$status2]);
+
+            return redirect()->route('dmn.dashboard');
+        }else{
+            $status2 = 'selesai';
+            Bimbingan::find($id)->update(['status'=>$status2]);
+            return redirect()->route('dmn.dashboard');
         }
     }
 }

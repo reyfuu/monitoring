@@ -21,23 +21,7 @@
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
-      <div class="container">
-          <ul class="base-timeline">
-              <li class="base-timeline__item base-timeline__item--active">
-                  <span class="base-timeline__summary-text">Proposal</span>
-              </li>
-              <li class="base-timeline__item base-timeline__item">
-                  <span class="base-timeline__summary-text">Revisi</span>
-              </li>
-              <li class="base-timeline__item">
-                  <span class="base-timeline__summary-text">Selesai</span>
-              </li>
-              {{-- <li class="base-timeline__item">
-                  <span class="base-timeline__summary-text">four</span>
-              </li> --}}
-          </ul>
-      </div>
-    </div>
+      
     <!-- /.content-header -->
 
 

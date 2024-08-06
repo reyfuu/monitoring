@@ -11,7 +11,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   @yield('title')
-
+  <style>
+    th{
+      white-space: nowrap;
+      width: 300px
+    }
+    td{
+      white-space: nowrap;
+      width: 300px
+    }
+  </style>
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -33,6 +42,7 @@
   <link rel="stylesheet" href="{{asset('lte/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('lte/plugins/summernote/summernote-bs4.min.css')}}">
+  <script src="{{asset('lte/plugins/chart.js/Chart.min.js')}}"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -101,81 +111,27 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a href="" class="nav-link"> 
+            <a href="{{ route('admin.mahasiswa') }}" class="nav-link"> 
               <p class="mx-2">
                 Mahasiswa
               </p>
             </a>
           </li>
           <li class="nav-item ">
-            <a href="" class="nav-link"> 
+            <a href="{{ route('admin.domen') }}" class="nav-link"> 
               <p class="mx-2">
                 Dosen dan Mentor
               </p>
             </a>
           </li>
           <li class="nav-item ">
-            <a href="" class="nav-link "> 
+            <a href="{{ route('admin.ta') }}" class="nav-link "> 
               <p class="mx-2">
-                Proposal
-                <i class="right fas fa-angle-left"></i>
+                Tugas Akhir
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="">
-                  <p>Proposal Tunggu</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="">
-                  <p>Proposal Terjadwal</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="">
-                  <p>Proposal Selesai</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="">
-                  <p>Proposal Rekap</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item ">
-            <a href="" class="nav-link "> 
-              <p class="mx-2">
-                Tugas AKhir
-              </p>
-            </a>
-            <li class="nav-item">
-              <a href="">
-                <p>Tugas AKhir Tunggu</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="">
-                <p>Tugas Terjadwal</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="">
-                <p>Tugas Selesai</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="">
-                <p>Tugas AKhir Rekap</p>
-              </a>
-            </li>
+           
+        </li>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
@@ -196,49 +152,17 @@
 <!-- ./wrapper -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-    
-  $(".step").click( function() {
-$(this).addClass("active").prevAll().addClass("active");
-$(this).nextAll().removeClass("active");
-});
 
-$(".step01").click( function() {
-$("#line-progress").css("width", "3%");
-$(".discovery").addClass("active").siblings().removeClass("active");
-});
-
-$(".step02").click( function() {
-$("#line-progress").css("width", "25%");
-$(".strategy").addClass("active").siblings().removeClass("active");
-});
-
-$(".step03").click( function() {
-$("#line-progress").css("width", "50%");
-$(".creative").addClass("active").siblings().removeClass("active");
-});
-
-$(".step04").click( function() {
-$("#line-progress").css("width", "75%");
-$(".production").addClass("active").siblings().removeClass("active");
-});
-
-$(".step05").click( function() {
-$("#line-progress").css("width", "100%");
-$(".analysis").addClass("active").siblings().removeClass("active");
-});
-
-
-  </script>
+  <script src="{{asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- jQuery -->
 <script src="{{asset('lte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset('lte/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <!-- Bootstrap 4 -->
-<script src="{{asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
 <!-- ChartJS -->
-<script src="{{asset('lte/plugins/chart.js/Chart.min.js')}}"></script>
+
 <!-- Sparkline -->
 <script src="{{asset('lte/plugins/sparklines/sparkline.js')}}"></script>
 <!-- JQVMap -->
@@ -249,8 +173,6 @@ $(".analysis").addClass("active").siblings().removeClass("active");
 <!-- daterangepicker -->
 <script src="{{asset('lte/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('lte/plugins/daterangepicker/daterangepicker.js')}}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 <!-- Summernote -->
 <script src="{{asset('lte/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <!-- overlayScrollbars -->

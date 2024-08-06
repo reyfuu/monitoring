@@ -56,8 +56,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(laporan_harian::class,'npm');
     }
-    public function dosen(){
-        return $this->belongsTo(dosen::class);
-    }
+
 
 }

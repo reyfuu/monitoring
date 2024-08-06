@@ -40,14 +40,14 @@ class LoginController extends Controller
             $username= dosen::select('name')->where('email','like','%'.$email.'%')->first()->name;
             $domen_id= dosen::select('domen_id')->where('email','like','%'.$email.'%')->first()->domen_id;
             FacadesSession::put('domen_id',$domen_id);
-            $_SESSION['domen']=$username;
-            return redirect()->route('dmn.laporan');
+            FacadesSession::put('domen',$username);
+            return redirect()->route('dmn.dashboard');
         }elseif(Auth::guard('user')->attempt($data)){
-            $username= User::where('email','like','%'.$email.'%')->first()->name;
+            $username= User::select('name')->where('email','like','%'.$email.'%')->first()->name;
             $npm= User::select('npm')->where('email','like','%'.$email.'%')->first()->npm;
             FacadesSession::put('npm',$npm);
-            $_SESSION['mahasiswa']=$username;
-            return redirect()->route('mhs.laporan');
+            FacadesSession::put ('mahasiswa',$username);
+            return redirect()->route('mhs.home');
         }
         elseif(Auth::guard('admin')->attempt($data)){
             $_SESSION['admin']='admin';

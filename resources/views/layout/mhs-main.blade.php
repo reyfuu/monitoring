@@ -11,7 +11,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   @yield('title')
+  <style>
+    table{
 
+      width: 450px;
+      word-wrap: break-word;
+    }
+
+    td{
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      width: 450px
+    }
+  </style>
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
   <!-- Google Font: Source Sans Pro -->
@@ -54,22 +66,7 @@
       <!-- chat menu need add  -->
       
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a class="dropdown-item">
-            <div class="media-body"> 
-          @foreach ($comment as $c)
-            <h3 class="dropdown-item-title">Edwin</h3>
-              <p class="text-sm">{{ $c->isi }}</p>
-          @endforeach
-        </div>
-        </a>
-        </div>
-      </li>
+   
       {{-- Logout & user --}}
       <li class="nav-item dropdown">
         <a href="" class="nav-link" data-toggle="dropdown">
@@ -77,7 +74,10 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
           <p class="dropdown-item"></p>
-          <p class="dropdown-item disabled">Hello, </p>
+          <p class="dropdown-item disabled">Hello,
+            @php
+                echo session()->get('mahasiswa');
+            @endphp </p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>
@@ -108,7 +108,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item ">
-            <a href="{{ route('mhs.laporan') }}" class="nav-link">
+            <a href="{{ route('mhs.home') }}" class="nav-link">
              <img src="{{ asset('img/home.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Dashboard
@@ -116,26 +116,45 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a href="{{ route('mhs.proposal') }}" class="nav-link">
-              <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
-              <p class="mx-2">
-                Proposal
-              </p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a href="{{ route('mhs.bimbingan') }}" class="nav-link">
+            <a class="nav-link">
              <img src="{{ asset('img/file-text.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
-                Bimbingan
+                Proposal
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('mhs.proposal') }}" class="nav-link">
+                 Proposal
+             
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('mhs.bimbingan') }}" class="nav-link">
+                  Bimbingan
+             
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('mhs.syarat') }}" class="nav-link">
+                  Syarat Ujian
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item ">
             <a href="{{ route('mhs.ta') }}" class="nav-link">
               <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Laporan Akhir
+              </p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a href="{{ route('mhs.laporan') }}" class="nav-link">
+              <p class="mx-2">
+                Laporan 
               </p>
             </a>
           </li>

@@ -61,7 +61,11 @@
           <i class="far fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
-          <p class="dropdown-item disabled">Hello, <?= $_SESSION['domen']?></p>
+          <p class="dropdown-item disabled">Hello, 
+            @php
+                 echo session()->get('domen');
+            @endphp
+          </p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>
@@ -87,13 +91,14 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item ">
-            <a href="{{ route('dmn.laporan') }}" class="nav-link">
+            <a href="{{ route('dmn.dashboard') }}" class="nav-link">
              <img src="{{ asset('img/home.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Dashboard
               </p>
             </a>
           </li>
+   
           <li class="nav-item ">
             <a href="{{ route('dmn.proposal') }}" class="nav-link">
               <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
@@ -107,6 +112,13 @@
               <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Laporan Akhir
+              </p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a href="{{ route('dmn.laporan') }}" class="nav-link">
+              <p class="mx-2">
+                Laporan
               </p>
             </a>
           </li>

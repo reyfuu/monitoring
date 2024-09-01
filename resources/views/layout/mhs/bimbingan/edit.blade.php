@@ -28,7 +28,7 @@
     <section class="content">
         <div class="container">
           {{-- form start --}}
-            <form action="{{ route('mhs.update2',['id'=> $data->npm]) }}" method="post">
+            <form action="{{ route('mhs.update2',['id'=> $data->bimbingan_id]) }}" method="post">
                 @csrf
                 @method('put')
                 <div class="col-md-12">

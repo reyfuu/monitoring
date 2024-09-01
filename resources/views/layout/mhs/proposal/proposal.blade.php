@@ -1,6 +1,7 @@
 @extends('layout.mhs-main')
 @section('title')
 
+
 <title>Proposal</title>
 @endsection
 @section('content')
@@ -29,12 +30,25 @@
     <section class="content">
         <div class="container">
             {{-- form start --}}
-            <form action="{{ route('mhs.store') }}" method="post" enctype="multipart/form-data">
-                @csrf
+
                 <div class="col-md-12">
                     <div class="card card-primary">
-
-                <form>
+                      @if (session('success'))
+                      <div class="alert alert-success">{{ session('success') }}</div>
+                  @elseif(session('error'))
+                      <div class="alert alert-danger">{{ session('error') }}</div>
+                  @endif
+                  @if ($errors->any())
+                  <div class="alert alert-danger">
+                    <ul>
+                      @foreach ($errors->all() as $error )
+                          <li>{{ $error }}</li>
+                      @endforeach
+                    </ul>
+                  </div>
+                  @endif
+                <form action="{{ route('mhs.store') }}" method="post" enctype="multipart/form-data">
+                  @csrf
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">Judul</label>
@@ -45,7 +59,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">Deskripsi</label>
+                            <label for="">Abstrak</label>
                             <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" required></textarea>
                             @error('deskripsi')
                                 <small>{{$message}}</small>
@@ -59,14 +73,13 @@
                             @enderror
                         </div>
                         <input type="hidden"  name="status" value="Proposal">
-                        <div class="form-group text-center">
+                        <div class=" text-center ">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </form>
               </div>
              </div>
-            </form>
             {{-- end form --}}
         </div>
     </section>

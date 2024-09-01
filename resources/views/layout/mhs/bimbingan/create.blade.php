@@ -60,6 +60,13 @@
                                 <small>{{$message}}</small>
                             @enderror
                         </div>
+                        <div class="gorm-group">
+                          <label for="">Type</label>
+                          <select name="type" class="form-control" >
+                            <option value="Proposal">Proposal</option>
+                            <option value="Tugas Akhir">Tugas Akhir</option>
+                          </select>
+                        </div>
                         
                         <div class="form-group">
                           <label for="">Tanggal </label>

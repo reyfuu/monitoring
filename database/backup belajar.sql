@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 06, 2024 at 10:03 AM
+-- Generation Time: Aug 22, 2024 at 01:21 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -47,9 +47,9 @@ INSERT INTO `admin` (`id`, `email`, `password`) VALUES
 --
 
 CREATE TABLE `bimbingan` (
-  `bimbingan_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `topik` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bimbingan_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `topik` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `npm` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `domen_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
@@ -62,7 +62,8 @@ CREATE TABLE `bimbingan` (
 
 INSERT INTO `bimbingan` (`bimbingan_id`, `topik`, `status`, `npm`, `domen_id`, `tanggal`, `isi`) VALUES
 ('BM001', 'UI/UX', 'perlu direvisi', '123er', '9', '2024-05-06', 'hell'),
-('BM002', 'Sistem Informasi', 'submit', '123er', '12345', '2024-07-27', 'hello');
+('BM002', 'Sistem Informasi', 'submit', '123er', '12345', '2024-07-27', 'hello'),
+('BM003', 'laravel', 'submit', '19340019', '12345', '2024-08-21', 'adanya perbaikan di laravel');
 
 -- --------------------------------------------------------
 
@@ -84,7 +85,8 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`comment_id`, `domen_id`, `npm`, `tanggal`, `isi`, `type`) VALUES
-('CM001', '9', '123er', '2024-07-07 00:00:00', 'test', '');
+('CM001', '9', '123er', '2024-07-07 00:00:00', 'test', ''),
+('CM002', '9', '19340019', '2024-08-21 03:41:15', 'masalah mengenai combo box dan saat melakukan edit data', '');
 
 -- --------------------------------------------------------
 
@@ -137,7 +139,21 @@ INSERT INTO `laporan` (`laporan_id`, `judul`, `tanggal_mulai`, `tanggal_berakhir
 ('LP001', 'judul', '2024-04-05', '2024-05-23', 'test', '9', '123er', 'coba.pdf', 'Submit', 'Proposal'),
 ('LP004', 'hello', '2024-04-05', '2024-05-23', 'test', '9', '123er', 'coba.pdf', 'perlu direvisi', 'Laporan'),
 ('LP005', 'hai', '2024-03-07', '2024-05-21', 'test2', '9', '123rt', 'laporan.pdf', 'perlu direvisi', 'Laporan'),
-('LP007', 'Aplikasi pemilihan template website menggunakan ', '2024-04-01', '2024-07-31', 'hello', '9', '19340012', NULL, 'submit', 'Proposal');
+('LP007', 'Aplikasi pemilihan template website menggunakan ', '2024-04-01', '2024-07-31', 'hello', '9', '19340012', NULL, 'submit', 'Proposal'),
+('LP008', NULL, '2024-08-10', '2010-11-24', NULL, '9', '23124151', NULL, NULL, 'Proposal'),
+('LP009', 'Pengembangan Aplikasi deteksi dan klasifikasi kanker kulit menggunakan metode inception V3 Berbasis ', '2024-08-19', '2019-11-24', NULL, '9', '23400005', NULL, NULL, 'Proposal'),
+('LP010', NULL, '2024-08-19', '2019-11-24', NULL, '12345', '203400006', NULL, NULL, 'Proposal'),
+('LP011', NULL, '2024-08-19', '2019-11-24', NULL, '9', '203400010', NULL, NULL, 'Proposal'),
+('LP012', NULL, '2024-08-19', '2019-11-24', NULL, '9', '203400012', NULL, NULL, 'Proposal'),
+('LP013', NULL, '2024-08-19', '2019-11-24', NULL, '9', '203400013', NULL, NULL, 'Proposal'),
+('LP014', NULL, '2024-08-19', '2019-11-24', NULL, '9', '20340014', NULL, NULL, 'Proposal'),
+('LP015', NULL, '2024-08-19', '2019-11-24', NULL, '9', '20340017', NULL, NULL, 'Proposal'),
+('LP016', NULL, '2024-08-19', '2019-11-24', NULL, '9', '20340018', NULL, NULL, 'Proposal'),
+('LP017', NULL, '2024-08-19', '2019-11-24', NULL, '9', '20340019', NULL, NULL, 'Proposal'),
+('LP018', NULL, '2024-08-19', '2019-11-24', NULL, '9', '203400023', NULL, NULL, 'Proposal'),
+('LP019', 'Rancang Bangun Sistem Informasi Monitoring Tugas Akhir dan Magang\r\n', '2024-02-07', '2019-11-24', NULL, '12345', '19340019', NULL, NULL, 'Proposal'),
+('LP020', NULL, '2024-08-21', '2021-11-24', NULL, '23dasd2', '123', NULL, NULL, 'Proposal'),
+('LP021', NULL, '2024-08-21', '2021-11-24', NULL, '12345', '12345', NULL, NULL, 'Proposal');
 
 -- --------------------------------------------------------
 
@@ -204,17 +220,32 @@ CREATE TABLE `mahasiswa` (
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `angkatan` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `mahasiswa`
 --
 
-INSERT INTO `mahasiswa` (`npm`, `name`, `email`, `password`, `status`) VALUES
-('123er', 'wati', 'wati@gmail.com', '$2y$12$lXnCjfNVCbv/bKbkPFiGjOAcqVLSRUyKbCkMOhaivq0DbXdydZKYa', 'Magang'),
-('123rt', 'dida', 'didi@gmail.com', '$2y$12$.iINVaggW.LFRg8EoGeyHu0NsnzWyzxk0NrlM1qt6paM4ehzmVCAm', 'Magang'),
-('19340012', 'Hanna Pratiwi', 'hanna@gmail.com', '$2y$12$yU.DFx.cmlNRQhlR6sJo2..RHh6g7GSKnl94ySazhV5xDL.NvkhLe', 'Tugas Akhir');
+INSERT INTO `mahasiswa` (`npm`, `name`, `email`, `password`, `status`, `angkatan`) VALUES
+('123', 'audi', 'test@gmail.com', '$2y$12$iq/xbKZ1ozBsUPfbvSHv4eNvCrgwDXlhAX8MGswQl/A6VXfn7ud.y', 'Magang', '2019'),
+('12345', 'dummy', 'dummy@gmail.com', '$2y$12$2kTf4KFKQH4pqBa8tiZ.GOYoRu.Fy50MaDXQckNVYKrTu2r7DSa6C', 'Tugas Akhir', '2019'),
+('123er', 'wati', 'wati@gmail.com', '$2y$12$bMHgRgkWyXGezYeFwOC88O5jWFkD90BCGWxlIBfQ4/sE.hz2.UWG6', 'Tugas Akhir', ''),
+('123rt', 'dida', 'didi@gmail.com', '$2y$12$.iINVaggW.LFRg8EoGeyHu0NsnzWyzxk0NrlM1qt6paM4ehzmVCAm', 'Magang', ''),
+('19340012', 'Hanna Pratiwi', 'hanna@gmail.com', '$2y$12$yU.DFx.cmlNRQhlR6sJo2..RHh6g7GSKnl94ySazhV5xDL.NvkhLe', 'Tugas Akhir', ''),
+('19340019', 'Audi Nathanael G', 'audi@gmail.com', '$2y$12$K8cfyh8.FV75PbhbkRVybeRDk6qTAb8NCHBZKDwuNjs2YPqgRAPju', 'Tugas Akhir', '2019'),
+('203400006', 'Jonathan Steven Iskandar', 'jonathan@gmail.com', '$2y$12$Xwqx6FADt3Y5N8g/Yyw9.ueRd2LUMs.0LrDkcIOY0u/a2SVRMWAre', 'Tugas Akhir', '2020'),
+('203400010', 'Alvinus Yodi', 'yodi@gmail.com', '$2y$12$yYVzQqi2j7dSAWXUcXXrkOTWw9HF7uP1Dnw9VduwHYtJfHSJg1kbS', 'Tugas Akhir', '2020'),
+('203400012', 'Yulius Dani Eko Saputro', 'dani@gmail.com', '$2y$12$pejeZruHcwOOdfnuJ6KkP.SD/4c6LBA5HAWYhYCxepduEE/pNHFMG', 'Tugas Akhir', '2020'),
+('203400013', 'Hendra', 'hendra@gmail.com', '$2y$12$qiRYC.QSpZgy2cBGm9diE.CZua1a9R5rDjGfGwX1Jr6pDz18PFSGW', 'Tugas Akhir', '2020'),
+('203400023', 'Fianindra Riezca Agusty', 'fian@gmail.com', '$2y$12$9HTKSEmgZs2vCUB3aiOoe.U.bjgyBuDIEfQGByqYJhz/.xbU7v9uO', 'Tugas Akhir', '2020'),
+('20340014', 'Yohana Christela Oktavani', 'yohana@gmail.com', '$2y$12$1HxRpidqcalo9mTb0mi8O.LOdSYVf5.uo5osJrUt0yTEbmPKU32zq', 'Tugas Akhir', '2020'),
+('20340017', 'wildwina', 'wildwina@gmail.com', '$2y$12$1fKCVyfo9gVN/SRLvrtrxOmwRrDdREkQ5x86Y.YlxwSgxE/pHQsKG', 'Tugas Akhir', '2020'),
+('20340018', 'Angelicha Yuspitasari Suwingnyo', 'angel@gmail.com', '$2y$12$hU0jwJnl13tRq98WltttCuzFQ26nv2gYatwhRULzDQk37DEtHlRn.', 'Tugas Akhir', '2020'),
+('20340019', 'Elisabeth Yolanda Christin', 'yolanda@gmail.com', '$2y$12$q98TdSTE7kBf15hHIOp5Iu/i/oGS5nAATV0bzMhOP1bMfd1l5mfMS', 'Tugas Akhir', '2020'),
+('23124151', 'dewi', 'dewi@gmail.com', '$2y$12$pWgBOULqtNDKoplks4x.seWRMgYTTy5P7X.W9tLm/ghosstjiYUkK', 'Tugas Akhir', ''),
+('23400005', 'Alvin Widyadhana Kosman', 'alvin@gmail.com', '$2y$12$eEubwT3gYqgKzMF3WZwKTOCmWH5eP9TcOas8WPbCqC1FB7wq2vS8y', 'Tugas Akhir', '2020');
 
 -- --------------------------------------------------------
 
@@ -234,7 +265,7 @@ CREATE TABLE `mingguan` (
   `event_id` varchar(50) NOT NULL,
   `created_at` varchar(50) NOT NULL,
   `updated_at` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -243,13 +274,13 @@ CREATE TABLE `mingguan` (
 --
 
 CREATE TABLE `syarat` (
-  `id_syarat` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_syarat` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `npm` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `file` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `dateupload` date DEFAULT NULL,
+  `file` varchar(75) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dateupload` date NOT NULL,
   `dateac` date DEFAULT NULL,
-  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `syarat` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `syarat` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -257,7 +288,11 @@ CREATE TABLE `syarat` (
 --
 
 INSERT INTO `syarat` (`id_syarat`, `npm`, `file`, `dateupload`, `dateac`, `status`, `syarat`) VALUES
-('LP006', '123er', '2960201_1634466434.pdf', '2024-07-28', NULL, 'submit', NULL);
+('SY001', '19340019', 'google sheet audi.pdf', '2024-08-21', NULL, 'submit', 'kpk'),
+('SY002', '19340019', 'A.01 Pemberitahuan Jadwal Seminar Proposal.pdf', '2024-08-21', NULL, 'submit', 'sks'),
+('SY003', '19340019', 'SWTM-2088_Atlassian-Git-Cheatsheet.pdf', '2024-08-21', NULL, 'submit', 'inhouse'),
+('SY004', '19340019', 'SWTM-2088_Atlassian-Git-Cheatsheet.pdf', '2024-08-21', NULL, 'submit', 'wm'),
+('SY005', '19340019', 'SWTM-2088_Atlassian-Git-Cheatsheet.pdf', '2024-08-21', NULL, 'submit', 'kpk');
 
 --
 -- Indexes for dumped tables
@@ -371,7 +406,7 @@ ALTER TABLE `laporan_mingguan`
 -- Constraints for table `syarat`
 --
 ALTER TABLE `syarat`
-  ADD CONSTRAINT `syarat_ibfk_1` FOREIGN KEY (`npm`) REFERENCES `mahasiswa` (`npm`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `syarat_ibfk_1` FOREIGN KEY (`npm`) REFERENCES `mahasiswa` (`npm`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

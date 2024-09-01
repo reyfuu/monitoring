@@ -49,29 +49,73 @@
 
 
                 <form>
+               
                     <div class="card-body">
-
+                    
                       <div class="form-group">
                         <a data-toggle="modal" data-target="#modalInfo" class="btn btn-info">Lihat Status Proposal</a>
                       </div>
- 
-                        <div class="form-group">
-                            <label for="">Judul</label>
-                            <input type="text" class="form-control" value="{{ $judul }}" readonly>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="">Upload Revisi</label>
-                            <input type="file" class="form-control-file" name="file" required>
-                            @error('file')
-                                <small>{{$message}}</small>
-                            @enderror
-                        </div>
+                     
+                      <div class="modal fade " id="modalInfo" tabindex="-1" aria-labelledby="modalInfo" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                          <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="eventModalLabel">Status Proposal</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <label for="">Daftar Revisi</label>
+                            @foreach ($komment as $c)
+                         
+                            <p>{{ $c->isi }}</p>
+                            @endforeach
 
-                        <input type="hidden"  name="status" value="Proposal">
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            </table>
+                          </div>
                         </div>
+                      </div>
+                    </div>
+                    @foreach ($data as $d)
+                      <div class="form-group">
+                        <a href="{{ route('mhs.editProposal',['id'=>$d->laporan_id]) }}" class="btn btn-warning"> <i class="fas fa-pen"></i> Update Proposal</a>
+                      </div>
+                 
+                    <div class="form-group">
+                        <label for="">NPM</label>
+                        <input type="text" class="form-control" value="{{ $d->npm }}" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label for="">Nama</label>
+                      <input type="text" class="form-control" value="{{ $d->name }}" readonly>
+                  </div>
+                      <div class="form-group">
+                        <label for="">Judul</label>
+                        <input type="text" class="form-control" value="{{ $d->judul }}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for=""> Revisi</label>
+                       <a href="{{ route('mhs.viewProposal',['id'=> $d->dokumen]) }}" class="form-control">{{ $d->dokumen }}</a>
+
+                    </div>
+                    <div class="form-group">
+                      <label for="">Pembimbing</label>
+                      <input type="text" class="form-control" value="{{ $d->domen }}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="">Abstrak</label>
+                      <textarea name="" class="form-control" id="" cols="30" rows="10" readonly>
+                        {{ $d->deskripsi }}
+                      </textarea>
+                    </div>
+              
+                    
+                      @endforeach
+                        
                     </div>
                 </form>
               </div>
@@ -83,27 +127,8 @@
 
 
     <!-- /.content -->
-    @foreach ($comment as $c)
-        
+  
 
-    <div class="modal fade " id="modalInfo" tabindex="-1" aria-labelledby="modalRevisi" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="eventModalLabel">Status Proposal</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <label for="">Status Proposal</label>
-          <p>{{ $status }}</p>
-          <label for="">Daftar Revisi</label>
-            <p>{{ $c->isi }}</p>
-          </table>
-      </div>
-    </div>
-    @endforeach
     <!-- /.content -->
   </div>
     </div>

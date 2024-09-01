@@ -1,8 +1,5 @@
 @php
-    session_start();
-    if (isset($_SESSION['mahasiswa'])){
-        header("Location: auth/login.php");
-    }
+    
 @endphp
 {{-- mahasiswa template --}}
 <!DOCTYPE html>
@@ -24,6 +21,9 @@
       width: 450px
     }
   </style>
+  @notifyCss
+  <x-notify::notify />
+  @notifyJs
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
   <!-- Google Font: Source Sans Pro -->
@@ -76,7 +76,7 @@
           <p class="dropdown-item"></p>
           <p class="dropdown-item disabled">Hello,
             @php
-                echo session()->get('mahasiswa');
+                echo session()->get('username');
             @endphp </p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
@@ -89,7 +89,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('mhs.laporan') }}" class="brand-link">
+    <a href="{{ route('mhs.home') }}" class="brand-link">
       <img src="{{asset('img/logo.png')}}" alt="TAMP Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">TAMP</span>
     </a>
@@ -148,16 +148,25 @@
               <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Laporan Akhir
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('mhs.ta') }}" class="nav-link">
+                 Tugas Akhir
+             
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('mhs.bimbingan2') }}" class="nav-link">
+                 Bimbingan
+             
+                </a>
+              </li>
+            </ul>
           </li>
-          <li class="nav-item ">
-            <a href="{{ route('mhs.laporan') }}" class="nav-link">
-              <p class="mx-2">
-                Laporan 
-              </p>
-            </a>
-          </li>
+
       </nav>
       <!-- /.sidebar-menu -->
     </div>

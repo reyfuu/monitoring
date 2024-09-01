@@ -24,5 +24,6 @@ class Bimbingan extends Model
         'status',
         'npm',
         'tanggal',
+        'type',
     ];
 }

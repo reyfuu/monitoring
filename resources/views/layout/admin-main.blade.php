@@ -1,9 +1,4 @@
-@php
-        session_start();
-    if (isset($_SESSION['admin'])){
-        header("Location: auth/login.php");
-    }
-@endphp
+
 {{-- template admin --}}
 <!DOCTYPE html>
 <html lang="en">
@@ -12,13 +7,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   @yield('title')
   <style>
-    th{
-      white-space: nowrap;
-      width: 300px
+    table{
+
+      width: 450px;
+      word-wrap: break-word;
     }
+
     td{
-      white-space: nowrap;
-      width: 300px
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      width: 450px
     }
   </style>
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
@@ -72,7 +70,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
           <p class="dropdown-item"></p>
-          <p class="dropdown-item disabled">Hello, <?= $_SESSION['admin']?></p>
+          <p class="dropdown-item disabled">Hello,Admin</p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </li>
@@ -107,6 +105,13 @@
              <img src="{{ asset('img/home.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Dashboard
+              </p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a href="{{ route('admin.syarat') }}" class="nav-link">
+              <p class="mx-2">
+                Syarat
               </p>
             </a>
           </li>

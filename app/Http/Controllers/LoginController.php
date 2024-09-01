@@ -33,24 +33,23 @@ class LoginController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
-        $email= $request->email;
-        session_start();
+    $email= $request->email;
        
         if(Auth::guard('dosen')->attempt($data)){
             $username= dosen::select('name')->where('email','like','%'.$email.'%')->first()->name;
             $domen_id= dosen::select('domen_id')->where('email','like','%'.$email.'%')->first()->domen_id;
-            FacadesSession::put('domen_id',$domen_id);
-            FacadesSession::put('domen',$username);
+        //    $request->session()->put(['domen_id',$domen_id,'domen',$username]);
             return redirect()->route('dmn.dashboard');
         }elseif(Auth::guard('user')->attempt($data)){
-            $username= User::select('name')->where('email','like','%'.$email.'%')->first()->name;
-            $npm= User::select('npm')->where('email','like','%'.$email.'%')->first()->npm;
-            FacadesSession::put('npm',$npm);
-            FacadesSession::put ('mahasiswa',$username);
+            $npm= User::select('npm','name')->where('email','like','%'.$email.'%')->first();
+            Session::put('npm',$npm->npm );
+            Session::put('username',$npm->name );
+
+
+
             return redirect()->route('mhs.home');
         }
         elseif(Auth::guard('admin')->attempt($data)){
-            $_SESSION['admin']='admin';
             return redirect()->route('admin.dashboard');
         }
         else{
@@ -59,12 +58,15 @@ class LoginController extends Controller
     }
 
     // function to logout
-    public function logout(){
+    public function logout(Request $request){
   
-        session_start();
-        $_SESSION=[];
-        session_unset();
-        session_destroy();
+        if($request->session()->has('npm')){
+            $request->session()->forget('npm');
+        }elseif($request->session()->has('domen')){
+            $request->session()->forget('domen');
+        }
+  
+
         Auth::logout();
 
         return redirect()->route('login');

@@ -29,7 +29,10 @@ Route::get('/logout',[LoginController::class, 'logout'])->name('logout');
 Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function(){ 
     Route::get('/proposal',[MahasiswaController::class, 'proposal'])->name('proposal');
     Route::get('/proposal2',[MahasiswaController::class, 'proposal2'])->name('proposal2');
+    Route::get('/upload',[MahasiswaController::class,'upload'])->name('upload');
     Route::get('/proposal3',[MahasiswaController::class,'proposal3'])->name('proposal3');
+    Route::get('/editProposal/{id}',[MahasiswaController::class, 'editProposal'])->name('editProposal');
+    Route::get('/viewProposal/{id}',[MahasiswaController::class,'viewProposal'])->name('viewProposal');
 
     Route::get('/laporan',[MahasiswaController::class, 'laporan'])->name('laporan');
     Route::put('/laporan2/{id}',[MahasiswaController::class, 'laporan2'])->name('laporan2');
@@ -46,11 +49,15 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::get('/edit/{id}',[MahasiswaController::class, 'edit'])->name('edit');
     Route::put('/update2/{id}',[MahasiswaController::class, 'update2'])->name('update2');
 
+    Route::get('/bimbingan2',[MahasiswaController::class, 'bimbingan2'])->name('bimbingan2');
+
     Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
     Route::put('/store2',[MahasiswaController::class, 'store2'])->name('store2');
     Route::post('/store3',[MahasiswaController::class, 'store3'])->name('store3');
     Route::post('/store4',[MahasiswaController::class, 'store4'])->name('store4');
     Route::post('/store5',[MahasiswaController::class, 'store5'])->name('store5');
+    Route::put('/store5',[MahasiswaController::class],'store5')->name('putstore');
+
 
     Route::post('/update',[MahasiswaController::class, 'update'])->name('update');
     Route::put('/update3/{id}',[MahasiswaController::class, 'update3'])->name('update3');
@@ -62,10 +69,13 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
 
 Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],function(){
     Route::get('/proposal',[DosenController::class,'proposal'])->name('proposal');
+    Route::get('/proposal4',[DosenController::class,'proposal4'])->name('proposal4');
     Route::get('/proposal2',[DosenController::class,'proposal2'])->name('proposal2');
     Route::get('/proposal3',[DosenController::class,'proposal3'])->name('proposal3');
-    Route::get('/viewProposal/{id}',[DosenController::class,'viewProposal'])->name('viewProposal');
     Route::get('/dashboard',[DosenController::class,'dashboard'])->name('dashboard');
+    Route::get('/bimbingan',[DosenController::class,'dbimbingan'])->name('dbimbingan');
+    Route::get('/bimbingan/{id}',[DosenController::class,'bimbingan'])->name('bimbingan');
+
 
     Route::get('/laporan',[DosenController::class,'laporan'])->name('laporan');
     Route::put('/laporan2',[DosenController::class,'laporan2'])->name('laporan2');
@@ -78,7 +88,8 @@ Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],fu
     Route::post('/store',[DosenController::class,'store'])->name('store');
     Route::post('/store2',[DosenController::class,'store2'])->name('store2');
     Route::post('/update',[DosenController::class,'update'])->name('update');
-    Route::post('/update2',[DosenController::class,'update2'])->name('update2');
+    Route::put('/update2',[DosenController::class,'update2'])->name('update2');
+    Route::put('/update3',[DosenController::class,'update3'])->name('update3');
 
 });
 
@@ -88,6 +99,12 @@ Route::group(['prefix'=> 'admin', 'middleware' => ['auth:admin'],'as'=> 'admin.'
     Route::get('/home',[HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/user',[HomeController::class, 'index'])->name('index');
     Route::get('/ta',[HomeController::class, 'ta'])->name('ta');
+    Route::get('/syarat',[HomeController::class, 'syarat'])->name('syarat');
+    Route::get('/syarat/{id}',[HomeController::class, 'syarat2'])->name('syarat2');
+    Route::get('/viewSyarat/{id}',[HomeController::class,'viewSyarat'])->name('viewSyarat');
+    Route::put('/update3',[HomeController::class, 'update3'])->name('update3');
+    Route::get('/bimbingan/{id}',[HomeController::class,'bimbingan'])->name('bimbingan');
+    Route::get('/bimbingan2/{id}',[HomeController::class,'bimbingan2'])->name('bimbingan2');
 
     Route::get('/mahasiswa',[HomeController::class, 'mahasiswa'])->name('mahasiswa');
     Route::get('/domen',[HomeController::class, 'domen'])->name('domen');

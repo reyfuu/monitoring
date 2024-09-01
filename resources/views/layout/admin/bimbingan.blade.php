@@ -1,7 +1,7 @@
 @extends('layout.admin-main')
 @section('title')
 
-<title>Dashboard</title>
+<title>Dashboard Bimbingan</title>
 @endsection
 @section('content')
 <div class="content-wrapper">
@@ -21,57 +21,43 @@
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
-  <!-- /.content-header -->
 
-  <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
       {{-- <div class="row"> --}}
 
-
-        <table class="table table-hover text-nowrap">
+        <table class="table table-hover ">
           <thead>
             <tr>
-              <th>Nama Mahasiswa</th>
-              <th>Judul Tugas Akhir</th>
-              <th>Nama pembimbing</th>
-              <th>Tanggal Pengajuan</th>
+              <th>No</th>
+              <th>Tanggal</th>
+              <th>Bimbingan</th>
+              <th>Topik</th>
               <th>Status</th>
-              <th>Aksi</th>
+
               
             </tr>
           </thead>
           <tbody>
-
-              @foreach ($data as $d)
-
-              <tr>
-              <td>{{ $d->mahasiswa }}</td>
-              <td>{{ $d->judul }}</td>
-              <td>{{ $d->domen }}</td>
-              <td>{{ $d->mulai }}</td>
-              <td>{{ $d->status }}</td>
-              <td>
-                <a href="{{ route('admin.bimbingan2',['id'=>$d->npm]) }}" class="btn btn-primary"> Detail</a>
-               
-              </td>
-       
-            </tr>
+            @foreach ($data as $d)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $d->tanggal }}</td>
+                <td>{{ $d->name }}</td>
+                <td>{{ $d->topik }}</td>
+                <td>
+                @if ($d->status == 'disetujui')
+                  <i class="fa fa-check" style="color:#008d4c"></i></td>
+                @else
+                </td>
+                @endif
+              </tr>
             @endforeach
-            
           </tbody>
-      
         </table>
-        
-
-      <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
+        </div>
+    </div>
   </section>
-
-  <!-- /.content -->
 </div>
-<script>
-  
-</script>
 @endsection

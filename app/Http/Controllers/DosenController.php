@@ -16,42 +16,62 @@ use Carbon\Carbon;
 
 class DosenController extends Controller
 {
+    
     public function dashboard(){
+ 
         $domen_id= FacadesSession::get('domen_id');
-        $bimbingan= Bimbingan::
-        join('mahasiswa','mahasiswa.npm','=','bimbingan.npm')
-        ->where('domen_id',$domen_id)->get(['mahasiswa.status as status2','mahasiswa.name as nama','bimbingan.topik as topik'
-        ,'Bimbingan.bimbingan_id as id','bimbingan.isi as isi' ]);
+        $bimbingan= bimbingan::where('domen_id',$domen_id)->where('bimbingan.status','disetujui')->get(['bimbingan.status as status']);
+        $countMahasiswa= count($bimbingan);
+        $bimbingan2= bimbingan::where('status','submit')->get();
+        $countSubmit= count($bimbingan);
+        $dt_mahasiswa = User::join('bimbingan', 'mahasiswa.npm', '=', 'bimbingan.npm')
+        ->where('bimbingan.domen_id', '=', $domen_id)
+        ->selectRaw('mahasiswa.npm, COUNT(mahasiswa.npm) as count_npm')
+        ->groupBy('mahasiswa.npm')
+        ->get();
+        $i=0;
+            foreach ($dt_mahasiswa as $d){
+                if($d->count_npm >=14){
+                    $i+=1;
+                }
+            }
+        return view('layout.dsn.dbimbingan', compact('i','countSubmit','countMahasiswa'));
+    }
+    public function bimbingan($id){
+        $data= Bimbingan::where('npm','like','%'.$id.'%')->get();
 
+        return view('layout.dsn.bimbingan',compact('data'));
+    } 
+    public function dbimbingan(){
+        $domen_id= FacadesSession::get('domen_id');
+
+
+        $bimbingan= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
+        ->join('domen','domen.domen_id','=','laporan.domen_id')
+        ->where('type','Proposal')->where('domen.domen_id','=',$domen_id)
+        ->get(['mahasiswa.status as status2','mahasiswa.name as nama',
+        'laporan.judul as topik','laporan.laporan_id as id',
+        'mahasiswa.npm as npm'
+        ]);
+        $isi= Bimbingan::where('domen_id',$domen_id)->get();
+    
+
+        
+       
         return view('layout.dsn.dashboard',compact('bimbingan'));
     }
-
     public function proposal(){
-        $mahasiswa = user::all();
-        $proposal= laporan::all();
+   
         $domen_id= FacadesSession::get('domen_id');
-     
+    
+       
+        $data= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
+        ->join('domen', 'domen.domen_id','=','laporan.domen_id')->where('laporan.type','like','%Proposal%')
+        ->where('laporan.domen_id','like','%'.$domen_id.'%')
+        ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
+        'laporan.dokumen as dokumen','laporan.laporan_id']);
 
-        $combinedData=[];
-        foreach($mahasiswa as $mhs){
-            // $date= laporan::where('npm',$mhs->npm)->where('domen_id',$domen_id)->first()->tanggal_mulai;
-            // dd($date);
-
-            $laporan= $proposal->where('npm',$mhs->npm)->where('domen_id',$domen_id)->
-            where('type','Proposal')->sortDesc()->first();
-
-                $combinedData[] = [
-                    'proposal_id'  =>  $laporan ? $laporan->laporan_id : '0' ,
-                    'name' => $mhs->name,
-                    'email' => $mhs->email,
-                    'proposal'=> $laporan ? $laporan->type : '-',
-                    'has_proposal'=> !is_null($laporan),
-                    'dokumen'=> $laporan ? $laporan->status : 'belum submit',
-                    ];
-
-        }
-
-        return view('layout.dsn.dashboardp',compact('combinedData'));
+        return view('layout.dsn.dashboardp',compact('data'));
     }
     public function proposal2(Request $request){
         $id=$request->id;
@@ -109,25 +129,16 @@ class DosenController extends Controller
         return view('layout.dsn.laporan.laporan',compact('days','laporan_mingguan'));
     }
     public function ta(){
-        $mahasiswa = user::all();
-        $ta= laporan::all();
         $domen_id= FacadesSession::get('domen_id');
-
-        $combinedData=[];
-        foreach($mahasiswa as $mhs){
-            $laporan= $ta->where('npm',$mhs->npm)->where('domen_id',$domen_id)->
-            where('type','Laporan')->sortDesc()->first();
     
-            $combinedData[] = [
-                'ta_id'  =>  $laporan->laporan_id ,
-                'name' => $mhs->name,
-                'email' => $mhs->email,
-                'ta'=> $laporan ? $laporan->type : '-',
-                'has_ta'=> !is_null($laporan),
-                'dokumen'=> $laporan ? $laporan->status : 'belum submit',
-            ];
-        }
-        return view('layout.dsn.dashboardt',compact('combinedData'));
+       
+        $data= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
+        ->join('domen', 'domen.domen_id','=','laporan.domen_id')->where('laporan.type','like','%Tugas Akhir%')
+        ->where('laporan.domen_id','like','%'.$domen_id.'%')
+        ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
+        'laporan.dokumen as dokumen','laporan.laporan_id']);
+
+        return view('layout.dsn.dashboardt',compact('data'));
     }
     public function ta2(Request $request){
         $id= $request->id;
@@ -135,6 +146,7 @@ class DosenController extends Controller
 
         return view('layout.dsn.ta.ta',compact('ta','id'));
     }
+
     public function viewTa($id){
         return response()->file(public_path('/storage/dokumen/'.$id,['Content-Type'=>'application/pdf']));
     }
@@ -211,19 +223,34 @@ class DosenController extends Controller
         }
     }
     public function update2(Request $request){
-        $status= $request->status;
+        $data['status']=$request->status;
+
+        $id= $request->id_bimbingan;
+
+        Bimbingan::find($id)->update($data);
+        return redirect()->route('dmn.dashboard');
+
+    }
+    public function update3(Request $request){
+        $data['status']=$request->status;
         $id= $request->laporan_id;
-
-
-        if($status== 'Revisi'){
-            $status2 = 'perlu direvisi';
-            Bimbingan::find($id)->update(['status'=>$status2]);
-
-            return redirect()->route('dmn.dashboard');
+        $data['tanggal'] = Carbon::now()->format('Y-m-d');
+        $data['npm']= laporan::where('laporan_id','like','%'.$id.'%')->first()->npm;
+        $data['type']= laporan::where('laporan_id','like','%'.$id.'%')->first()->type;
+        $data['comment_id'] = IdGenerator::generate(
+            ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
+        $data['domen_id']= FacadesSession::get('domen_id');
+        $data['isi']= $request->comment;
+        comment::create($data);
+        $data2['status']= $request->status;
+        $status= $request->status;
+        laporan::where('laporan_id',$id)->update($data2);
+        if($status == 'Proposal'){
+            return redirect()->route('dmn.proposal');
         }else{
-            $status2 = 'selesai';
-            Bimbingan::find($id)->update(['status'=>$status2]);
-            return redirect()->route('dmn.dashboard');
+            return redirect()->route('dmn.ta');
         }
+
+
     }
 }

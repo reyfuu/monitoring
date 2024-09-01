@@ -16,15 +16,13 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item active">Dashboard Proposal</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
-  <!-- /.content-header -->
 
-  <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
@@ -58,33 +56,18 @@
                   </tr>
                 </thead>
                 <tbody>
-
-                  @foreach ($bimbingan as $data)
-
-
-                  <tr>
-                  <td>{{ $data->nama }}</td>
-                  <td>{{ $data->topik }}</td>
-                  <td>{{ $data->status2 }}</td>
-        
-          
-                  <td><a href="{{ route('dmn.bimbingan',['id'=>$data->npm]) }}" class="btn btn-primary" name="submit">Lihat Detail</a></td>
-     
-                  </tr>
-                 
-                @endforeach
+                    @foreach ($isi as $data)
+                        <td>{{ $data->npm }}</td>
+                    @endforeach
                 </tbody>
+
               </table>
-              {{-- end show data --}}
             </div>
             <!-- /.card-body -->
           </div>
           <!-- /.card -->
         </div>
       </div>
-      <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
+    </div>
   </section>
-  <!-- /.content -->
 </div>
-@endsection

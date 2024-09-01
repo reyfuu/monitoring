@@ -93,6 +93,13 @@
                             <small>{{$message}}</small>
                           @enderror
                         </div>
+                        <div class="form-group">
+                          <label>Angkatan</label>
+                          <input class="form-control" name="angkatan" placeholder="Enter Angkatan" required>
+                        </div>
+                        @error('angkatan')
+                        <small>{{$message}}</small>
+                      @enderror
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>

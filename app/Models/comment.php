@@ -6,16 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class comment extends Authenticatable
+class comment extends Model
 {
+    
+    use HasFactory;
     public $timestamps = false;
 
-    use HasFactory;
     public $incrementing = false;
-
+    protected $table='comment';
 
     protected $primaryKey='comment_id';
-    protected $table='comment';
+
 
     protected $fillable = [
         'comment_id',
@@ -23,5 +24,6 @@ class comment extends Authenticatable
         'npm',
         'tanggal',
         'isi',
+        'type',
     ];
 }

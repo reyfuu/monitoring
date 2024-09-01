@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Domen;
+use App\Models\Bimbingan;
 use App\Models\dosen;
 use App\Models\laporan;
+use App\Models\syarat;
 use App\Models\User;
+use GuzzleHttp\Psr7\Response;
 // use Dotenv\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use HasRoles;
 
@@ -20,21 +24,39 @@ class HomeController extends Controller
   // function to show dashboard
     public function dashboard(){
 
-        $data=laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
+        $data=laporan::distinct()->join('mahasiswa','mahasiswa.npm','=','laporan.npm')
         ->join('domen','domen.domen_id','=','laporan.domen_id')
+        ->join('bimbingan','bimbingan.npm','=','bimbingan.npm')
         ->where('laporan.type','Proposal')
         ->get(['mahasiswa.name as mahasiswa','domen.name as domen','laporan.laporan_id as id',
-        'laporan.judul as judul','laporan.tanggal_mulai as mulai','laporan.status as status']);
+        'laporan.judul as judul','laporan.tanggal_mulai as mulai','laporan.status as status',
+          'mahasiswa.npm as npm']);
         
-
         return view('layout.admin.dashboard',compact('data'));
+    }
+    public function bimbingan($id){
+      $data= Bimbingan::join('domen','domen.domen_id','=','bimbingan.domen_id')->where('bimbingan.npm',$id)->
+      where('type','Proposal')->
+      get(['domen.name as name','bimbingan.tanggal as tanggal','bimbingan.topik as topik'
+      ,'bimbingan.status as status','bimbingan.bimbingan_id as id']);
+
+      return view('layout.admin.bimbingan',compact('data'));
+    }
+    public function bimbingan2($id){
+      $data= Bimbingan::join('domen','domen.domen_id','=','bimbingan.domen_id')->where('bimbingan.npm',$id)->
+      where('type','Tugas AKhir')->
+      get(['domen.name as name','bimbingan.tanggal as tanggal','bimbingan.topik as topik'
+      ,'bimbingan.status as status','bimbingan.bimbingan_id as id']);
+
+      return view('layout.admin.bimbingan2',compact('data'));
     }
     public function ta(){
       $data=laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
       ->join('domen','domen.domen_id','=','laporan.domen_id')
-      ->where('laporan.type','Laporan')
+      ->where('laporan.type','Tugas Akhir')
       ->get(['mahasiswa.name as mahasiswa','domen.name as domen','laporan.laporan_id as id',
-      'laporan.judul as judul','laporan.tanggal_mulai as mulai','laporan.status as status']);
+      'laporan.judul as judul','laporan.tanggal_mulai as mulai','laporan.status as status',
+      'mahasiswa.npm as npm']);
 
       return view('layout.admin.ta',compact('data'));
     }
@@ -46,7 +68,29 @@ class HomeController extends Controller
       $data=dosen::get();
       return view('layout.admin.domen',compact('data'));
     }
+    public function syarat(){
+      $data=syarat::get();
 
+
+      $mahasiswa=user::distinct()->join('syarat','syarat.npm','=','mahasiswa.npm')
+      ->join('laporan','laporan.npm','=','mahasiswa.npm')
+      ->select('mahasiswa.npm as npm','mahasiswa.name as name','laporan.judul as judul')
+      ->get();
+
+      return view('layout.admin.syarat',compact('mahasiswa'));
+    }
+    public function syarat2(Request $request,$id){
+ 
+        $data= syarat::where('npm',$id)->get(['syarat','file','status','id_syarat','dateac']);
+
+        $data= $data->toArray();
+        return view('layout.admin.syarat2',compact('data'));
+    }
+    public function viewSyarat($id){
+      
+
+      return response()->file(public_path('storage/documents/'.$id,['Content-Type'=>'application/pdf']));
+    }
     // function to choose mahasiswa or dosen
     public function create(){
         return view('layout.admin.create.create');
@@ -96,6 +140,7 @@ class HomeController extends Controller
         $data2['type']= 'Proposal';
         $data2['domen_id']= $dosen_id;
         $data2['npm']=$request->npm;
+        $data['angkatan']=$request->angkatan;
         User::create($data);
         laporan::create($data2);
       }
@@ -148,6 +193,13 @@ class HomeController extends Controller
       return redirect()->route('admin.dashboard');
       }
     }
+    public function update3(Request $request){
+        $data['status']=$request->status;
+        $id= $request->id_syarat;
+        $data['dateac']=Carbon::now();
+        syarat::where('id_syarat',$id)->update($data);
+        return redirect()->route('admin.syarat');
+    }
     // function to delete mahasiswa
     public function delete(Request $request,$id){
       $data=User::find($id);
@@ -166,3 +218,4 @@ class HomeController extends Controller
       return redirect()->route('admin.dashboard');
     }
 }
+

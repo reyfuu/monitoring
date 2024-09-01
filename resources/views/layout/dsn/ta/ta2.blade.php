@@ -2,6 +2,7 @@
 @section('title')
 
 <title>Tugas Akhir</title>
+@notifyCss
 {{-- finish tugas akhir --}}
 @endsection
 @section('content')
@@ -51,5 +52,6 @@
     <!-- /.content -->
   </div>
     <!-- /.content -->
-
+    <x-notify::notify />
+    @notifyJs
 @endsection

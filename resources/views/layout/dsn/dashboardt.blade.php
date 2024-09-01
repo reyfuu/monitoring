@@ -51,28 +51,70 @@
                 <thead>
                   <tr>
                     <th>Nama</th>
-                    <th>Email</th>
+                    <th>Judul</th>
+                    <th>File</th>
                     <th>Status</th>
                     <th>Detail</th>
                   </tr>
                 </thead>
                 <tbody>
                   
-                  @foreach ($combinedData as $data)
+                  @foreach ($data as $d)
                   <tr>
-                  @if ($data['ta'])
-                      
-                      <td>{{ $data['name']}}</td>
-                      <td>{{ $data['email'] }}</td>
-                      <td>{{ $data['dokumen'] }}</td>
-                      <td><a href="{{ route('dmn.ta2',
-                      ['id'=>$data['ta_id']]) }}"><button class="btn btn-primary">Lihat Detail</button></a></td>
-
-                     
-                  @elseif(!$data['ta'])
-                  <td class="text-center">Tidak ada mahasiswa</td>
-                  @endif
-                </tr>
+                      <td>{{ $d->mahasiswa }}</td>
+                      <td>{{ $d->judul }}</td>
+                      <td>
+         
+                        <a href="{{ route('dmn.viewTa',['id'=>$d->dokumen]) }}">
+                          <img src="{{ asset('img/pdf.png') }}" style="width: 25% " alt="">
+                        </a>
+                      </td>
+                      <td>
+                        @if ($d->status == 'disetujui')
+                        <i class="fa fa-check" style="color:#008d4c"></i>
+                        @else
+                            
+                        @endif
+                      </td>
+                      <td>
+                        <a class=" btn btn-success text-end" data-toggle="modal" data-target="#modal{{ $d->laporan_id }}" >Ubah Persetujuan</a>
+                      </tr>
+                        <div class="modal fade" id="modal{{ $d->laporan_id }}">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title">Apakah Syarat Valid ?</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                              <form action="{{ route('dmn.update3')}}" method="post">
+                                @csrf
+                                @method('put')
+                                  <input type="text" name="laporan_id" value={{ $d->laporan_id }} hidden>
+                                  <label for="">Status</label>
+                                  <select name="status"  class="form-control">
+                                      <option value="disetujui">disetujui</option>
+                                      <option value="ditolak">ditolak</option>
+                                  </select>
+                                  <label for="">Komentar</label>
+                                  <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+                              </div>
+                              <div class="modal-footer justify-content-between">
+  
+                                  <div class="text-center">
+                                    <button type="submit" class="btn btn-primary text-center">Yes</button>
+                                  </div>
+                              </div>
+                             </form>
+                            </div>
+                            <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                        </div>
+                      </td>
+                    </tr>
                   @endforeach
 
                 </tbody>

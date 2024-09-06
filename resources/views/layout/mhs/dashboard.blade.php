@@ -26,14 +26,18 @@
   <section class="content">
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
+        @if($notifikasi == 'sudah acc')
+        <div class="alert alert-success">ada notifikasi</div>
 
+       
+    @endif
         <div class="small-box bg-info">
             <div class="inner">
                 <h3>{{ $count }}</h3>
                 <p>Jumlah Bimbingan yang diapprove</p>
             </div>
         </div>
-
+        
         <h3>Judul TA : {{ $judul->judul }}</h3>
         
       <!-- /.row (main row) -->

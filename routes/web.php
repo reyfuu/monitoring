@@ -33,6 +33,7 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::get('/proposal3',[MahasiswaController::class,'proposal3'])->name('proposal3');
     Route::get('/editProposal/{id}',[MahasiswaController::class, 'editProposal'])->name('editProposal');
     Route::get('/viewProposal/{id}',[MahasiswaController::class,'viewProposal'])->name('viewProposal');
+    Route::get('/editTa/{id}',[MahasiswaController::class, 'editTa'])->name('editTA');
 
     Route::get('/laporan',[MahasiswaController::class, 'laporan'])->name('laporan');
     Route::put('/laporan2/{id}',[MahasiswaController::class, 'laporan2'])->name('laporan2');
@@ -42,6 +43,8 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::get('/ta',[MahasiswaController::class, 'ta'])->name('ta');
     Route::get('/ta2',[MahasiswaController::class, 'ta2'])->name('ta2');
     Route::get('/ta3',[MahasiswaController::class, 'ta3'])->name('ta3');
+
+    Route::get('/magang',[MahasiswaController::class, 'magang'])->name('magang');
 
 
     Route::get('/bimbingan',[MahasiswaController::class, 'bimbingan'])->name('bimbingan');
@@ -57,6 +60,7 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::post('/store4',[MahasiswaController::class, 'store4'])->name('store4');
     Route::post('/store5',[MahasiswaController::class, 'store5'])->name('store5');
     Route::put('/store5',[MahasiswaController::class],'store5')->name('putstore');
+    Route::post('/store6',[MahasiswaController::class, 'store6'])->name('store6');
 
 
     Route::post('/update',[MahasiswaController::class, 'update'])->name('update');
@@ -90,6 +94,7 @@ Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],fu
     Route::post('/update',[DosenController::class,'update'])->name('update');
     Route::put('/update2',[DosenController::class,'update2'])->name('update2');
     Route::put('/update3',[DosenController::class,'update3'])->name('update3');
+    Route::put('/update4',[DosenController::class,'update4'])->name('update4');
 
 });
 

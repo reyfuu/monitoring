@@ -1,7 +1,7 @@
 @extends('layout.mhs-main')
 @section('title')
 
-<title>Proposal</title>
+<title>tugas AKhir</title>
 {{-- finish tugas akhir --}}
 @endsection
 @section('content')
@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Upload Tugas Akhir</h1>
+            <h1 class="m-0">Tugas Akhir</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

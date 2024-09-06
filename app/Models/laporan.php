@@ -25,6 +25,7 @@ class laporan extends Model
         'deskripsi',
         'domen_id',
         'dokumen',
+        'status',
         'type',
         'npm',
     ];

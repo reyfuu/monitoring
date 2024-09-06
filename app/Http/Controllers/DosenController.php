@@ -18,9 +18,10 @@ class DosenController extends Controller
 {
     
     public function dashboard(){
- 
-        $domen_id= FacadesSession::get('domen_id');
-        $bimbingan= bimbingan::where('domen_id',$domen_id)->where('bimbingan.status','disetujui')->get(['bimbingan.status as status']);
+
+        $domen_id= session('domen_id');
+        // $bimbingan= bimbingan::where('domen_id',$domen_id)->get(['bimbingan.status as status']);
+        $bimbingan = laporan::where('domen_id',$domen_id)->where('type','Proposal')->get();
         $countMahasiswa= count($bimbingan);
         $bimbingan2= bimbingan::where('status','submit')->get();
         $countSubmit= count($bimbingan);
@@ -29,13 +30,35 @@ class DosenController extends Controller
         ->selectRaw('mahasiswa.npm, COUNT(mahasiswa.npm) as count_npm')
         ->groupBy('mahasiswa.npm')
         ->get();
+        $submit= 'submit';
+
+        $coba = laporan::selectRaw("case when status= 'submit' then 'mahasiswa submit' 
+        when status= 'Revisi' then 'mahasiswa revisi dan sudah dilihat'
+        when status= 'Finish' then 'mahasiswa selesai'
+        when status= 'belum dilihat' then 'mahasiswa revisi tapi belum dilihat'
+        else 'mahasiswa belum submit'  end as status,count(status) as count ")
+        ->where('domen_id',$domen_id)->where('type','Proposal')->groupBy('status')->get();
+        $tugasAkhir= laporan::selectRaw("case when status= 'submit' then 'mahasiswa submit' 
+        when status= 'Revisi' then 'mahasiswa revisi dan sudah dilihat'
+        when status= 'Finish' then 'mahasiswa selesai'
+        when status= 'belum dilihat' then 'mahasiswa revisi tapi belum dilihat'
+        else 'mahasiswa belum submit'  end as status,count(status) as count ")
+        ->where('domen_id',$domen_id)->where('type','Tugas Akhir')->groupBy('status')->get();
+        $LaporanMingguan= laporan_mingguan::selectRaw("case 
+        when status= 'menunggu persetujuan mentor' then 'mahasiswa submit'
+        when status= 'revisi' then 'mahasiswa revisi'
+        when status= 'disetujui' then 'mahasiswa disetujui' end as status, count(status) as count")
+        ->where('domen_id',$domen_id)->groupBy('status')->get();
+
         $i=0;
             foreach ($dt_mahasiswa as $d){
                 if($d->count_npm >=14){
                     $i+=1;
                 }
             }
-        return view('layout.dsn.dbimbingan', compact('i','countSubmit','countMahasiswa'));
+        $mentor = dosen::select('status')->where('domen_id',$domen_id)->get();
+        return view('layout.dsn.dbimbingan', compact('i','countSubmit','countMahasiswa',
+        'coba','tugasAkhir','LaporanMingguan','mentor'));
     }
     public function bimbingan($id){
         $data= Bimbingan::where('npm','like','%'.$id.'%')->get();
@@ -62,15 +85,15 @@ class DosenController extends Controller
     }
     public function proposal(){
    
-        $domen_id= FacadesSession::get('domen_id');
+        $domen_id= session('domen_id');
     
        
         $data= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
         ->join('domen', 'domen.domen_id','=','laporan.domen_id')->where('laporan.type','like','%Proposal%')
         ->where('laporan.domen_id','like','%'.$domen_id.'%')
         ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
-        'laporan.dokumen as dokumen','laporan.laporan_id']);
-
+        'laporan.dokumen as dokumen','laporan.laporan_id','laporan.status_domen']);
+        // dd($data);
         return view('layout.dsn.dashboardp',compact('data'));
     }
     public function proposal2(Request $request){
@@ -83,27 +106,11 @@ class DosenController extends Controller
     }
     
     public function laporan(){
-        $mahasiswa = user::all();
-        $laporanMingguan= laporan_mingguan::all();
-        $domen_id= FacadesSession::get('domen_id');
-        $combinedData=[];
-        foreach($mahasiswa as $mhs){
-            $proposal= $laporanMingguan->where('npm',$mhs->npm)->where('domen_id',$domen_id);
-            
-            foreach($proposal as $p){
-                    $combinedData[] = [
-                        'name' => $mhs->name,
-                        'email' => $mhs->email,
-                        'has_laporan'=> !is_null($proposal),
-                        'status'=> $p->status ? $p->status : '-',
-                        'npm'=> $p->npm,
-                        'week'=> $p->week,
-                    ];
-            }
-    
-        }
+        $mahasiswa= laporan_mingguan::join('mahasiswa','mahasiswa.npm','=','laporan_mingguan.npm')
+        ->get(['laporan_mingguan.laporan_mingguan_id as id',
+        'mahasiswa.name as name','laporan_mingguan.status as status2','laporan_mingguan.isi as isi']);
+        return view('layout.dsn.dashboardla',compact('mahasiswa'));
 
-        return view('layout.dsn.dashboardl',compact('combinedData'));
     }
     public function laporan2(Request $request){
         $npm= $request->npm;
@@ -240,9 +247,17 @@ class DosenController extends Controller
         $data['comment_id'] = IdGenerator::generate(
             ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
         $data['domen_id']= FacadesSession::get('domen_id');
+        $data['notifikasi']= 'sudah acc';
         $data['isi']= $request->comment;
         comment::create($data);
-        $data2['status']= $request->status;
+
+        $data2['status_domen']=$request->status_domen;
+        if($data2['status_domen'] == 'disetujui'){
+            $data2['status']= 'Finish';
+        }else{
+            $data2['status']= 'belum dilihat';
+        }
+
         $status= $request->status;
         laporan::where('laporan_id',$id)->update($data2);
         if($status == 'Proposal'){

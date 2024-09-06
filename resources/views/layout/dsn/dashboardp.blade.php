@@ -64,13 +64,12 @@
                       <td>{{ $d->mahasiswa }}</td>
                       <td>{{ $d->judul }}</td>
                       <td>
-         
-                        <a href="{{ route('dmn.viewTa',['id'=>$d->dokumen]) }}">
+                        <a href="{{ route('dmn.viewTa',['id'=>$d->dokumen ?? 'BELUM SUBMIT.pdf']) }}">
                           <img src="{{ asset('img/pdf.png') }}" style="width: 25%" alt="">
                         </a>
                       </td>
                       <td>
-                        @if ($d->status == 'disetujui')
+                        @if ($d->status_domen == 'disetujui')
                         <i class="fa fa-check" style="color:#008d4c"></i>
                         @else
                             
@@ -94,12 +93,14 @@
                                 @method('put')
                                   <input type="text" name="laporan_id" value={{ $d->laporan_id }} hidden>
                                   <label for="">Status</label>
-                                  <select name="status"  class="form-control">
+                                  <select name="status_domen"  class="form-control">
                                       <option value="disetujui">disetujui</option>
+                                      <option value="direvisi">direvisi</option>
                                       <option value="ditolak">ditolak</option>
                                   </select>
                                   <label for="">Komentar</label>
                                   <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+                                  <input type="text" name="status" value="Proposal" hidden>
                               </div>
                               <div class="modal-footer justify-content-between">
   

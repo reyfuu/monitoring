@@ -113,14 +113,28 @@
                       @if ($d->status == 'disetujui' && $d->syarat== $file[$index])
                       <i class="fa fa-check" style="color:#008d4c"></i>
                      @else
-
+                  
                      @endif
-                      @endforeach
+                     @endforeach
                      
                     </td>
                     <td>
-                        <button  type="submit" class="btn btn-success text-end">Simpan</button>
+                      @if($status->isEmpty())
+                      <button  type="submit" class="btn btn-success text-end">Simpan</button>
+                      @endif 
+                     @foreach ($status as $stat)
+                         @if ($stat->status !== null && $stat->syarat !== null && $stat->syarat == $file[$index])
+                         <button  type="submit" class="btn btn-success text-end" disabled>Simpan</button>
+                         @else
+                         <button  type="submit" class="btn btn-success text-end">Simpan</button>
+                         @endif
+                     @endforeach
+
+      
+
+                 
                     </td>
+           
                   </form>
 
                 </tr>

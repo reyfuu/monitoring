@@ -65,7 +65,7 @@
                       <td>{{ $d->judul }}</td>
                       <td>
          
-                        <a href="{{ route('dmn.viewTa',['id'=>$d->dokumen]) }}">
+                        <a href="{{ route('dmn.viewTa',['id'=>$d->dokumen ?? 'BELUM SUBMIT.pdf']) }}">
                           <img src="{{ asset('img/pdf.png') }}" style="width: 25% " alt="">
                         </a>
                       </td>
@@ -94,8 +94,9 @@
                                 @method('put')
                                   <input type="text" name="laporan_id" value={{ $d->laporan_id }} hidden>
                                   <label for="">Status</label>
-                                  <select name="status"  class="form-control">
+                                  <select name="status_domen"  class="form-control">
                                       <option value="disetujui">disetujui</option>
+                                      <option value="direvisi">direvisi</option>
                                       <option value="ditolak">ditolak</option>
                                   </select>
                                   <label for="">Komentar</label>

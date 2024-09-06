@@ -1,8 +1,9 @@
 @php
-        session_start();
-    if (isset($_SESSION['domen'])){
-        header("Location: auth/login.php");
-    }
+if (Session::has('npm')) {
+    return route('login'); 
+}elseif(Session::has('admin')){
+  return route('login');
+}
 @endphp
 {{-- dosen template --}}
 <!DOCTYPE html>
@@ -12,17 +13,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   @yield('title')
   <style>
-    /* table{
-
+    table{
       width: 450px;
       word-wrap: break-word;
     }
-
     td{
       white-space: pre-wrap;
       word-wrap: break-word;
       width: 450px
-    } */
+    }
   </style>
   <link rel="stylesheet" href="{{asset('css/dsn-app.css')}}">
   <!-- Google Font: Source Sans Pro -->
@@ -75,7 +74,7 @@
         <div class="dropdown-menu dropdown-menu-lg">
           <p class="dropdown-item disabled">Hello, 
             @php
-                 echo session()->get('domen');
+                    echo session()->get('username');
             @endphp
           </p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
@@ -111,14 +110,16 @@
             </a>
           </li>
    
-          <li class="nav-item ">
-            <a href="{{ route('dmn.proposal') }}" class="nav-link">
-              <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
-              <p class="mx-2">
-                Proposal
-              </p>
-            </a>
-          </li>
+   @if (empty($mentor))
+   <li class="nav-item ">
+    <a href="{{ route('dmn.proposal') }}" class="nav-link">
+      <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
+      <p class="mx-2">
+        Proposal
+      </p>
+    </a>
+  </li>
+   @endif
           <li class="nav-item ">
             <a href="{{ route('dmn.ta') }}" class="nav-link">
               <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
@@ -127,10 +128,20 @@
               </p>
             </a>
           </li>
+          @if (empty($mentor))
           <li class="nav-item">
             <a href="{{ route('dmn.dbimbingan') }}" class="nav-link">
               <p class="mx-2">
                 Bimbingan
+              </p>
+            </a>
+          </li>
+          @endif
+        
+          <li class="nav-item">
+            <a href="{{ route('dmn.laporan')}}" class="nav-link">
+              <p class="mx-2">
+                Laporan
               </p>
             </a>
           </li>
@@ -154,40 +165,7 @@
 <!-- ./wrapper -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script>
-    
-  $(".step").click( function() {
-$(this).addClass("active").prevAll().addClass("active");
-$(this).nextAll().removeClass("active");
-});
 
-$(".step01").click( function() {
-$("#line-progress").css("width", "3%");
-$(".discovery").addClass("active").siblings().removeClass("active");
-});
-
-$(".step02").click( function() {
-$("#line-progress").css("width", "25%");
-$(".strategy").addClass("active").siblings().removeClass("active");
-});
-
-$(".step03").click( function() {
-$("#line-progress").css("width", "50%");
-$(".creative").addClass("active").siblings().removeClass("active");
-});
-
-$(".step04").click( function() {
-$("#line-progress").css("width", "75%");
-$(".production").addClass("active").siblings().removeClass("active");
-});
-
-$(".step05").click( function() {
-$("#line-progress").css("width", "100%");
-$(".analysis").addClass("active").siblings().removeClass("active");
-});
-
-
-  </script>
 <!-- jQuery -->
 <script src="{{asset('lte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -219,5 +197,7 @@ $(".analysis").addClass("active").siblings().removeClass("active");
 <!-- <script src="{{asset('lte/dist/js/demo.js')}}"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="{{asset('lte/dist/js/pages/dashboard.js')}}"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@yield('script')
 </body>
 </html>

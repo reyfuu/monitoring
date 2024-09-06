@@ -38,18 +38,20 @@ class LoginController extends Controller
         if(Auth::guard('dosen')->attempt($data)){
             $username= dosen::select('name')->where('email','like','%'.$email.'%')->first()->name;
             $domen_id= dosen::select('domen_id')->where('email','like','%'.$email.'%')->first()->domen_id;
-        //    $request->session()->put(['domen_id',$domen_id,'domen',$username]);
+            Session::put('domen_id',$domen_id );
+            Session::put('username',$username);
             return redirect()->route('dmn.dashboard');
         }elseif(Auth::guard('user')->attempt($data)){
-            $npm= User::select('npm','name')->where('email','like','%'.$email.'%')->first();
+            $npm= User::select('npm','name','status')->where('email','like','%'.$email.'%')->first();
             Session::put('npm',$npm->npm );
             Session::put('username',$npm->name );
-
-
-
+            if($npm->status == 'Magang' ){
+              return redirect()->route('mhs.laporan');
+            }
             return redirect()->route('mhs.home');
         }
         elseif(Auth::guard('admin')->attempt($data)){
+            Session::put('admin','admin' );
             return redirect()->route('admin.dashboard');
         }
         else{
@@ -60,15 +62,9 @@ class LoginController extends Controller
     // function to logout
     public function logout(Request $request){
   
-        if($request->session()->has('npm')){
-            $request->session()->forget('npm');
-        }elseif($request->session()->has('domen')){
-            $request->session()->forget('domen');
-        }
-  
-
+    
         Auth::logout();
-
+        Session::flush();
         return redirect()->route('login');
     }
 }

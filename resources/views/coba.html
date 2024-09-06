@@ -6,27 +6,34 @@
   <title>Document</title>
 </head>
 <body>
-<form action="coba.php" method="post" enctype="multipart/form-data">
-  <table>
-    <tr>
-      <td>
-        <label for="file1">File 1:</label>
-        <input type="file" name="file1" id="file1">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label for="file2">File 2:</label>
-        <input type="file" name="file2" id="file2">
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <button type="submit">Submit</button>
-      </td>
-    </tr>
-  </table>
-</form>
+  <div>
+    <canvas id="myChart"></canvas>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>

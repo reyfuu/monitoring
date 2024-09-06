@@ -312,8 +312,12 @@ ul li .active .uil{
     padding: 5px; /* Optional: Add padding */
   }
   #background{
-    background-image: url('../img/background.jpg') ;
+    background-image: url('../img/background dosen.png') ;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+  }
+  .chartBox{
+    max-width: 600px;
+    max-height: 400px;
   }

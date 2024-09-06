@@ -1,4 +1,11 @@
 
+@php
+if (Session::has('npm')) {
+    return route('login'); 
+}elseif(Session::has('domen_id')){
+  return route('login');
+}
+@endphp
 {{-- template admin --}}
 <!DOCTYPE html>
 <html lang="en">

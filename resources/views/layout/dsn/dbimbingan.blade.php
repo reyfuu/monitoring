@@ -33,17 +33,156 @@
                 <p>Total mahasiswa yang dibimbing</p>
             </div>
         </div>
-
+        @if (empty($mentor))
         <div class="small-box bg-primary">
-            <div class="inner">
-                <h3>{{ $i }}</h3>
-                <p>Total mahasiswa yang sudah validasi</p>
-            </div>
-        </div>
-        
+          <div class="inner">
+              <h3>{{ $i }}</h3>
+              <p>Total mahasiswa yang sudah validasi</p>
+          </div>
+      </div>
+        @endif
+
       <!-- /.row (main row) -->
+      @if (!empty($mentor))
+        <div class="container" style="width: 400px">
+
+            <div class="chartbox">
+              <h3 class="text-center">Laporan Mingguan</h3>
+              <canvas id="LaporanMingguan" width="100" height="100" ></canvas>
+            </div>
+
+        </div>
+      @else
+      <div class="container">
+        <div class="row ">
+          <div class="chartBox">
+            <h3 class="text-center">Proposal</h3>
+            <canvas id="myChart" width="400" height="400" style="padding: 50px"></canvas>
+          </div>
+          <div class="chartBox">
+            <h3 class="text-center">Tugas Akhir</h3>
+            <canvas id="tugasAkhir" width="400" height="400" style="padding: 50px"></canvas>
+          </div>
+      </div>    
+      @endif
 
   </section>
   <!-- /.content -->
 </div>
+@section('script')
+<script>
+  const ctx = document.getElementById('myChart');
+  const ctx2 = document.getElementById('tugasAkhir');
+  const ctx3 = document.getElementById('LaporanMingguan');
+
+  new Chart(ctx3, {
+    type: 'pie',
+    data: {
+      labels:@json($LaporanMingguan->map(fn ($LaporanMingguan) => $LaporanMingguan->status)),
+      datasets: [{
+        label:'jumlah mahasiswa',
+        data: @json($LaporanMingguan->map(fn ($LaporanMingguan) => $LaporanMingguan->count)),
+
+        hoverOffset:4
+      }]
+
+    },
+    options: {
+      plugins: {
+        legend: {
+            display: false // Sembunyikan legenda
+        },
+        datalabels: {
+            display: false // Sembunyikan label pada potongan pie
+        }
+    },
+    scales: {
+        xAxes: [{
+            ticks: {
+                display: false
+            }
+        }],
+        yAxes: [{
+            ticks: {
+                display: false
+            }
+        }]
+    }
+}
+    
+  });
+
+  new Chart(ctx2, {
+    type: 'pie',
+    data: {
+      labels:@json($tugasAkhir->map(fn ($tugasAkhir) => $tugasAkhir->status)),
+      datasets: [{
+        label:'jumlah mahasiswa',
+        data: @json($tugasAkhir->map(fn ($tugasAkhir) => $tugasAkhir->count)),
+
+        hoverOffset:4
+      }]
+
+    },
+    options: {
+      plugins: {
+        legend: {
+            display: false // Sembunyikan legenda
+        },
+        datalabels: {
+            display: false // Sembunyikan label pada potongan pie
+        }
+    },
+    scales: {
+        xAxes: [{
+            ticks: {
+                display: false
+            }
+        }],
+        yAxes: [{
+            ticks: {
+                display: false
+            }
+        }]
+    }
+}
+    
+  });
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: @json($coba->map(fn ($coba) => $coba->status)),
+      datasets: [{
+        label: 'Jumlah dari mahasiswa',
+        data: @json($coba->map(fn ($coba) => $coba->count)),
+
+        hoverOffset:4
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+            display: false // Sembunyikan legenda
+        },
+        datalabels: {
+            display: false // Sembunyikan label pada potongan pie
+        }
+    },
+    scales: {
+        xAxes: [{
+            ticks: {
+                display: false
+            }
+        }],
+        yAxes: [{
+            ticks: {
+                display: false
+            }
+        }]
+    }
+}
+  });
+
+</script>
+@endsection
 @endsection

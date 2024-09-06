@@ -119,7 +119,7 @@ class HomeController extends Controller
       $data['password']=Hash::make($request->password); 
       $data['status']=$request->status;
       $data2['tanggal_mulai']=$request->tanggal_mulai;
-      $data2['tanggal_berakhir']=date('d-m-y',strtotime("+3 months"));
+      $data2['tanggal_berakhir']=date('Y-m-d',strtotime("+6 months"));
       $data2['laporan_id']= IdGenerator::generate(
         ['table'=> 'laporan','field'=> 'laporan_id','length'=>5,'prefix'=>'LP']);
        
@@ -133,6 +133,11 @@ class HomeController extends Controller
           ['table'=> 'domen','field'=> 'domen_id','length'=>5,'prefix'=>'MN']);
         dosen::create($data);
       }
+      // elseif($status == 'Magang'){
+      //   $data['npm']= $request->npm;
+      //   $data['email']= $request->email;
+      //   $data['password']= Hash::make($request->password);
+      // }
       else{
         $data['npm']=$request->npm;
         $name=$request->dosen;
@@ -140,14 +145,27 @@ class HomeController extends Controller
         $data2['type']= 'Proposal';
         $data2['domen_id']= $dosen_id;
         $data2['npm']=$request->npm;
+        $data2['status']= 'submit';
         $data['angkatan']=$request->angkatan;
         User::create($data);
         laporan::create($data2);
+
+        $data3['tanggal_mulai']=$request->tanggal_mulai;
+        $data3['tanggal_berakhir']=date('Y-m-d',strtotime("+6 months"));
+        $data3['laporan_id']= IdGenerator::generate(
+          ['table'=> 'laporan','field'=> 'laporan_id','length'=>5,'prefix'=>'LP']);
+          $data3['type']= 'Tugas Akhir';
+          $data3['domen_id']= $dosen_id;
+          $data3['npm']=$request->npm;
+          $data3['status']= 'submit';
+          laporan::create($data3);
       }
+  
 
-
+      //   dd($data3);
       return redirect()->route('admin.dashboard');
     }
+    
     // function to navigate edit mahasiswa
     public function edit(Request $request,$id){
       $id2= User::find($id);

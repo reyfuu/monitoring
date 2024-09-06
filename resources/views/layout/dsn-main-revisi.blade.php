@@ -1,8 +1,5 @@
 @php
-        session_start();
-    if (isset($_SESSION['domen'])){
-        header("Location: auth/login.php");
-    }
+      
 @endphp
 {{-- dosen revisi template --}}
 <!DOCTYPE html>

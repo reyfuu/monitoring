@@ -1,5 +1,9 @@
 @php
-    
+if (Session::has('domen_id')) {
+    return route('login'); 
+}elseif(Session::has('admin')){
+  return route('login');
+}
 @endphp
 {{-- mahasiswa template --}}
 <!DOCTYPE html>
@@ -21,9 +25,7 @@
       width: 450px
     }
   </style>
-  @notifyCss
-  <x-notify::notify />
-  @notifyJs
+
   <link rel="stylesheet" href="{{asset('css/app.css')}}">
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
   <!-- Google Font: Source Sans Pro -->

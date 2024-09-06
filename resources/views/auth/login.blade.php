@@ -22,7 +22,7 @@
     <div class="card-header text-center  ">
       <a href="{{ route('login') }}'}}" class="h1"><b>TAMP</b></a>
       <img src="{{asset('img/logo_IF.png')}}" class="" style="width: 30%; margin-bottom:20px" alt="">
-
+      <p class="text-center"> <b>T</b>hesis <b>A</b>nd <b>M</b>onitoring <b>P</b>latform</p>
     </div>
     <div class="text-right">
    
@@ -62,6 +62,7 @@
 
           <!-- /.col -->
         </div>
+        <p class="text-center"> Version 1.0</p>
       </form>
 
       <!-- /.social-auth-links -->

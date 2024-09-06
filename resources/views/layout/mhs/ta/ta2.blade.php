@@ -1,7 +1,7 @@
 @extends('layout.mhs-main')
 @section('title')
 
-<title>Proposal</title>
+<title>Tugas AKhir</title>
 {{-- revisi proposal --}}
 @endsection
 @section('content')
@@ -78,7 +78,7 @@
                     </div>
 
                       <div class="form-group">
-                        <a href="{{ route('mhs.editProposal',['id'=>$id]) }}" class="btn btn-warning"> <i class="fas fa-pen"></i> Update
+                        <a href="{{ route('mhs.editTA',['id'=>$id]) }}" class="btn btn-warning"> <i class="fas fa-pen"></i> Update
                            Tugas Akhir</a>
                       </div>
                       @foreach ($proposal as $data)
@@ -107,9 +107,7 @@
 
                     <div class="form-group">
                       <label for="">Abstrak</label>
-                      <textarea name="" class="form-control" id="" cols="30" rows="10" readonly>
-                        {{ $data->deskripsi }}
-                      </textarea>
+                      <textarea name="" class="form-control" id="" cols="10" rows="10" readonly>{{$data->deskripsi }}</textarea>
                     </div>
               
                     

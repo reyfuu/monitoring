@@ -26,61 +26,14 @@
           <div class="col-md-12">
             <div class="card card-primary">
                 {{-- show days --}}
-                  @foreach ($days as $day)
-                  <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">{{ $day['date'] }}</h5>
-                    <br>
-                    <div class="text-center">
-                      @if ($day['has_report'])
-
-                        <p >{{ $day['isi'] }}</p>
-                        <a class="btn btn-secondary activity-button" data-toggle="modal" data-target="#modalHarianEdit{{ $day['id'] }}" 
-                        data-isi="{{ $day['isi'] }}"> <i class="fas fa-pen"></i> Edit</a>
-               
-                  
-                      @else
-                      <button type="button" class="btn btn-primary activity-button " data-toggle="modal" data-target="#modalHarian"
-                      data-date="{{ $day['date'] }}">
-                        Buat Laporan Harian
-                      </button>
-                      @endif
-                    {{-- end show days --}}
-                    </div>
-                  </div>
-                </div>
-                {{-- modal Harian edit --}}
-                <div class="modal fade" id="modalHarianEdit{{ $day['id'] }}" tabindex="-1" aria-labelledby="modalHarianEdit{{ $day['id'] }}" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="modalHarianEdit">Edit Laporan Harian</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <form action="{{ route('mhs.update3',['id'=> $day['id']]) }}" method="post">
-                        @csrf
-                        @method('put')
-                        <textarea class="form-control" rows="5" name="isi" >{{ $day['isi'] }}</textarea>
-              
-
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                      </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-                  @endforeach
+    
 
                   <div class="card">
                     <div class="card-body">
                       <h5 class="card-title">Rangkuman</h5>
                       <br>
                       <div class="text-center">
-                      @if ($week->isi)
+                      @if (!empty($week))
                           <a class="btn btn-secondary activity-button" data-toggle="modal" data-target="#modalRangkumanEdit" data-isi="{{ $week->isi }}"> <i class="fas fa-pen"></i> Edit</a>
                       @else
                       <button type="button" class="btn btn-primary activity-button " data-toggle="modal" data-target="#modalRangkuman">
@@ -152,7 +105,8 @@
                           </div>
                         </div>
                          {{-- modal Rangkuman edit --}}
-                        
+                        @if (!empty($week))
+
                          <div class="modal fade" id="modalRangkumanEdit" tabindex="-1" aria-labelledby="modalRangkumanEdit" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
@@ -175,7 +129,9 @@
                               </form>
                             </div>
                           </div>
-                        </div>                       
+                        </div>     
+                                                    
+                        @endif                  
                         {{-- modal & form end --}}
                     </div>
                   </div>

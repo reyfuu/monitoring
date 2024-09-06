@@ -77,9 +77,7 @@
 
                     <div class="form-group">
                       <label for="">Abstrak</label>
-                      <textarea name="abstrak" class="form-control" name="abstrak" cols="30" rows="10" >
-                        {{ $data->deskripsi }}
-                      </textarea>
+                      <textarea name="abstrak" class="form-control" name="abstrak" cols="30" rows="10" >{{ $data->deskripsi }}</textarea>
                     </div> 
                     <input type="text" name="status" value="{{ $data->type }}" hidden >   
                       @endforeach

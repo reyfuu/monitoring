@@ -36,7 +36,20 @@
       </div>
     </div>
     <!-- /.content-header -->
- 
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+  @endif
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
     <!-- Main content -->
     <section class="content">
@@ -108,9 +121,7 @@
 
                     <div class="form-group">
                       <label for="">Abstrak</label>
-                      <textarea name="" class="form-control" id="" cols="30" rows="10" readonly>
-                        {{ $d->deskripsi }}
-                      </textarea>
+                      <textarea name="" class="form-control" id="" cols="30" rows="10" readonly>{{ $d->deskripsi }}</textarea>
                     </div>
               
                     

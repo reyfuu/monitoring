@@ -1,4 +1,4 @@
-@extends('layout.mhs-main')
+@extends('layout.mhs-main-magang')
 @section('title')
 
 <title>Laporan Mingguan</title>

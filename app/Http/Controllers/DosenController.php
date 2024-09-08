@@ -44,11 +44,7 @@ class DosenController extends Controller
         when status= 'belum dilihat' then 'mahasiswa revisi tapi belum dilihat'
         else 'mahasiswa belum submit'  end as status,count(status) as count ")
         ->where('domen_id',$domen_id)->where('type','Tugas Akhir')->groupBy('status')->get();
-        $LaporanMingguan= laporan_mingguan::selectRaw("case 
-        when status= 'menunggu persetujuan mentor' then 'mahasiswa submit'
-        when status= 'revisi' then 'mahasiswa revisi'
-        when status= 'disetujui' then 'mahasiswa disetujui' end as status, count(status) as count")
-        ->where('domen_id',$domen_id)->groupBy('status')->get();
+
 
         $i=0;
             foreach ($dt_mahasiswa as $d){
@@ -59,6 +55,19 @@ class DosenController extends Controller
         $mentor = dosen::select('status')->where('domen_id',$domen_id)->get();
         return view('layout.dsn.dbimbingan', compact('i','countSubmit','countMahasiswa',
         'coba','tugasAkhir','LaporanMingguan','mentor'));
+    }
+    public function dashboardm(){
+        $domen_id = session('domen_id');
+        $mahasiswa= laporan_mingguan::where('domen_id',$domen_id)->get();
+        $countMahasiswa= count($mahasiswa);
+        $LaporanMingguan= laporan_mingguan::selectRaw("case 
+        when status= 'menunggu persetujuan mentor' then 'mahasiswa submit'
+        when status= 'revisi' then 'mahasiswa revisi'
+        when status= 'disetujui' then 'mahasiswa disetujui'
+        else 'mahasiswa belum submit' end as status, count(status) as count")
+        ->where('domen_id',$domen_id)->groupBy('status')->get();
+
+        return view('layout.dsn.dashboardm',compact('countMahasiswa','LaporanMingguan'));
     }
     public function bimbingan($id){
         $data= Bimbingan::where('npm','like','%'.$id.'%')->get();

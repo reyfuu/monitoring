@@ -36,7 +36,13 @@ class MahasiswaController extends Controller
 
         return view('layout.mhs.dashboard',compact('count','judul','notifikasi'));
     }
+    public function magang(){
+        $npm= session('npm');
+        $bimbingan = laporan_mingguan::where('npm',$npm)->where('status','disetujui')->get();
+        $count= count($bimbingan);
 
+        return view('layout.mhs.dashboard2',compact('count'));
+    }
     // function show proposal when  submit
     public function proposal(){
         $npm= session('npm');
@@ -183,11 +189,11 @@ class MahasiswaController extends Controller
         $tanggal_berakhir= laporan::select('tanggal_berakhir')->where('npm','like','%'.$npm.'%')->first()->tanggal_berakhir;
         $endDate = Carbon::parse($tanggal_berakhir);
         
-        $currentMonth= $startDate->month;
-        $endMonth= $endDate->month;
+        $currentMonth= Carbon::parse($tanggal_mulai)->format('Y-m-d'); 
+        $endMonth= Carbon::parse($tanggal_berakhir)->format('Y-m-d');
         $comment= comment::orderBy('tanggal','desc')->where('npm','like','%'.$npm.'%')->take(5)->get();
         // Loop through each month (February to July)
-        for($currentMonth ;$currentMonth<=$endMonth;$currentMonth++) {
+        while($currentMonth <= $endMonth) {
 
             while ($startDate<=$endDate) {
 

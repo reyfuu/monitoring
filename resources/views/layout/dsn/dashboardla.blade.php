@@ -1,4 +1,4 @@
-@extends('layout.dsn-main')
+@extends('layout.dsn-main-revisi')
 @section('title')
 
 <title>Dashboard </title>

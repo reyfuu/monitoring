@@ -43,16 +43,7 @@
         @endif
 
       <!-- /.row (main row) -->
-      @if (!empty($mentor))
-        <div class="container" style="width: 400px">
 
-            <div class="chartbox">
-              <h3 class="text-center">Laporan Mingguan</h3>
-              <canvas id="LaporanMingguan" width="100" height="100" ></canvas>
-            </div>
-
-        </div>
-      @else
       <div class="container">
         <div class="row ">
           <div class="chartBox">
@@ -64,7 +55,7 @@
             <canvas id="tugasAkhir" width="400" height="400" style="padding: 50px"></canvas>
           </div>
       </div>    
-      @endif
+
 
   </section>
   <!-- /.content -->

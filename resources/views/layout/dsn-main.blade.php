@@ -109,17 +109,14 @@ if (Session::has('npm')) {
               </p>
             </a>
           </li>
-   
-   @if (empty($mentor))
-   <li class="nav-item ">
-    <a href="{{ route('dmn.proposal') }}" class="nav-link">
-      <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
-      <p class="mx-2">
-        Proposal
-      </p>
-    </a>
-  </li>
-   @endif
+           <li class="nav-item ">
+            <a href="{{ route('dmn.proposal') }}" class="nav-link">
+              <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
+              <p class="mx-2">
+                Proposal
+              </p>
+            </a>
+          </li>
           <li class="nav-item ">
             <a href="{{ route('dmn.ta') }}" class="nav-link">
               <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
@@ -128,7 +125,7 @@ if (Session::has('npm')) {
               </p>
             </a>
           </li>
-          @if (empty($mentor))
+    
           <li class="nav-item">
             <a href="{{ route('dmn.dbimbingan') }}" class="nav-link">
               <p class="mx-2">
@@ -136,7 +133,7 @@ if (Session::has('npm')) {
               </p>
             </a>
           </li>
-          @endif
+
         
           <li class="nav-item">
             <a href="{{ route('dmn.laporan')}}" class="nav-link">
@@ -145,6 +142,7 @@ if (Session::has('npm')) {
               </p>
             </a>
           </li>
+    
       </nav>
       <!-- /.sidebar-menu -->
     </div>

@@ -34,6 +34,7 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::get('/editProposal/{id}',[MahasiswaController::class, 'editProposal'])->name('editProposal');
     Route::get('/viewProposal/{id}',[MahasiswaController::class,'viewProposal'])->name('viewProposal');
     Route::get('/editTa/{id}',[MahasiswaController::class, 'editTa'])->name('editTA');
+    Route::get('/magang',[MahasiswaController::class,'magang'])->name('magang');
 
     Route::get('/laporan',[MahasiswaController::class, 'laporan'])->name('laporan');
     Route::put('/laporan2/{id}',[MahasiswaController::class, 'laporan2'])->name('laporan2');
@@ -79,6 +80,7 @@ Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],fu
     Route::get('/dashboard',[DosenController::class,'dashboard'])->name('dashboard');
     Route::get('/bimbingan',[DosenController::class,'dbimbingan'])->name('dbimbingan');
     Route::get('/bimbingan/{id}',[DosenController::class,'bimbingan'])->name('bimbingan');
+    Route::get('/dashboardm',[DosenController::class,'dashboardm'])->name('dashboardm');
 
 
     Route::get('/laporan',[DosenController::class,'laporan'])->name('laporan');

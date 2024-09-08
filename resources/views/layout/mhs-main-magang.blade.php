@@ -102,7 +102,7 @@ if (Session::has('domen_id')) {
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item ">
-            <a href="{{ route('mhs.home') }}" class="nav-link">
+            <a href="{{ route('mhs.magang') }}" class="nav-link">
              <img src="{{ asset('img/home.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Dashboard
@@ -114,15 +114,7 @@ if (Session::has('domen_id')) {
             <a href="{{ route('mhs.laporan') }}" class="nav-link">
               <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
               <p class="mx-2">
-                laporan
-              </p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a href="{{ route('dmn.ta') }}" class="nav-link">
-              <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
-              <p class="mx-2">
-                Laporan Akhir
+                Laporan
               </p>
             </a>
           </li>

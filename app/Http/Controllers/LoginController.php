@@ -36,17 +36,22 @@ class LoginController extends Controller
     $email= $request->email;
        
         if(Auth::guard('dosen')->attempt($data)){
-            $username= dosen::select('name')->where('email','like','%'.$email.'%')->first()->name;
+            $username= dosen::select('name', 'status')->where('email','like','%'.$email.'%')->first();
             $domen_id= dosen::select('domen_id')->where('email','like','%'.$email.'%')->first()->domen_id;
             Session::put('domen_id',$domen_id );
-            Session::put('username',$username);
-            return redirect()->route('dmn.dashboard');
+            Session::put('username',$username->name); 
+            if($username->status == 'Mentor'){
+                return redirect()->route('dmn.dashboardm');
+            }else{
+                return redirect()->route('dmn.dashboard');
+            }
+  
         }elseif(Auth::guard('user')->attempt($data)){
             $npm= User::select('npm','name','status')->where('email','like','%'.$email.'%')->first();
             Session::put('npm',$npm->npm );
             Session::put('username',$npm->name );
             if($npm->status == 'Magang' ){
-              return redirect()->route('mhs.laporan');
+              return redirect()->route('mhs.magang');
             }
             return redirect()->route('mhs.home');
         }

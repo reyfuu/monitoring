@@ -27,18 +27,20 @@
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
         @if($notifikasi == 'sudah acc')
-        <div class="alert alert-success">ada notifikasi</div>
-
-       
+        <div class="alert alert-success">Tugas Akhir sudah di acc</div>       
     @endif
+
+      
         <div class="small-box bg-info">
             <div class="inner">
                 <h3>{{ $count }}</h3>
                 <p>Jumlah Bimbingan yang diapprove</p>
             </div>
         </div>
-        
-        <h3>Judul TA : {{ $judul->judul }}</h3>
+        @foreach ($judul as $j)
+        <h3>Judul TA : {{ $j->judul }}</h3>
+        @endforeach
+
         
       <!-- /.row (main row) -->
 

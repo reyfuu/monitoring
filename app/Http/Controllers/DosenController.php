@@ -54,7 +54,17 @@ class DosenController extends Controller
             }
         $mentor = dosen::select('status')->where('domen_id',$domen_id)->get();
         return view('layout.dsn.dbimbingan', compact('i','countSubmit','countMahasiswa',
-        'coba','tugasAkhir','LaporanMingguan','mentor'));
+        'coba','tugasAkhir'));
+    }
+
+    public function detailb($id){
+        
+        $data= Bimbingan::where('bimbingan_id',$id)->get();
+        $domen_id= session('domen_id');
+        $npm = Bimbingan::where('bimbingan_id',$id)->first()->npm;
+ 
+
+        return view('layout.dsn.detailb',compact('data'));
     }
     public function dashboardm(){
         $domen_id = session('domen_id');
@@ -70,28 +80,73 @@ class DosenController extends Controller
         return view('layout.dsn.dashboardm',compact('countMahasiswa','LaporanMingguan'));
     }
     public function bimbingan($id){
-        $data= Bimbingan::where('npm','like','%'.$id.'%')->get();
-
+        $data= Bimbingan::where('npm','like','%'.$id.'%')->where('Type','Proposal')->get();
         return view('layout.dsn.bimbingan',compact('data'));
     } 
+    public function edit($id){
+        $data= bimbingan::select('bimbingan.bimbingan_id as bimbingan','bimbingan.topik as topik',
+        'bimbingan.tanggal as tanggal','bimbingan.isi as isi')->
+        where('bimbingan.bimbingan_id','=',$id)->get();
+        $domen_id= session('domen_id');
+      
+        return view('layout.dsn.editb', compact('data'));
+    }
     public function dbimbingan(){
-        $domen_id= FacadesSession::get('domen_id');
+        $domen_id= session('domen_id');
 
 
         $bimbingan= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
         ->join('domen','domen.domen_id','=','laporan.domen_id')
         ->where('type','Proposal')->where('domen.domen_id','=',$domen_id)
-        ->get(['mahasiswa.status as status2','mahasiswa.name as nama',
+        ->get(['laporan.Type as status2','mahasiswa.name as nama',
         'laporan.judul as topik','laporan.laporan_id as id',
         'mahasiswa.npm as npm'
         ]);
+
         $isi= Bimbingan::where('domen_id',$domen_id)->get();
     
 
         
-       
         return view('layout.dsn.dashboard',compact('bimbingan'));
     }
+    public function bimbingan2($id){
+        $data= Bimbingan::where('npm','like','%'.$id.'%')->where('Type','Tugas Akhir')->get();
+        return view('layout.dsn.bimbingan2',compact('data'));
+    }
+    public function dbimbingan2(){
+        $domen_id= session('domen_id');
+
+
+        $bimbingan= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
+        ->join('domen','domen.domen_id','=','laporan.domen_id')
+        ->where('type','Tugas Akhir')->where('domen.domen_id','=',$domen_id)
+        ->get(['laporan.Type as status2','mahasiswa.name as nama',
+        'laporan.judul as topik','laporan.laporan_id as id',
+        'mahasiswa.npm as npm'
+        ]);
+
+        $isi= Bimbingan::where('domen_id',$domen_id)->get();
+    
+        return view('layout.dsn.dashboard2',compact('bimbingan'));
+    }
+    public function detailb2($id){
+        $data= Bimbingan::where('bimbingan_id',$id)->get();
+        $domen_id= session('domen_id');
+    
+        $npm = Bimbingan::where('bimbingan_id',$id)->first()->npm;
+        $bimbingan= comment::where('domen_id',$domen_id)->where('npm',$npm)->where('Type','Bimbingant')->get();
+        return view('layout.dsn.detailb2',compact('data','bimbingan'));
+    }
+    public function edit2($id){
+        $data= bimbingan::select('bimbingan.bimbingan_id as bimbingan','bimbingan.topik as topik',
+        'bimbingan.tanggal as tanggal','bimbingan.isi as isi')->
+        where('bimbingan.bimbingan_id','=',$id)->get();
+        $domen_id= session('domen_id');
+      
+        return view('layout.dsn.editb2', compact('data'));
+    }
+    
+    
     public function proposal(){
    
         $domen_id= session('domen_id');
@@ -101,9 +156,22 @@ class DosenController extends Controller
         ->join('domen', 'domen.domen_id','=','laporan.domen_id')->where('laporan.type','like','%Proposal%')
         ->where('laporan.domen_id','like','%'.$domen_id.'%')
         ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
-        'laporan.dokumen as dokumen','laporan.laporan_id','laporan.status_domen']);
+        'laporan.dokumen as dokumen','laporan.laporan_id','laporan.status_domen','mahasiswa.npm as npm']);
+    
         // dd($data);
         return view('layout.dsn.dashboardp',compact('data'));
+    }
+    public function rekapp($id){
+        $domen_id = session('domen_id');
+        $data= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
+        ->join('domen', 'domen.domen_id','=','laporan.domen_id')->where('laporan.type','like','%Proposal%')
+        ->where('laporan.domen_id','like','%'.$domen_id.'%')->where('laporan.npm',$id)
+        ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
+        'laporan.dokumen as dokumen','laporan.laporan_id','laporan.status_domen','mahasiswa.npm as npm']);
+        
+        $bimbingan= comment::where('domen_id',$domen_id)->where('npm',$id)->where('type','Proposal')
+        ->get();
+        return view('layout.dsn.detailp',compact('data','bimbingan'));
     }
     public function proposal2(Request $request){
         $id=$request->id;
@@ -152,9 +220,24 @@ class DosenController extends Controller
         ->join('domen', 'domen.domen_id','=','laporan.domen_id')->where('laporan.type','like','%Tugas Akhir%')
         ->where('laporan.domen_id','like','%'.$domen_id.'%')
         ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
-        'laporan.dokumen as dokumen','laporan.laporan_id']);
+        'laporan.dokumen as dokumen','laporan.laporan_id','mahasiswa.npm as npm']);
 
         return view('layout.dsn.dashboardt',compact('data'));
+    }
+    public function rekapt($id){
+        $domen_id= FacadesSession::get('domen_id');
+    
+       
+        $data= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
+        ->join('domen', 'domen.domen_id','=','laporan.domen_id')->where('laporan.type','like','%Tugas Akhir%')
+        ->where('laporan.domen_id','like','%'.$domen_id.'%')->where('laporan.npm',$id)
+        ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
+        'laporan.dokumen as dokumen','laporan.laporan_id','mahasiswa.npm as npm']);
+
+        $bimbingan= comment::where('domen_id',$domen_id)->where('npm',$id)->where('type','Tugas Akhir')
+        ->get();
+
+        return view('layout.dsn.detailt',compact('data','bimbingan'));
     }
     public function ta2(Request $request){
         $id= $request->id;
@@ -169,7 +252,23 @@ class DosenController extends Controller
     public function ta3(){
         return view('layout.dsn.ta.ta2');
     }
+    public function setujubp($id){
+        $data= Bimbingan::where('bimbingan_id',$id)->get();
+        return view('layout.dsn.setujubp',compact('data','id'));
+    }
+    public function setujubt($id){
+        $data= Bimbingan::where('bimbingan_id',$id)->get();
+        return view('layout.dsn.setujubt',compact('data','id'));
+    }
     public function store(Request $request){
+        $request->validate([
+            'status'=>'required',
+            'comment'=>'required',
+        ],[
+            'status.required'=>'Harap status diisi',
+            'comment.required'=>'Harap komentar diisi',
+        ]
+    );
         $status= $request->status;
         $laporan_id= $request->laporan_id;
 
@@ -192,7 +291,16 @@ class DosenController extends Controller
         }
 
     }
+
     public function store2(Request $request){
+
+        $request->validate([
+            'status'=> 'required',
+            'isi'=> 'required'
+        ],[
+            'status.required'=> 'Harap status diisi',
+            'isi.required'=> 'Harap komentar diisi'
+        ]);
         $status = $request->status;
 
         $laporan_id= $request->laporan_id;
@@ -217,6 +325,13 @@ class DosenController extends Controller
         }
     }
     public function update(Request $request){
+        $request->validate([
+            'status'=>'required',
+            'comment'=>'required',
+        ],[
+            'status'=>'Harap status diisi',
+            'comment'=>'Harap komentar diisi',
+        ]);
         $status= $request->status;
         $id= $request->id;
 
@@ -239,25 +354,74 @@ class DosenController extends Controller
         }
     }
     public function update2(Request $request){
-        $data['status']=$request->status;
+        $request->validate([
+            'comment'=>'required',
+        ],[
+            'comment.required'=> 'Harap isi komentar',
+        ]);
+        $status= $request->statuscheck;
+        if($status == 'on'){
+            $status= 'disetujui';
+        }else{
+            $status= '';
+        }
+        $data['status']=$status;
+       
+        $data['komentar']= $request->comment;
+        
+        $id= $request->id;
+        $data2['npm']= bimbingan::where('bimbingan_id',$id)->first()->npm;
+        $data2['tanggal']= Carbon::now()->format('Y-m-d');
+        $type= bimbingan::where('bimbingan_id',$id)->first()->type;
+        $data2['comment_id']= IdGenerator::generate(
+            ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
+        $data2['domen_id']= session('domen_id');
+        $data2['isi']= $request->comment;
+        $data2['notifikasi']= 'sudah acc';
+        if($type == 'Proposal'){
+            $data2['type']= 'Bimbinganp';
+        }else{
+            $data2['type']= 'Bimbingant';
+        }
+        if($data2 == ''){
+            return redirect()->to($id->url);
+        }else{
 
-        $id= $request->id_bimbingan;
+            Bimbingan::find($id)->update($data);
+            comment::create($data2);
+            if($data2['type'] == 'Bimbinganp'){
+                return redirect()->route('dmn.dbimbingan');
+            }else{
+                return redirect()->route('dmn.dbimbingan2');
+            }
+        }
 
-        Bimbingan::find($id)->update($data);
-        return redirect()->route('dmn.dashboard');
 
     }
     public function update3(Request $request){
-        $data['status']=$request->status;
+
+     
+
+        $request->validate([
+            'statuscheck'=>'accepted',
+            'comment'=>'required',
+        ],[
+            'statuscheck.accepted'=> 'Harap isi checklist status',
+            'comment.required'=>'Harap isi Komentar',
+        ]);
+
+
+        $data['statuscheck']=$request->statuscheck;
         $id= $request->laporan_id;
         $data['tanggal'] = Carbon::now()->format('Y-m-d');
         $data['npm']= laporan::where('laporan_id','like','%'.$id.'%')->first()->npm;
         $data['type']= laporan::where('laporan_id','like','%'.$id.'%')->first()->type;
         $data['comment_id'] = IdGenerator::generate(
             ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
-        $data['domen_id']= FacadesSession::get('domen_id');
+        $data['domen_id']= session('domen_id');
         $data['notifikasi']= 'sudah acc';
         $data['isi']= $request->comment;
+        $data2['komentar']= $request->komentar;
         comment::create($data);
 
         $data2['status_domen']=$request->status_domen;
@@ -270,11 +434,29 @@ class DosenController extends Controller
         $status= $request->status;
         laporan::where('laporan_id',$id)->update($data2);
         if($status == 'Proposal'){
-            return redirect()->route('dmn.proposal');
+            return redirect()->route('dmn.dbimbingan');
         }else{
-            return redirect()->route('dmn.ta');
+            return redirect()->route('dmn.dbimbingan2');
         }
+   
 
 
+    }
+    public function update4(Request $request){
+
+
+            $data['topik']= $request->topik;
+            $data['isi']= $request->deskripsi;
+            $data['tanggal']= $request->tanggal;
+            $data2['komentar']= $request->komentar;
+            $bimbingan_id= $request->id;
+            $type= bimbingan::where('bimbingan_id',$bimbingan_id)->first()->type;
+            bimbingan::find($bimbingan_id)->update($data);
+            if($type == 'Proposal'){
+                return redirect()->route('dmn.dbimbingan');
+            }else{
+                return redirect()->route('dmn.dbimbingan2');
+            }
+          
     }
 }

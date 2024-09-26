@@ -74,19 +74,32 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
 
 Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],function(){
     Route::get('/proposal',[DosenController::class,'proposal'])->name('proposal');
+    Route::get('/proposal/{id}',[DosenController::class,'rekapp'])->name('rekapp');
     Route::get('/proposal4',[DosenController::class,'proposal4'])->name('proposal4');
     Route::get('/proposal2',[DosenController::class,'proposal2'])->name('proposal2');
     Route::get('/proposal3',[DosenController::class,'proposal3'])->name('proposal3');
     Route::get('/dashboard',[DosenController::class,'dashboard'])->name('dashboard');
     Route::get('/bimbingan',[DosenController::class,'dbimbingan'])->name('dbimbingan');
     Route::get('/bimbingan/{id}',[DosenController::class,'bimbingan'])->name('bimbingan');
+    Route::get('/bimbingan2',[DosenController::class,'dbimbingan2'])->name('dbimbingan2');
+    Route::get('/bimbingan2/{id}',[DosenController::class,'bimbingan2'])->name('bimbingan2');
+    Route::get('/bimbingan2/{id}/detail',[DosenController::class,'detailb2'])->name('detailb2');
+    Route::get('/bimbingan2/{id}/edit',[DosenController::class,'edit2'])->name('edit2');
     Route::get('/dashboardm',[DosenController::class,'dashboardm'])->name('dashboardm');
+    Route::get('/bimbingan/{id}/detail',[DosenController::class, 'detailb'])->name('detailb');
+    Route::get('/bimbingan/{id}/edit',[DosenController::class,'edit'])->name('edit');
+    Route::get('/persetujuan/{id}',[DosenController::class,'setujubp'])->name('setujubp');
+    Route::get('/persetujuan2/{id}',[DosenController::class,'setujup'])->name('setujup');
+    Route::get('/persetujuan3/{id}',[DosenController::class,'setujut'])->name('setujut');
+    Route::get('/persetujuan4/{id}',[DosenController::class,'setujubt'])->name('setujubt');
 
+    
 
     Route::get('/laporan',[DosenController::class,'laporan'])->name('laporan');
     Route::put('/laporan2',[DosenController::class,'laporan2'])->name('laporan2');
 
     Route::get('/ta',[DosenController::class,'ta'])->name('ta');
+    Route::get('/ta/{id}',[DosenController::class,'rekapt'])->name('rekapt');
     Route::get('/ta2',[DosenController::class,'ta2'])->name('ta2');
     Route::get('/ta3',[DosenController::class,'ta3'])->name('ta3');
     Route::get('/viewTa/{id}',[DosenController::class,'viewTa'])->name('viewTa');

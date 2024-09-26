@@ -22,6 +22,7 @@ class laporan extends Model
         'judul',
         'tanggal_mulai',
         'tanggal_berakhir',
+        'tanggal_submit',
         'deskripsi',
         'domen_id',
         'dokumen',

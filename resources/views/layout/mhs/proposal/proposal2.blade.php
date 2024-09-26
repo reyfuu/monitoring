@@ -80,6 +80,8 @@
                             </button>
                           </div>
                           <div class="modal-body">
+                            <label for="">Status Tugas Akhir</label>
+                            <p>{{ $status->status }}</p>
                             <label for="">Daftar Revisi</label>
                             @foreach ($komment as $c)
                          

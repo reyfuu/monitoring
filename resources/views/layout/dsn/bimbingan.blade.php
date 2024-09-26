@@ -10,7 +10,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard Dosen</h1>
+          <h1 class="m-0">Daftar Bimbingan Proposal</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -34,7 +34,8 @@
             <tr>
               <th>No</th>
               <th>Tanggal</th>
-              <th>Judul</th>
+              <th>Topik</th>
+              <th>Deskripsi</th>
               <th>Status</th>
               <th>AKsi</th>     
             </tr>
@@ -45,55 +46,42 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $d->tanggal }}</td>
                 <td>{{ $d->topik }}</td>
+                <td>{{ $d->isi }}</td>
                 <td>
-                @if ($d->status == 'disetujui')
-                  <i class="fa fa-check" style="color:#008d4c"></i></td>
+                @if ($d->status )
+                  {{ $d->status }}
                 @else
-            
+                
                 @endif
                 </td>
                 <td>
-                    <a class=" btn btn-success text-end" data-toggle="modal" data-target="#modal{{ $d->bimbingan_id }}" >Ubah Persetujuan</a>
+                    <a href="{{ route('dmn.detailb', $d->bimbingan_id) }}" class="btn btn-primary text-end">Detail</a>
+                    <a href="{{ route('dmn.setujubp',['id'=>$d->bimbingan_id]) }}" class=" btn btn-success text-end"  >Ubah Persetujuan</a>
                   </tr>
-                    <div class="modal fade" id="modal{{  $d->bimbingan_id }}">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h4 class="modIal-title">Apakah Syarat Valid ?</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                          <form action="{{ route('dmn.update2') }}" method="post">
-                            @csrf
-                            @method('put')
-                              <input type="text" name="id_bimbingan" value={{ $d->bimbingan_id }} hidden >
-                              <select name="status"  class="form-control">
-                                  <option value="disetujui">disetujui</option>
-                                  <option value="ditolak">ditolak</option>
-                              </select>
-                          </div>
-                          <div class="modal-footer justify-content-between">
-
-                              <div class="text-center">
-                                <button type="submit" class="btn btn-primary text-center">Yes</button>
-                              </div>
-                          </div>
-                     
-                         </form>
-                        </div>
-                        <!-- /.modal-content -->
-                      </div>
-                      <!-- /.modal-dialog -->
-                    </div>
+                  
+           
                 </td>
              
             @endforeach
-          </tbody>
-        </table>
-        </div>
-    </div>
+            
+            
   </section>
 </div>
+
+<script src="{{ asset('lte/plugins/jquery/jquery.min.js')}}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('lte/dist/js/adminlte.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if ($message= Session::get('success'))
+  <script>
+    Swal.fire('{{ $message }}')
+  </script>
+@endif
+@if ($message= Session::get('failed'))
+  <script>
+    Swal.fire('{{ $message }}')
+  </script>
+@endif
 @endsection

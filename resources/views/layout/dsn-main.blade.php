@@ -109,6 +109,7 @@ if (Session::has('npm')) {
               </p>
             </a>
           </li>
+
            <li class="nav-item ">
             <a href="{{ route('dmn.proposal') }}" class="nav-link">
               <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
@@ -116,6 +117,21 @@ if (Session::has('npm')) {
                 Proposal
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('dmn.proposal') }}" class="nav-link">
+                 Proposal
+             
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('dmn.dbimbingan') }}" class="nav-link">
+                  <p class="mx-2">
+                    Bimbingan
+                  </p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item ">
             <a href="{{ route('dmn.ta') }}" class="nav-link">
@@ -124,24 +140,25 @@ if (Session::has('npm')) {
                 Laporan Akhir
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('dmn.ta') }}" class="nav-link">
+                 Tugas Akhir
+             
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('dmn.dbimbingan2') }}" class="nav-link">
+                  <p class="mx-2">
+                    Bimbingan
+                  </p>
+                </a>
+              </li>
+            </ul>
           </li>
     
-          <li class="nav-item">
-            <a href="{{ route('dmn.dbimbingan') }}" class="nav-link">
-              <p class="mx-2">
-                Bimbingan
-              </p>
-            </a>
-          </li>
-
         
-          <li class="nav-item">
-            <a href="{{ route('dmn.laporan')}}" class="nav-link">
-              <p class="mx-2">
-                Laporan
-              </p>
-            </a>
-          </li>
+
     
       </nav>
       <!-- /.sidebar-menu -->

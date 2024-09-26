@@ -69,20 +69,23 @@
                         </a>
                       </td>
                       <td>
-                        @if ($d->status_domen == 'disetujui')
-                        <i class="fa fa-check" style="color:#008d4c"></i>
+      
+                        @if ($d->status_domen)
+                            {{ $d->status_domen }}
                         @else
-                            
+                            belum dilihat
                         @endif
+
                       </td>
                       <td>
+                        <a href="{{ route('dmn.rekapp',$d->npm) }}" class="btn btn-primary text-end" >Detail</a>
                         <a class=" btn btn-success text-end" data-toggle="modal" data-target="#modal{{ $d->laporan_id }}" >Ubah Persetujuan</a>
                       </tr>
                         <div class="modal fade" id="modal{{ $d->laporan_id }}">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h4 class="modal-title">Apakah Syarat Valid ?</h4>
+                                <h4 class="modal-title">Apakah Proposal Valid ?</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
@@ -96,11 +99,13 @@
                                   <select name="status_domen"  class="form-control">
                                       <option value="disetujui">disetujui</option>
                                       <option value="direvisi">direvisi</option>
-                                      <option value="ditolak">ditolak</option>
                                   </select>
                                   <label for="">Komentar</label>
                                   <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
                                   <input type="text" name="status" value="Proposal" hidden>
+                                  @error('comment')
+                                    <small>{{ $message }}</small>
+                                  @enderror
                               </div>
                               <div class="modal-footer justify-content-between">
   

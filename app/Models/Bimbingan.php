@@ -25,5 +25,6 @@ class Bimbingan extends Model
         'npm',
         'tanggal',
         'type',
+        'komentar'
     ];
 }

@@ -15,7 +15,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item active">Dashboard</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -70,20 +70,21 @@
                         </a>
                       </td>
                       <td>
-                        @if ($d->status == 'disetujui')
-                        <i class="fa fa-check" style="color:#008d4c"></i>
+                        @if ($d->status)
+                          {{ $d->status }}
                         @else
-                            
+                            belum submit
                         @endif
                       </td>
                       <td>
+                        <a href="{{ route('dmn.rekapt',$d->npm) }}" class="btn btn-primary text-end" >Detail</a>
                         <a class=" btn btn-success text-end" data-toggle="modal" data-target="#modal{{ $d->laporan_id }}" >Ubah Persetujuan</a>
                       </tr>
                         <div class="modal fade" id="modal{{ $d->laporan_id }}">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h4 class="modal-title">Apakah Syarat Valid ?</h4>
+                                <h4 class="modal-title">Apakah Tugas Akhir Valid ?</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>

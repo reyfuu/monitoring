@@ -64,44 +64,7 @@
 <script>
   const ctx = document.getElementById('myChart');
   const ctx2 = document.getElementById('tugasAkhir');
-  const ctx3 = document.getElementById('LaporanMingguan');
 
-  new Chart(ctx3, {
-    type: 'pie',
-    data: {
-      labels:@json($LaporanMingguan->map(fn ($LaporanMingguan) => $LaporanMingguan->status)),
-      datasets: [{
-        label:'jumlah mahasiswa',
-        data: @json($LaporanMingguan->map(fn ($LaporanMingguan) => $LaporanMingguan->count)),
-
-        hoverOffset:4
-      }]
-
-    },
-    options: {
-      plugins: {
-        legend: {
-            display: false // Sembunyikan legenda
-        },
-        datalabels: {
-            display: false // Sembunyikan label pada potongan pie
-        }
-    },
-    scales: {
-        xAxes: [{
-            ticks: {
-                display: false
-            }
-        }],
-        yAxes: [{
-            ticks: {
-                display: false
-            }
-        }]
-    }
-}
-    
-  });
 
   new Chart(ctx2, {
     type: 'pie',

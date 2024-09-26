@@ -46,12 +46,11 @@
                       <td>{{ $d->tanggal }}</td>
                       <td>{{ $name }}</td>
                       <td>
-                      @if ($d->status == 'disetujui')
-                      <span style="margin: 0px; padding:0px;">
-                        <i class="fa fa-check" style="color:#008d4c;"></i>
+                      @if ($d->status)
+                      {{ $d->status }}
                       </span>            
                       @else
-                             
+                         belum dilihat   
                       @endif
                       </td>
                       <td>           

@@ -107,17 +107,27 @@
                         <div class="text-info">jpg, JPG, png, PNG, pdf, jpeg, JPEG (maxsize: 2 MB)</div>
                     </td >
                     <td>
+                     @foreach ($data as $d)
+                         
+                     @if ($d->dateac && $d->syarat==$file[$index])
+                     {{ $d->dateac }}
+                    @else
+                      belum diperiksa
+                    @endif
+                     @endforeach
+   
                     </td>
                     <td>
                       @foreach ($data as $d)
-                      @if ($d->status == 'disetujui' && $d->syarat== $file[$index])
-                      <i class="fa fa-check" style="color:#008d4c"></i>
+                      @if ($d->status  && $d->syarat== $file[$index])
+                        {{ $d->status }}
                      @else
-                  
+                      belum submit
                      @endif
                      @endforeach
                      
                     </td>
+        
                     <td>
                       @if($status->isEmpty())
                       <button  type="submit" class="btn btn-success text-end">Simpan</button>

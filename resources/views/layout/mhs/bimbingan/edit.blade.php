@@ -59,6 +59,7 @@
                           @error('tanggal')
                             <small>{{$message}}</small>
                           @enderror
+                        
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary" wire:Loading.attr="disabled">Simpan</button>

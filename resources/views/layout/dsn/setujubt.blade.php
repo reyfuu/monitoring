@@ -1,0 +1,72 @@
+@extends('layout.dsn-main')
+@section('title')
+
+<title>Persetujuan Bimbingan Proposal</title>
+{{-- edit dosen --}}
+@endsection
+@section('content')
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">ubah Persetujuan Tugas Akhir</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">ubah Persetujuan Tugas Akhir</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+<section class="content">
+    <div class="container">
+        @foreach ($data as $d)
+            
+        
+        <form action="{{ route('dmn.update2')}}" method="post">
+            @csrf
+            @method('put')
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-body">
+                        <div class="form-group">
+                            
+                            
+                           <div class="form-check">
+                            <input type="checkbox" name="statuscheck" class="form-check-input " id="status">
+                            <label for="form-check-label" for="status">Disetujui Bimbingan</label>
+                           </div>
+                           @error('status')
+                             <small>{{ $message }}</small>
+                           @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="">Komentar</label>
+                            <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+                            <input type="text" name="status" value="Proposal" hidden>
+                            @error('comment')
+                              <div class="alert alert-danger">
+                                <p>{{ $message }}</p>
+                              </div>
+                            @enderror
+                        </div>
+                            <input type="text" name="id" value="{{ $id }}" hidden>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary text-center">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               </form>
+               @endforeach
+                </div>
+            </div>
+            
+    </div>
+</section>
+@endsection

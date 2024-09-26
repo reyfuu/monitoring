@@ -163,7 +163,6 @@ if (Session::has('domen_id')) {
               <li class="nav-item">
                 <a href="{{ route('mhs.bimbingan2') }}" class="nav-link">
                  Bimbingan
-             
                 </a>
               </li>
             </ul>

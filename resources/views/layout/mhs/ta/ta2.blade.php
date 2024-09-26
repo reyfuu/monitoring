@@ -1,7 +1,7 @@
 @extends('layout.mhs-main')
 @section('title')
 
-<title>Tugas AKhir</title>
+<title>Tugas Akhir</title>
 {{-- revisi proposal --}}
 @endsection
 @section('content')
@@ -67,6 +67,8 @@
                             </button>
                           </div>
                           <div class="modal-body">
+                            <label for="">Status Tugas Akhir</label>
+                            <p>{{ $status->status }}</p>
                             <label for="">Daftar Revisi</label>
                             @foreach ($comment as $c)
                               <p>{{ $c->isi }}</p>

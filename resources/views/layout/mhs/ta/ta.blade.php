@@ -23,7 +23,7 @@
       <div class="container">
           <ul class="base-timeline">
               <li class="base-timeline__item base-timeline__item--active">
-                  <span class="base-timeline__summary-text">Laporan</span>
+                  <span class="base-timeline__summary-text">Tugas Akhir</span>
               </li>
               <li class="base-timeline__item base-timeline__item">
                   <span class="base-timeline__summary-text">Revisi</span>
@@ -44,16 +44,7 @@
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
-          @endif
-          @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+          @endif    
             {{-- start form --}}
             <form action="{{ route('mhs.store6') }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -63,24 +54,24 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">Judul</label>
-                            <input type="text" class="form-control" name="judul" placeholder="Enter Judul" required>
+                            <input type="text" class="form-control" name="judul" placeholder="Enter Judul">
                             @error('judul')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="form-group">
-                            <label for="">Deskripsi</label>
-                            <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" required></textarea>
+                            <label for="">Abstrak</label>
+                            <textarea class="form-control" name="deskripsi" placeholder="Enter Deskripsi" ></textarea>
                             @error('deskripsi')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="">Dokumen</label>
-                            <input type="file" class="form-control-file" name="file" required>
+                            <input type="file" class="form-control-file" name="file" >
                             @error('file')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <input type="hidden"  name="status" value="Laporan">

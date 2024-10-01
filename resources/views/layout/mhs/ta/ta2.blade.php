@@ -53,7 +53,7 @@
                     <div class="card-body">
                     
                       <div class="form-group">
-                        <a data-toggle="modal" data-target="#modalInfo" class="btn btn-info">Lihat Status Tugas AKhir</a>
+                        <a data-toggle="modal" data-target="#modalInfo" class="btn btn-info">Lihat Status Tugas Akhir</a>
                       </div>
                  
                      

@@ -137,7 +137,7 @@ if (Session::has('npm')) {
             <a href="{{ route('dmn.ta') }}" class="nav-link">
               <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
-                Laporan Akhir
+                Tugas Akhir
               </p>
             </a>
             <ul class="nav nav-treeview">

@@ -46,7 +46,12 @@
                 <td>{{ $d->topik }}</td>
                 <td>{{ $d->isi }}</td>
                 <td>
+                  @if ($d->status == 'disetujui')
+                      
+                  @else
                   <a href="{{ route('dmn.edit2',$d->bimbingan_id) }}" class="btn btn-warning text-end" ><i class="fas fa-pen"></i> Edit</a>
+                  @endif
+                 
                   <br>
                   <a class="btn btn-success text-end" data-toggle="modal" data-target="#modal2">Rekap Komentar</a>
                               

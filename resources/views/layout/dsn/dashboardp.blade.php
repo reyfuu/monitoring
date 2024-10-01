@@ -15,7 +15,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard v1</li>
+            <li class="breadcrumb-item active">Dashboard</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -70,8 +70,8 @@
                       </td>
                       <td>
       
-                        @if ($d->status_domen)
-                            {{ $d->status_domen }}
+                        @if ($d->status)
+                            {{ $d->status }}
                         @else
                             belum dilihat
                         @endif
@@ -79,46 +79,14 @@
                       </td>
                       <td>
                         <a href="{{ route('dmn.rekapp',$d->npm) }}" class="btn btn-primary text-end" >Detail</a>
-                        <a class=" btn btn-success text-end" data-toggle="modal" data-target="#modal{{ $d->laporan_id }}" >Ubah Persetujuan</a>
+                        @if ($d->status == 'Finish')
+                            
+                        @else
+                        <a href="{{ route('dmn.setujup',$d->laporan_id) }}" class=" btn btn-success text-end" >Ubah Persetujuan</a>
+                        @endif
+                       
                       </tr>
-                        <div class="modal fade" id="modal{{ $d->laporan_id }}">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h4 class="modal-title">Apakah Proposal Valid ?</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                              <form action="{{ route('dmn.update3')}}" method="post">
-                                @csrf
-                                @method('put')
-                                  <input type="text" name="laporan_id" value={{ $d->laporan_id }} hidden>
-                                  <label for="">Status</label>
-                                  <select name="status_domen"  class="form-control">
-                                      <option value="disetujui">disetujui</option>
-                                      <option value="direvisi">direvisi</option>
-                                  </select>
-                                  <label for="">Komentar</label>
-                                  <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
-                                  <input type="text" name="status" value="Proposal" hidden>
-                                  @error('comment')
-                                    <small>{{ $message }}</small>
-                                  @enderror
-                              </div>
-                              <div class="modal-footer justify-content-between">
-  
-                                  <div class="text-center">
-                                    <button type="submit" class="btn btn-primary text-center">Yes</button>
-                                  </div>
-                              </div>
-                             </form>
-                            </div>
-                            <!-- /.modal-content -->
-                          </div>
-                          <!-- /.modal-dialog -->
-                        </div>
+                      
                       </td>
                     </tr>
                   @endforeach

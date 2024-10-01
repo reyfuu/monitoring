@@ -48,7 +48,7 @@ class DosenController extends Controller
 
         $i=0;
             foreach ($dt_mahasiswa as $d){
-                if($d->count_npm >=14){
+                if($d->count_npm >=14  && $d->status =='disetujui'){
                     $i+=1;
                 }
             }
@@ -56,7 +56,13 @@ class DosenController extends Controller
         return view('layout.dsn.dbimbingan', compact('i','countSubmit','countMahasiswa',
         'coba','tugasAkhir'));
     }
+    public function setujup($id){
 
+        return view('layout.dsn.setujup',compact('id'));
+    }
+    public function setujut($id){
+        return view('layout.dsn.setujut',compact('id'));
+    }
     public function detailb($id){
         
         $data= Bimbingan::where('bimbingan_id',$id)->get();
@@ -355,17 +361,14 @@ class DosenController extends Controller
     }
     public function update2(Request $request){
         $request->validate([
+            'status_domen'=>'required',
             'comment'=>'required',
         ],[
+            'status_domen'=>'Harap diisi status mahasiswa',
             'comment.required'=> 'Harap isi komentar',
         ]);
-        $status= $request->statuscheck;
-        if($status == 'on'){
-            $status= 'disetujui';
-        }else{
-            $status= '';
-        }
-        $data['status']=$status;
+
+        $data['status']=$request->status_domen;
        
         $data['komentar']= $request->comment;
         
@@ -402,13 +405,13 @@ class DosenController extends Controller
 
      
 
-        $request->validate([
-            'statuscheck'=>'accepted',
-            'comment'=>'required',
-        ],[
-            'statuscheck.accepted'=> 'Harap isi checklist status',
-            'comment.required'=>'Harap isi Komentar',
-        ]);
+        // $request->validate([
+        //     'statuscheck'=>'accepted',
+        //     'comment'=>'required',
+        // ],[
+        //     'statuscheck.accepted'=> 'Harap isi checklist status',
+        //     'comment.required'=>'Harap isi Komentar',
+        // ]);
 
 
         $data['statuscheck']=$request->statuscheck;
@@ -421,22 +424,21 @@ class DosenController extends Controller
         $data['domen_id']= session('domen_id');
         $data['notifikasi']= 'sudah acc';
         $data['isi']= $request->comment;
-        $data2['komentar']= $request->komentar;
         comment::create($data);
 
         $data2['status_domen']=$request->status_domen;
         if($data2['status_domen'] == 'disetujui'){
             $data2['status']= 'Finish';
         }else{
-            $data2['status']= 'belum dilihat';
+            $data2['status']= 'sudah dilihat';
         }
 
         $status= $request->status;
         laporan::where('laporan_id',$id)->update($data2);
         if($status == 'Proposal'){
-            return redirect()->route('dmn.dbimbingan');
+            return redirect()->route('dmn.proposal');
         }else{
-            return redirect()->route('dmn.dbimbingan2');
+            return redirect()->route('dmn.ta');
         }
    
 

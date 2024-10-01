@@ -29,20 +29,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
-          @if (session('success'))
-          <div class="alert alert-success">{{ session('success') }}</div>
-      @elseif(session('error'))
-          <div class="alert alert-danger">{{ session('error') }}</div>
-      @endif
-      @if ($errors->any())
-      <div class="alert alert-danger">
-        <ul>
-          @foreach ($errors->all() as $error )
-              <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-      @endif
+      
             {{-- form start --}}
             <form action="{{ route('mhs.update') }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -67,8 +54,10 @@
 
                     <div class="form-group">
                         <label for=""> Revisi</label>
-                       <input type="file" name="file" class="form-control">
-
+                       <input type="file" name="revisi" class="form-control">
+                       @error('revisi')
+                       <div class="alert alert-danger">{{ $message }}</div>
+                       @enderror
                     </div>
                     <div class="form-group">
                       <label for="">Pembimbing</label>

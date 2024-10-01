@@ -37,26 +37,26 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">Topik</label>
-                            <input type="text" class="form-control" name="topik" placeholder="Topik" required>
+                            <input type="text" class="form-control" name="topik" placeholder="Topik" >
                             @error('topik')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <label for="">Dosen / Mentor</label>
-                        <select class="form-control" name="dosen" aria-label="Default select example" required>
+                        <select class="form-control" name="dosen" aria-label="Default select example" >
                           <option hidden disabled selected value>Pilih Opsi</option>
                                 <option value="{{ $name }}">{{ $name }}</option>
 
                         </select>
                         @error('dosen')
-                         <small>{{$message}}</small>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         <div class="form-group">
                             <label for="">Bahasan</label>
-                            <textarea class="form-control" name="isi"  required></textarea>
+                            <textarea class="form-control" name="isi"  r></textarea>
                             @error('isi')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="gorm-group">
@@ -69,9 +69,9 @@
                         
                         <div class="form-group">
                           <label for="">Tanggal </label>
-                          <input type="date" class="form-control" name="tanggal"  required>
+                          <input type="date" class="form-control" name="tanggal" >
                           @error('tanggal')
-                            <small>{{$message}}</small>
+                          <div class="alert alert-danger">{{ $message }}</div>
                           @enderror
                         </div>
                         <div class="form-group text-center">

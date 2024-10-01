@@ -25,7 +25,7 @@
     <!-- /.content-header -->
 <section class="content">
     <div class="container">
-        @foreach ($data as $d)
+
             
         
         <form action="{{ route('dmn.update3')}}" method="post">
@@ -46,6 +46,7 @@
                             @error('comment')
                               <small>{{ $message }}</small>
                             @enderror
+                            <input type="hidden" name="laporan_id" value="{{ $id }}">
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary text-center">Simpan</button>
                             </div>
@@ -53,7 +54,7 @@
                     </div>
                 </div>
                </form>
-               @endforeach
+
                 </div>
             </div>
             

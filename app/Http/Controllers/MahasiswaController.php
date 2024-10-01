@@ -54,12 +54,29 @@ class MahasiswaController extends Controller
     public function proposal(){
         $npm= session('npm');
         $dokumen= laporan::where('npm',$npm)->where('type','Proposal')->first();
-
+        $bimbingan = bimbingan::where('npm',$npm)->where('Type','Proposal')->
+        where('status','disetujui')->get();
+        $bimbingan = count($bimbingan);
         if(!$dokumen->dokumen){
             return view('layout.mhs.proposal.proposal');
         }
             if($dokumen->status_domen == 'disetujui'){
-                return view('layout.mhs.proposal.proposal3');
+    
+                if($bimbingan >= 14){
+                    return view('layout.mhs.proposal.proposal3');
+                }else{
+                    $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
+                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+                $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
+                join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
+                select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
+                'laporan.dokumen as dokumen','domen.name as domen','Laporan.deskripsi as deskripsi',
+                'laporan.laporan_id')->
+                where('laporan.npm','like','%'.$npm.'%')->where('type','Proposal')->
+                get();
+                    return view('layout.mhs.proposal.proposal2',compact('komment','data','status'));
+                }
+ 
             }else{
                 $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
                 $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
@@ -70,7 +87,6 @@ class MahasiswaController extends Controller
                 'laporan.laporan_id')->
                 where('laporan.npm','like','%'.$npm.'%')->where('type','Proposal')->
                 get();
-
 
                 return view('layout.mhs.proposal.proposal2',compact('komment','data','status'));
             }
@@ -103,9 +119,14 @@ class MahasiswaController extends Controller
     public function proposal2(){
         $npm= session('npm');
         $dokumen= laporan::where('npm',$npm)->where('type','Proposal')->first();
+        $bimbingan = bimbingan::where('npm',$npm)->where('Type','Proposal')->
+        where('status','disetujui')->get();
+        $bimbingan = count($bimbingan);
+
   
         if($dokumen->status == "submit" ){
             $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
+            $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
             $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
             join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
             select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
@@ -113,7 +134,7 @@ class MahasiswaController extends Controller
             'laporan.laporan_id')->
             where('laporan.npm','like','%'.$npm.'%')->where('type','Proposal')->
             get();
-            return view('layout.mhs.proposal.proposal2',compact('komment','data'));
+            return view('layout.mhs.proposal.proposal2',compact('komment','data','status'));
         }
         elseif($dokumen->status == "Revisi" ){
             $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
@@ -126,7 +147,20 @@ class MahasiswaController extends Controller
             get();
             return view('layout.mhs.proposal.proposal2',compact('komment','data'));
         }elseif($dokumen->status_domen == 'disetujui'){
-            return view('layout.mhs.proposal.proposal3');
+            if($bimbingan >= 14){
+                return view('layout.mhs.proposal.proposal3');
+            }else{
+                $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
+            $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+            $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
+            join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
+            select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
+            'laporan.dokumen as dokumen','domen.name as domen','Laporan.deskripsi as deskripsi',
+            'laporan.laporan_id')->
+            where('laporan.npm','like','%'.$npm.'%')->where('type','Proposal')->
+            get();
+                return view('layout.mhs.proposal.proposal2',compact('komment','data','status'));
+            }
         }
 
     }
@@ -340,7 +374,13 @@ class MahasiswaController extends Controller
     // function to store proposal or laporan
     public function store(Request $request){
     $validator= Validator::make($request->all(),[
-            "file"=> "required|mimes:pdf|max:10458"
+            "file"=> "required|mimes:pdf|max:10458",
+            "judul"=>'required',
+            "deskripsi"=>'required',
+        ],[
+            'file.required'=>'Harap di isi file dokumennya',
+            'judul.required'=>'Harap di isi judulnya',
+            'deskripsi.required'=>'Harap di isi abstraknya'
         ]);
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
@@ -452,6 +492,18 @@ class MahasiswaController extends Controller
         }
     // function to store bimbingan
     public function store3(Request $request){
+        $request->validate([
+            "tanggal"=>"required|date_format:Y-m-d",
+            "topik"=>"required",
+            "isi"=>"required",
+            "dosen"=>'required'
+        ],[
+            'tanggal.required'=>'Harap di isi tanggal Bimbingannya',
+            'topik.required'=>'harap isi topik',
+            'isi.required'=>'Harap di isi Bahasannya',
+            "dosen.required"=>'Harap isi dosen pembimbingnya'
+        ]);
+ 
         $data['tanggal']= $request->tanggal;
         $data['domen']= $request->dosen;
         $data['topik']= $request->topik;
@@ -533,14 +585,21 @@ class MahasiswaController extends Controller
         }
  } 
     public function store6(Request $request){
+
         $npm= session('npm');
 
         // $dokumen = syarat::where('syarat','like','%%')->get();
 
         $validator= Validator::make($request->all(),[
-            "file.*"=> "required|file|max:10458|mimes:png,jpg,jpeg,pdf",
-   
+            "file"=> "required|file|max:10458|mimes:png,jpg,jpeg,pdf",
+            "judul"=> "required",
+            'deskripsi'=> "required"
+        ],[
+            'file.required'=>'Harap isi dokumennya',
+            'judul.required'=> 'Harap isi judulnya',
+            'deskripsi.required'=> 'Harap isi abstraknya'
         ]);
+        if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
         $npm=  session('npm');
           $data3['npm']= $npm;
           $data3['type']= 'Tugas Akhir';
@@ -567,13 +626,20 @@ class MahasiswaController extends Controller
     // function to update proposal or laporan
     public function update(Request $request){
         $validator= Validator::make($request->all(),[
-            "file"=> "required|mimes:pdf|max:5120"
+            "revisi"=> "required|mimes:pdf|max:5120"
+        ],[
+            'revisi.required'=>'Harap upload file revisi dalam bentuk pdf'
         ]);
-        if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+        $request->validate([
+            "revisi"=> "required|mimes:pdf|max:5120"
+        ],[
+            'revisi.required'=>'Harap upload file revisi dalam bentuk pdf'
+        ]);
+    
         $data['judul']= $request->judul;
         $data['status']='Revisi';
         $data['deskripsi']=$request->abstrak;
-        $dokumen= $request->file('file');
+        $dokumen= $request->file('revisi');
         $filename=$dokumen->getClientOriginalName();
         $path='dokumen/'.$filename;
         $status=$request->status;

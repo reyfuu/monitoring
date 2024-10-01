@@ -36,11 +36,11 @@
                     <div class="card-body">
                         <div class="form-group">
                             
-                            
-                           <div class="form-check">
-                            <input type="checkbox" name="statuscheck" class="form-check-input " id="status">
-                            <label for="form-check-label" for="status">Disetujui Bimbingan</label>
-                           </div>
+                            <label for="">Status</label>
+                            <select name="status_domen"  class="form-control">
+                                <option value="disetujui">disetujui</option>
+                                <option value="direvisi">direvisi</option>
+                            </select>
                            @error('status')
                              <small>{{ $message }}</small>
                            @enderror

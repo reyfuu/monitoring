@@ -56,7 +56,12 @@
                 </td>
                 <td>
                     <a href="{{ route('dmn.detailb', $d->bimbingan_id) }}" class="btn btn-primary text-end">Detail</a>
+                    @if ($d->status == 'disetujui')
+                        
+                    @else
                     <a href="{{ route('dmn.setujubp',['id'=>$d->bimbingan_id]) }}" class=" btn btn-success text-end"  >Ubah Persetujuan</a>
+                    @endif
+                    
                   </tr>
                   
            

@@ -33,10 +33,14 @@
                 @method('put')
                 <div class="col-md-12">
                     <div class="card card-primary">
-
+           
 
                 <form>
                     <div class="card-body">
+                      <div class="form-group">
+                        <label for="">Komentar Dosen</label>
+                        <p>{{ $data->komentar }}</p>
+                      </div>
                       <div class="form-group">
                         <label for="">Topik</label>
                         <input type="text" class="form-control" name="topik" value="{{ $data->topik }}"  required>

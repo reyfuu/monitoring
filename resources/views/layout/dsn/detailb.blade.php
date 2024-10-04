@@ -28,7 +28,7 @@
 
 
 
-        <table class="table table-hover text-nowrap">
+        <table class="table table-hover text-nowrap"style="word-wrap: break-word">
           <thead>
             <tr>
               <th>No</th>
@@ -45,12 +45,8 @@
                 <td>{{ $d->tanggal }}</td>
                 <td>{{ $d->topik }}</td>
                 <td>{{ $d->isi }}</td>
-                <td>
-                  @if ($d->status == 'disetujui')
-                      
-                  @else
-                  <a href="{{ route('dmn.edit',$d->bimbingan_id) }}" class="btn btn-warning text-end" ><i class="fas fa-pen"></i> Edit</a>
-                  @endif
+                <td >
+                
                   
                   <br>
 

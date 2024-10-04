@@ -14,15 +14,14 @@ if (Session::has('domen_id')) {
   @yield('title')
   <style>
     table{
-
-      width: 450px;
+      table-layout: fixed;
+      width: 100%;
       word-wrap: break-word;
     }
 
     td{
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      width: 450px
+
+      width: 200px;
     }
   </style>
 

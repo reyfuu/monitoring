@@ -54,7 +54,7 @@
                   @php
                   $syarat=[
                   'Kredit Poin Kegiatan Kemahasiswaan > 200 Poin---Kredit Poin Kegiatan Kemahasiswaan (KPKK) dengan nilai lebih besar dari 200 Poin
-                      <td>Kredit Poin Kegiatan Kemahasiswaan (KPKK) dengan nilai lebih besar dari 200 Poin',
+                      ',
                   'Lulus 120 SKS---Telah lulus 120 SKS',
                   'Lulus In House---Telah lulus in house',
                   'Lulus LKMM Etika Moral---Telah lulus LKMM Etika Moral',
@@ -100,7 +100,7 @@
                   <form action="{{ route('mhs.store5') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <td >{{ $loop->iteration }}</td>
-                    <td >{{ $s }}</td>
+                    <td style="white-space: pre-wrap;word-wrap: break-word;" >{{ $s }}</td>
                     <td>{{ $keterangan[$index] }}</td>
                     <td >
                         <input type="file" class="form-control" name="file{{ $file[$index] }}" >

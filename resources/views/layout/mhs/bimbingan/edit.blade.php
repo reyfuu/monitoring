@@ -59,7 +59,7 @@
                           @error('tanggal')
                             <small>{{$message}}</small>
                           @enderror
-                        
+                          <input type="text" value="{{ $data->type }}"name="type" hidden>
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary" wire:Loading.attr="disabled">Simpan</button>

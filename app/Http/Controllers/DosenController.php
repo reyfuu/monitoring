@@ -405,13 +405,11 @@ class DosenController extends Controller
 
      
 
-        // $request->validate([
-        //     'statuscheck'=>'accepted',
-        //     'comment'=>'required',
-        // ],[
-        //     'statuscheck.accepted'=> 'Harap isi checklist status',
-        //     'comment.required'=>'Harap isi Komentar',
-        // ]);
+        $request->validate([
+            'comment'=>'required',
+        ],[
+            'comment.required'=>'Harap isi Komentar',
+        ]);
 
 
         $data['statuscheck']=$request->statuscheck;

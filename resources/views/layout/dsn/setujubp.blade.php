@@ -41,9 +41,6 @@
                                 <option value="disetujui">disetujui</option>
                                 <option value="direvisi">direvisi</option>
                             </select>
-                           @error('status')
-                             <small>{{ $message }}</small>
-                           @enderror
                         </div>
                         <div class="form-group">
                             <label for="">Komentar</label>

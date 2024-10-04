@@ -54,9 +54,15 @@
                       @endif
                       </td>
                       <td>           
-                      <a href="{{ route('mhs.edit',['id' =>$d->bimbingan_id ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
-                        <br>
+                        @if ($d->status == 'disetujui')
+                            
+                        @else
+                        <a href="{{ route('mhs.edit',['id' =>$d->bimbingan_id ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
                         <a data-toggle="modal" data-target="#modal-delete{{ $d->bimbingan_id }}" href="{{ route('mhs.delete',['id' => $d->bimbingan_id ]) }}" class="btn btn-danger" > <i class="fas fa-trash"></i> Hapus</a>
+                        @endif 
+                        <br>
+                        
+                        <a data-toggle="modal" data-target="#modal2{{ $d->bimbingan_id }}"  class="btn btn-success" >  Komentar Dosen</a>
                       </td>
                     </tr>
                   </tbody>
@@ -80,6 +86,24 @@
                             <button type="submit" class="btn btn-primary">Yes</button>
                           </form>
                         </div>
+                      </div>
+                      <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                  </div>
+                  <div class="modal fade" id="modal2{{ $d->bimbingan_id }}">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modIal-title">Rekap Komentar ?</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                         
+                              <p>{{ $d->komentar }}</p>
+                 
                       </div>
                       <!-- /.modal-content -->
                     </div>

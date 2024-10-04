@@ -44,13 +44,17 @@
                             <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
                             <input type="text" name="status" value="Proposal" hidden>
                             @error('comment')
-                              <small>{{ $message }}</small>
+                            <div class="alert alert-danger">
+                              <p>{{ $message }}</p>
+                            </div>
+    
                             @enderror
                             <input type="hidden" name="laporan_id" value="{{ $id }}">
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary text-center">Simpan</button>
-                            </div>
+           
                         </div>
+                        <div class="text-center form-group">
+                          <button type="submit" class="btn btn-primary text-center">Simpan</button>
+                      </div>
                     </div>
                 </div>
                </form>

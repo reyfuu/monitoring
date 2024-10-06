@@ -37,8 +37,7 @@
               <th>Topik</th>
               <th>Deskripsi</th>
               <th>Status</th>
-              <th>Komentar</th>
-              <th>AKsi</th>     
+              <th>Komentar</th>   
             </tr>
           </thead>
           <tbody>
@@ -48,17 +47,13 @@
                 <td>{{ $d->tanggal }}</td>
                 <td>{{ $d->topik }}</td>
                 <td>{{ $d->isi }}</td>
-                <td>
-                @if ($d->status )
+                <td>@if ($d->status )
                   {{ $d->status }}
                 @else
                 
-                @endif
-                </td>
+                @endif</td>
+                <td>{{ $d->komentar }}</td>
                 <td>
-                  {{ $d->komentar }}
-                </td>
-                <td >
 
                     @if ($d->status == 'disetujui')
                         

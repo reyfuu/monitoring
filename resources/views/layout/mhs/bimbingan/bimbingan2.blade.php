@@ -44,7 +44,8 @@
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $d->tanggal }}</td>
-                      <td>{{ $name }}</td>
+                      <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $name }}</td>
                       <td>
                       @if ($d->status)
                       {{ $d->status }}       
@@ -55,9 +56,10 @@
                             
                         @else
                         <a href="{{ route('mhs.edit',['id' =>$d->bimbingan_id ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
+                        <br><br>
                         <a data-toggle="modal" data-target="#modal-delete{{ $d->bimbingan_id }}" href="{{ route('mhs.delete',['id' => $d->bimbingan_id ]) }}" class="btn btn-danger" > <i class="fas fa-trash"></i> Hapus</a>
+                        <br>
                         @endif 
-                      
                         <br>
                     
                         <a data-toggle="modal" data-target="#modal2{{ $d->bimbingan_id }}"  class="btn btn-success" >  Komentar Dosen</a>

@@ -20,7 +20,7 @@ if (Session::has('npm')) {
     td{
       white-space: pre-wrap;
       word-wrap: break-word;
-      width: 450px
+      width: 2000px
     }
   </style>
   <link rel="stylesheet" href="{{asset('css/dsn-app.css')}}">

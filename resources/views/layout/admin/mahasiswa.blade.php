@@ -72,6 +72,7 @@
                       <td>{{$d->status}}</td>
                       <td>
                           <a href="{{ route('admin.edit',['id' =>$d->npm ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
+                          <br>
                           <a data-toggle="modal" data-target="#modal-delete{{ $d->npm }}"  class="btn btn-danger" > <i class="fas fa-trash-alt"></i> Delete</a>
                       </td>
                       

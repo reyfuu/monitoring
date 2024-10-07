@@ -47,7 +47,7 @@
                 <th>File Upload</th>
                 <th>Tanggal Validasi</th>
                 <th>Valid</th>
-                <th>Save</th>
+                <th>Aksi</th>
               </thead>
               <tbody>
                 <tr>
@@ -95,30 +95,29 @@
                 ];
                   @endphp
                   @foreach ($syarat as $index=>$s)
-                      
+      
 
                   <form action="{{ route('mhs.store5') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <td >{{ $loop->iteration }}</td>
                     <td style="white-space: pre-wrap;word-wrap: break-word;" >{{ $s }}</td>
-                    <td>{{ $keterangan[$index] }}</td>
+                    <td style="white-space: pre-wrap;word-wrap: break-word;">{{ $keterangan[$index] }}</td>
                     <td >
                         <input type="file" class="form-control" name="file{{ $file[$index] }}" >
-                        <div class="text-info">jpg, JPG, png, PNG, pdf, jpeg, JPEG (maxsize: 2 MB)</div>
+      
+                        <div style="white-space: pre-wrap;word-wrap: break-word;" class="text-info">jpg, JPG, png, PNG, pdf, jpeg, JPEG (maxsize: 2 MB)</div>
                     </td >
                     <td>
                      @foreach ($data as $d)
                          
                      @if ($d->dateac && $d->syarat==$file[$index])
                      {{ $d->dateac }}
-                    @else
-                      belum diperiksa
+                 
                     @endif
-                     @endforeach
+          
    
                     </td>
                     <td>
-                      @foreach ($data as $d)
                       @if ($d->status  && $d->syarat== $file[$index])
                         {{ $d->status }}
                      @else
@@ -127,21 +126,16 @@
                      @endforeach
                      
                     </td>
-        
+        <td></td>
                     <td>
-                      @if($status->isEmpty())
-                      <button  type="submit" class="btn btn-success text-end">Simpan</button>
-                      @endif 
-                     @foreach ($status as $stat)
-                         @if ($stat->status !== null && $stat->syarat !== null && $stat->syarat == $file[$index])
-                         <button  type="submit" class="btn btn-success text-end" disabled>Simpan</button>
-                         @else
-                         <button  type="submit" class="btn btn-success text-end">Simpan</button>
-                         @endif
-                     @endforeach
+                
+             
+
+       
+          
 
       
-
+                     <button  type="submit" class="btn btn-success text-end">Simpan</button>
                  
                     </td>
            

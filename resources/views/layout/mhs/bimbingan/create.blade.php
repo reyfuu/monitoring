@@ -69,7 +69,7 @@
                         
                         <div class="form-group">
                           <label for="">Tanggal </label>
-                          <input type="date" class="form-control" name="tanggal" >
+                          <input type="datetime-local" class="form-control" name="tanggal" >
                           @error('tanggal')
                           <div class="alert alert-danger">{{ $message }}</div>
                           @enderror

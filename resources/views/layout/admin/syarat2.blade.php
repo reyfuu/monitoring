@@ -37,8 +37,7 @@
               <tbody>
                 @php
                 $syarat=[
-                'Kredit Poin Kegiatan Kemahasiswaan > 200 Poin---Kredit Poin Kegiatan Kemahasiswaan (KPKK) dengan nilai lebih besar dari 200 Poin
-                    <td>Kredit Poin Kegiatan Kemahasiswaan (KPKK) dengan nilai lebih besar dari 200 Poin',
+                'Kredit Poin Kegiatan Kemahasiswaan > 200 Poin---Kredit Poin Kegiatan Kemahasiswaan (KPKK) dengan nilai lebih besar dari 200 ',
                 'Lulus 120 SKS---Telah lulus 120 SKS',
                 'Lulus In House---Telah lulus in house',
                 'Lulus LKMM Etika Moral---Telah lulus LKMM Etika Moral',
@@ -89,8 +88,7 @@
     
                       @if ($d['syarat'] == $file[$index])
                       <a href="{{ route('admin.viewSyarat',['id' => $d['file'] ])}}" >
-                        <img src="{{ asset('img/pdf.png') }}" alt="" width="100" height="100">
-
+                        <img src="{{ asset('img/pdf.png') }}" width="50%">
                       </a>
                       @endif
          

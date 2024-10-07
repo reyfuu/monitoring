@@ -73,7 +73,7 @@ class HomeController extends Controller
 
 
       $mahasiswa=user::distinct()->join('syarat','syarat.npm','=','mahasiswa.npm')
-      ->join('laporan','laporan.npm','=','mahasiswa.npm')
+      ->join('laporan','laporan.npm','=','mahasiswa.npm')->where('Type','Proposal')
       ->select('mahasiswa.npm as npm','mahasiswa.name as name','laporan.judul as judul')
       ->get();
 
@@ -214,7 +214,10 @@ class HomeController extends Controller
     public function update3(Request $request){
         $data['status']=$request->status;
         $id= $request->id_syarat;
-        $data['dateac']=Carbon::now();
+        if($data['status'] == 'disetujui'){
+          $data['dateac']=Carbon::now();
+        }
+  
         syarat::where('id_syarat',$id)->update($data);
         return redirect()->route('admin.syarat');
     }

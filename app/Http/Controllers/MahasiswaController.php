@@ -622,7 +622,7 @@ class MahasiswaController extends Controller
     // function to store bimbingan
     public function store3(Request $request){
         $request->validate([
-            "tanggal"=>"required|date_format:Y-m-d",
+            "tanggal"=>"required",
             "topik"=>"required",
             "isi"=>"required",
             "dosen"=>'required'
@@ -673,24 +673,50 @@ class MahasiswaController extends Controller
         // $dokumen = syarat::where('syarat','like','%%')->get();
 
         $validator= Validator::make($request->all(),[
-            "filekpk"=> "required|file|max:2048|mimes:png,jpg,jpeg,pdf",
+            "file.*"=> "required|file|max:2048|mimes:png,jpg,jpeg,pdf",
    
         ]);
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
         $dokumen= $request->allFiles();
 
-        foreach($dokumen as $key=>$files){
-            $name= substr($key,4);
-            $file= $files->getClientOriginalName();
+        foreach($dokumen as $file){
+            $namaDokumen= $file->getClientOriginalName();
         }
+
+        if($request->hasFile('filekpk')){
+            $name='kpk';
+        }elseif($request->hasFile('filesks')){
+            $name='sks';
+        }elseif($request->hasFile('fileinhouse')){
+            $name='inhouse';
+        }elseif($request->hasFile('filewm')){
+            $name='wm';
+        }elseif($request->hasFile('filelkmmtd')){
+            $name='lkmmtd';
+        }elseif($request->hasFile('filelkmmtm')){
+            $name='lkmmtm';
+        }elseif($request->hasFile('fileoutbond')){
+            $name='outbond';
+        }elseif($request->hasFile('filespp')){
+            $name='spp';
+        }elseif($request->hasFile('filenilai')){
+            $name='nilai';
+        }elseif($request->hasFile('filesumsks')){
+            $name='sumsks';
+        }elseif($request->hasFile('filetoefl')){
+            $name='toefl';
+        }
+    
         
+            $dokumen2= syarat::where('syarat',$name)->where('npm',$npm)->get('id_syarat');
 
-            $dokumen2= syarat::where('syarat',$name)->get('id_syarat');
-
-            if(empty($dokumen2) ){
-                $data['file']= $file;
+            if($dokumen2 == null){
+                $data['file']= $namaDokumen;
+  
                 $id= $dokumen2->pluck('id_syarat');
                 syarat::where('id_syarat',$id)->update($data);
+                $path='documents/'.$namaDokumen;
+                Storage::disk('public')->put($path,file_get_contents($file));
                 return redirect()->route('mhs.syarat')->with('success','File Berhasil Ditambahkan');
             }else{
             
@@ -700,11 +726,11 @@ class MahasiswaController extends Controller
             $data['id_syarat']= $laporan_id;
             $data['syarat']= $name;
 
-            $data['file']= $file;
+            $data['file']= $namaDokumen;
             $data['dateupload']= Carbon::now();
             $data['npm']= $npm;
             $data['status']= 'submit';
-            $filepath= $files->storeAs('documents',$data['file'],'public');
+          
     
             syarat::create($data);
         

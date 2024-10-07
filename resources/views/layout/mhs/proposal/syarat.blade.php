@@ -112,30 +112,28 @@
                          
                      @if ($d->dateac && $d->syarat==$file[$index])
                      {{ $d->dateac }}
-                 
+           
+                    @else
+             
                     @endif
-          
+                      @endforeach
    
                     </td>
                     <td>
+                      @foreach ($data as $d)
                       @if ($d->status  && $d->syarat== $file[$index])
                         {{ $d->status }}
-                     @else
-                      belum submit
+               
                      @endif
                      @endforeach
                      
                     </td>
-        <td></td>
+
                     <td>
                 
-             
 
-       
-          
+                          <button  type="submit" class="btn btn-success text-end">Simpan</button> 
 
-      
-                     <button  type="submit" class="btn btn-success text-end">Simpan</button>
                  
                     </td>
            

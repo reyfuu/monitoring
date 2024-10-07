@@ -60,6 +60,7 @@
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Status</th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -74,6 +75,7 @@
                       <td>
                        
                           <a href="{{ route('admin.edit2',['id' =>$d->domen_id ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
+                          <br><br>
                           <a data-toggle="modal" data-target="#modal-delete{{ $d->domen_id }}"  class="btn btn-danger" > <i class="fas fa-trash-alt"></i> Delete</a>
                       </td>
                       

@@ -48,7 +48,7 @@
                 <td>{{ $d->topik }}</td>
                 <td>
                 @if ($d->status == 'disetujui')
-                  <i class="fa fa-check" style="color:#008d4c"></i></td>
+                  {{ $d->status }}
                 @else
                 </td>
                 @endif

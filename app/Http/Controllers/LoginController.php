@@ -70,6 +70,7 @@ class LoginController extends Controller
     
         Auth::logout();
         Session::flush();
+        $request->session()->flush();
         return redirect()->route('login');
     }
 }

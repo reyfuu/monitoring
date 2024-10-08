@@ -110,9 +110,9 @@
                       @foreach ($data as $d)
                      
                     @if ($d['status'] == 'disetujui' && $d['syarat'] == $file[$index])
-                      <i class="fa fa-check" style="color:#008d4c"></i>
+                      {{ $d['status'] }}
                      @elseif($d['status'] == 'ditolak' && $d['syarat'] == $file[$index])
-                         <i class="fa fa-times" style="color: red"></i>
+                         
                      @endif
                      @endforeach
                     </td>
@@ -140,10 +140,9 @@
                                     <option value="ditolak">ditolak</option>
                                 </select>
                             </div>
-                            <div class="modal-footer justify-content-between">
-
+                            <div class="modal-footer">
                                 <div class="text-center">
-                                  <button type="submit" class="btn btn-primary text-center">Yes</button>
+                                  <button type="submit" class="btn btn-primary">Yes</button>
                                 </div>
                             </div>
                            </form>

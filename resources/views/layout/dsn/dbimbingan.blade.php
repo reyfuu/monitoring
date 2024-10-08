@@ -36,7 +36,7 @@
         @if (empty($mentor))
         <div class="small-box bg-primary">
           <div class="inner">
-              <h3>{{ $i }}</h3>
+              <h3>{{ $dt_mahasiswa }}</h3>
               <p>Total mahasiswa yang sudah validasi</p>
           </div>
       </div>

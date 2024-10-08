@@ -48,7 +48,8 @@
       word-wrap: break-word;">{{ $name }}</td>
                       <td>
                       @if ($d->status)
-                      {{ $d->status }}       
+                      {{ $d->status }}  
+             
                       @endif
                       </td>
                       <td>          
@@ -83,8 +84,10 @@
                           <form action="{{ route('mhs.delete',['id'=>$d->bimbingan_id]) }}" method="POST">
                             @csrf
                             @method('delete')
+                            <div class="text-center">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Yes</button>
+                          </div>
                           </form>
                         </div>
                       </div>

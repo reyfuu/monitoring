@@ -10,7 +10,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard Admin</h1>
+          <h1 class="m-0">Dashboard Tugas Akhir</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -48,10 +48,12 @@
 
               <tr>
               <td>{{ $d->mahasiswa }}</td>
-              <td>{{ $d->judul }}</td>
-              <td>{{ $d->domen }}</td>
+              <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->judul }}</td>
+              <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->domen }}</td>
               <td>{{ $d->mulai }}</td>
-              <td>{{ $d->status }}</td>
+              <td>{{ $d->status_domen }}</td>
               <td>
                 <a href="{{ route('admin.bimbingan2',['id'=>$d->npm]) }}" class="btn btn-primary"> Detail</a>
                

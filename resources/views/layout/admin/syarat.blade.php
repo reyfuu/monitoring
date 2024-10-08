@@ -29,7 +29,6 @@
                 <tr>
                     <th>Nama Mahasiswa</th>
                     <th>Judul TA</th>
-                    <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -39,7 +38,6 @@
                   
                         <td>{{ $m->name }}</td>
                         <td>{{ $m->judul }}</td>
-                        <td>{{ $m->status }}</td>
                     <td>
                       <a href="{{ route('admin.syarat2', ['id'=>$m->npm]) }}" class="btn btn-primary">Detail</button>
                     </td>

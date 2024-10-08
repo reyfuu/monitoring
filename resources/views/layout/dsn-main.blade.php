@@ -14,13 +14,13 @@ if (Session::has('npm')) {
   @yield('title')
   <style>
     table{
-      width: 450px;
+      table-layout: fixed;
+      width: 100%;
       word-wrap: break-word;
     }
     td{
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      width: 2000px
+   
+      width: 200px;
     }
   </style>
   <link rel="stylesheet" href="{{asset('css/dsn-app.css')}}">

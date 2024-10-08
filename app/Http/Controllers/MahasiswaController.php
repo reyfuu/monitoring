@@ -32,7 +32,9 @@ class MahasiswaController extends Controller
         ->where('status','disetujui')->get();
         $count= count($bimbingan);
         $judul= laporan::select('judul')->where('npm',$npm)->where('type','Proposal')->get();
-        $notifikasi= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
+        $notifikasi= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->
+        orderBy('comment_id','desc')->first()->notifikasi ?? '';
+        $notifikasi2= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
         orderBy('comment_id','desc')->first()->notifikasi ?? '';
         $submit = laporan::where('tanggal_submit','<',Carbon::now()->subDays(30))->
         where('npm',$npm)->where('type','Proposal')->get();
@@ -41,7 +43,7 @@ class MahasiswaController extends Controller
             $belum_submit= 'Peringatan Proposal belum di submit dalam 30 hari ';
         }
   
-        return view('layout.mhs.dashboard',compact('count','judul','notifikasi','belum_submit'));
+        return view('layout.mhs.dashboard',compact('npm','count','judul','notifikasi','belum_submit','notifikasi2'));
     }
     public function magang(){
         $npm= session('npm');
@@ -67,8 +69,8 @@ class MahasiswaController extends Controller
                 if($bimbingan >= 5){
                     return view('layout.mhs.proposal.proposal3');
                 }else{
-                    $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+                $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
+                $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
                 $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
@@ -76,12 +78,14 @@ class MahasiswaController extends Controller
                 'laporan.laporan_id')->
                 where('laporan.npm','like','%'.$npm.'%')->where('type','Proposal')->
                 get();
+    
+             
                     return view('layout.mhs.proposal.proposal2',compact('komment','data','status'));
                 }
  
             }else{
                 $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+                $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
                 $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
@@ -130,7 +134,7 @@ class MahasiswaController extends Controller
         }
         if($dokumen->status == "submit" ){
             $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
-            $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+            $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
             $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
             join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
             select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
@@ -142,7 +146,7 @@ class MahasiswaController extends Controller
         }
         elseif($dokumen->status == "Revisi" ){
             $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
-            $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+            $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
             $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
             join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
             select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
@@ -155,8 +159,8 @@ class MahasiswaController extends Controller
             if($bimbingan >= 5){
                 return view('layout.mhs.proposal.proposal3');
             }else{
-                $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
-            $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+            $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
+            $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
             $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
             join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
             select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
@@ -189,7 +193,7 @@ class MahasiswaController extends Controller
                     return view('layout.mhs.proposal.proposal3');
                 }else{
                     $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+                    $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
                 $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
@@ -202,7 +206,7 @@ class MahasiswaController extends Controller
  
             }else{
                 $komment= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+                $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
                 $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
@@ -340,8 +344,8 @@ class MahasiswaController extends Controller
                 if($bimbingan >= 14){
                     return view('layout.mhs.ta.ta3');
                 }else{
-                    $comment= comment::where('npm','like','%'.$npm.'%')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Tugas Akhir')->first();
+                    $comment= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
+                    $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
                 $proposal= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
@@ -354,8 +358,8 @@ class MahasiswaController extends Controller
                 }
                 
             }else{
-                $comment= comment::where('npm','like','%'.$npm.'%')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Tugas Akhir')->first();
+                $comment= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
+                $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
                 $proposal= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
@@ -384,8 +388,8 @@ class MahasiswaController extends Controller
             if($bimbingan >= 14){
                 return view('layout.mhs.ta.ta3');
             }else{
-                $comment= comment::where('npm','like','%'.$npm.'%')->get();
-            $status= laporan::select('status')->where('npm',$npm)->where('type','Tugas Akhir')->first();
+                $comment= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
+                $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
             $proposal= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
             join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
             where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
@@ -398,8 +402,8 @@ class MahasiswaController extends Controller
             }
 
             if($dokumen->status == 'submit'){
-                $comment= comment::where('npm','like','%'.$npm.'%')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+                $comment= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
+                $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
                 $proposal= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
@@ -409,8 +413,8 @@ class MahasiswaController extends Controller
    
                 return view('layout.mhs.ta.ta2',compact('comment','status','proposal','id'));
             }elseif($dokumen->status == "Revisi"){
-                $comment= comment::where('npm','like','%'.$npm.'%')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+                $comment= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
+                $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();;
                 $proposal= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
@@ -440,8 +444,8 @@ class MahasiswaController extends Controller
         if($bimbingan >= 14){
             return view('layout.mhs.ta.ta3');
         }else{
-            $comment= comment::where('npm','like','%'.$npm.'%')->get();
-        $status= laporan::select('status')->where('npm',$npm)->where('type','Tugas Akhir')->first();
+            $comment= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
+            $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
         $proposal= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
         join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
         where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
@@ -454,8 +458,8 @@ class MahasiswaController extends Controller
         }
 
             if($dokumen->status == 'submit'){
-                $comment= comment::where('npm','like','%'.$npm.'%')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+                $comment= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
+                $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
                 $proposal= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
@@ -465,8 +469,8 @@ class MahasiswaController extends Controller
    
                 return view('layout.mhs.ta.ta2',compact('comment','status','proposal','id'));
             }elseif($dokumen->status == "Revisi"){
-                $comment= comment::where('npm','like','%'.$npm.'%')->get();
-                $status= laporan::select('status')->where('npm',$npm)->where('type','Proposal')->first();
+                $comment= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
+                $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
                 $proposal= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
                 join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
                 where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
@@ -507,9 +511,9 @@ class MahasiswaController extends Controller
             "judul"=>'required',
             "deskripsi"=>'required',
         ],[
-            'file.required'=>'Harap di isi file dokumennya',
-            'judul.required'=>'Harap di isi judulnya',
-            'deskripsi.required'=>'Harap di isi abstraknya'
+            'file.required'=>'Harap isi file dokumennya',
+            'judul.required'=>'Harap isikolom judulnya',
+            'deskripsi.required'=>'Harap isi kolom abstraknya'
         ]);
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
@@ -541,7 +545,7 @@ class MahasiswaController extends Controller
             $data['npm']=$npm;
             laporan::create($data);
            
-            return redirect()->route('mhs.ta')->with('success','proposal berhasil diupdate');
+            return redirect()->route('mhs.ta')->with('success','Tugas Akhir berhasil diupdate');
         }
     }
     // function to create report bimbingan
@@ -627,10 +631,10 @@ class MahasiswaController extends Controller
             "isi"=>"required",
             "dosen"=>'required'
         ],[
-            'tanggal.required'=>'Harap di isi tanggal Bimbingannya',
-            'topik.required'=>'harap isi topik',
-            'isi.required'=>'Harap di isi Bahasannya',
-            "dosen.required"=>'Harap isi dosen pembimbingnya'
+            'tanggal.required'=>'Harap pilih tanggal Bimbingannya',
+            'topik.required'=>'harap isi kolom topik',
+            'isi.required'=>'Harap di isi kolom Bahasannya',
+            "dosen.required"=>'Harap pilih dosen pembimbingnya'
         ]);
  
         $data['tanggal']= $request->tanggal;
@@ -750,9 +754,9 @@ class MahasiswaController extends Controller
             "judul"=> "required",
             'deskripsi'=> "required"
         ],[
-            'file.required'=>'Harap isi dokumennya',
-            'judul.required'=> 'Harap isi judulnya',
-            'deskripsi.required'=> 'Harap isi abstraknya'
+            'file.required'=>'Harap isi kolom dokumen',
+            'judul.required'=> 'Harap isi kolom judulnya',
+            'deskripsi.required'=> 'Harap isi kolom abstraknya'
         ]);
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
         $npm=  session('npm');
@@ -774,7 +778,7 @@ class MahasiswaController extends Controller
     
           laporan::where('npm',$npm)->where('Type','Tugas Akhir')->update($data3);
         
-          return redirect()->route('mhs.ta')->with('success','Tugas Berhasil disimpan');
+          return redirect()->route('mhs.ta')->with('success','Tugas Akhir Berhasil disimpan');
     }
 
     
@@ -811,7 +815,7 @@ class MahasiswaController extends Controller
         }else{
  
             laporan::where('npm',$npm)->where('type',$status)->update($data);
-            return redirect()->route('mhs.ta');
+            return redirect()->route('mhs.ta')->with('success','Tugas Akhir Berhasil diupdate');
         }     
     }
     // function to update bimbingan
@@ -843,9 +847,15 @@ class MahasiswaController extends Controller
     }
     public function delete($id){
         $data= Bimbingan::find($id);
+        $status= Bimbingan::where('bimbingan_id',$id)->first()->type;
         if($data){
             $data->delete();
         }
-        return redirect()->route('mhs.bimbingan');
+        if($status == 'Tugas Akhir'){
+            return redirect()->route('mhs.bimbingan2');
+        }else{
+            return redirect()->route('mhs.bimbingan');
+        }
+       
     }
 }

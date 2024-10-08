@@ -27,4 +27,7 @@ class Bimbingan extends Model
         'type',
         'komentar'
     ];
+    public function mahasiswa(){
+        return $this->belongsTo(User::class,'npm','npm');
+    }
 }

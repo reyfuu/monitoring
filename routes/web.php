@@ -137,6 +137,7 @@ Route::group(['prefix'=> 'admin', 'middleware' => ['auth:admin'],'as'=> 'admin.'
     Route::put('/update2/{id}',[HomeController::class, 'update2'])->name('update2');
     
     Route::post('/store',[HomeController::class, 'store'])->name('store');
+    Route::post('/store2',[HomeController::class,'store2'])->name('store2');
     Route::delete('/delete/{id}',[HomeController::class, 'delete'])->name('delete');
     Route::delete('/delete2/{id}',[HomeController::class, 'delete2'])->name('delete2');
 });

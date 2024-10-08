@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Edit Akun</h1>
+            <h1 class="m-0">Edit Akun Mahasiswa</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -39,61 +39,64 @@
                     <div class="card-body">
                       <div class="form-group">
                         <label for="">NPM</label>
-                        <input type="text" class="form-control" name="npm" value="{{ $id2->npm }}"  required>
+                        <input type="text" class="form-control" name="npm" value="{{ $id2->npm }}"  >
                         @error('npm')
-                            <small>{{$message}}</small>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                         <div class="form-group">
                             <label for="">Nama</label>
-                            <input type="text" class="form-control" name="name" value="{{ $id2->name }}"  required>
+                            <input type="text" class="form-control" name="name" value="{{ $id2->name }}"  >
                             @error('name')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="email" value="{{ $id2->email }}"  required>
+                            <input type="email" class="form-control" name="email" value="{{ $id2->email }}"  >
                             @error('email')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="">Password</label>
                             <input type="password" class="form-control" name="password" placeholder="Password" >
                             @error('password')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <label for="">Status</label>
-                        <select class="form-control" name="status" wire:model="selectedClass" aria-label="Default select example" required>
+                        <select class="form-control" name="status" wire:model="selectedClass" aria-label="Default select example" >
                           <option hidden disabled selected value>Pilih Opsi</option>
                           <option value="Magang">Magang</option>
                           <option value="Tugas Akhir">Tugas Akhir</option>
                           <option value="Magang dan Tugas Akhir">Magang dan Tugas Akhir</option>
                         </select>
                         @error('status')
-                         <small>{{$message}}</small>
+                        <div class="alert alert-danger">{{ $message }}</div>
                          @enderror
                         <div class="form-group">
                           <label for="">Start</label>
                           <input type="date" class="form-control" name="tanggal_mulai" 
-                           value="{{ $tanggal_mulai }}" required>
+                           value="{{ $tanggal_mulai }}" >
                           @error('tanggal_mulai')
-                            <small>{{$message}}</small>
+                          <div class="alert alert-danger">{{ $message }}</div>
                           @enderror
                         </div>
                         <div class="form-group">
                           <label for="">End</label>
                           <input type="date" class="form-control" name="tanggal_berakhir" 
-                           value="{{ $tanggal_berakhir }}" required>
+                           value="{{ $tanggal_berakhir }}" >
                           @error('tanggal_berakhir')
-                            <small>{{$message}}</small>
+                          <div class="alert alert-danger">{{ $message }}</div>
                           @enderror
-                        <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary" wire:Loading.attr="disabled">Simpan</button>
                         </div>
+                          <div class="form-group text-center">
+                        
+                            <button type="submit" class="btn btn-primary" >Simpan</button>
+                          </div>
+                     
                     </div>
                 </form>
               </div>

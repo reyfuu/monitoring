@@ -80,6 +80,7 @@ if (Session::has('domen_id')) {
                 echo session()->get('username');
             @endphp </p>
           <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
+      
         </div>
       </li>
     </ul>

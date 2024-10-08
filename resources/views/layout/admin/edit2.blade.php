@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Edit Akun</h1>
+            <h1 class="m-0">Edit Akun Dosen</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -29,50 +29,53 @@
     <section class="content">
         <div class="container">
           {{-- form start --}}
-            <form action="{{ route('admin.update',['id'=> $id2->domen_id]) }}" method="post">
+            <form action="{{ route('admin.update2',['id'=> $id2->domen_id]) }}" method="post">
                 @csrf
                 @method('put')
                 <div class="col-md-12">
-                    <div class="card card-primary">
+                  <div class="card card-primary">
 
 
                 <form>
                     <div class="card-body">
                         <div class="form-group">
                             <label for="">Nama</label>
-                            <input type="text" class="form-control" name="name" value="{{ $id2->name }}"  required>
+                            <input type="text" class="form-control" name="name" value="{{ $id2->name }}"  >
                             @error('name')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="email" value="{{ $id2->email }}"  required>
+                            <input type="email" class="form-control" name="email" value="{{ $id2->email }}"  >
                             @error('email')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="">Password</label>
                             <input type="password" class="form-control" name="password" placeholder="Password" >
                             @error('password')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <label for="">Status</label>
-                        <select class="form-control" name="status" aria-label="Default select example" required>
+                        <select class="form-control" name="status" aria-label="Default select example" >
                           <option hidden disabled selected value>Pilih Opsi</option>
                           <option value="Dosen">Dosen</option>
                           <option value="Mentor">Mentor</option>
                         </select>
                         @error('status')
-                         <small>{{$message}}</small>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
+                    </div>
+      
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
+                  
                 </form>
               </div>
              </div>

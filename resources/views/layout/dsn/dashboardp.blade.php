@@ -15,7 +15,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
+            <li class="breadcrumb-item active">Dashboard Proposal</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -33,18 +33,8 @@
             <div class="card-header">
 
 
-              <div class="card-tools">
-                <div class="input-group input-group-sm" style="width: 150px;">
-                  <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                  <div class="input-group-append">
-                    <button type="submit" class="btn btn-default">
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+             
+          
             <!-- show data -->
             <div class="card-body table-responsive p-0">
               <table class="table table-hover text-nowrap">
@@ -64,9 +54,14 @@
                       <td>{{ $d->mahasiswa }}</td>
                       <td>{{ $d->judul }}</td>
                       <td>
-                        <a href="{{ route('dmn.viewTa',['id'=>$d->dokumen ?? 'BELUM SUBMIT.pdf']) }}">
-                          <img src="{{ asset('img/pdf.png') }}" style="width: 25%" alt="">
+                        @if ($d->dokumen)
+                        <a href="{{ route('dmn.viewTa',['id'=>$d->dokumen ]) }}">
+                          <img src="{{ asset('img/pdf.png') }}" style="width: 25%">
                         </a>
+                        @else
+                            Belum submit 
+                        @endif
+
                       </td>
                       <td>
       
@@ -79,9 +74,11 @@
                       </td>
                       <td>
                         <a href="{{ route('dmn.rekapp',$d->npm) }}" class="btn btn-primary text-end" >Detail</a>
+                        <br>
                         @if ($d->status == 'Finish')
                             
                         @else
+                        <br>
                         <a href="{{ route('dmn.setujup',$d->laporan_id) }}" class=" btn btn-success text-end" >Ubah Persetujuan</a>
                         @endif
                        
@@ -95,6 +92,7 @@
                 </tbody>
               </table>
             </div>
+          </div>
             <!-- end show data -->
           </div>
           <!-- /.card -->

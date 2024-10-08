@@ -58,7 +58,7 @@
                         </div>
                         <div class="form-group">
                           <label for="">Tanggal </label>
-                          <input type="date" class="form-control" name="tanggal" 
+                          <input type="datetime-local" class="form-control" name="tanggal" 
                             value="{{ $data->tanggal }}" required>
                           @error('tanggal')
                             <small>{{$message}}</small>

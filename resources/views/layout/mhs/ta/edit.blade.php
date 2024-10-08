@@ -29,7 +29,6 @@
     <!-- Main content -->
     <section class="content">
         <div class="container">
-       - form start --}}
             <form action="{{ route('mhs.update') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">

@@ -10,7 +10,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Dashboard Admin</h1>
+          <h1 class="m-0">Dashboard Mahasiswa</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -32,25 +32,8 @@
           {{-- button create --}}
           <a href="{{ route('admin.create') }}" class="btn btn-primary mb-3">Buat Akun</a>
           <div class="card"> 
-            <div class="card-header">
-
-
-              <div class="card-tools">
-                <form action="/home" method="get">
-                <div class="input-group input-group-sm" style="width: 150px;">
         
-                  <input type="search" name="search" class="form-control float-right" placeholder="Search">
-
-                  <div class="input-group-append">
-                    <button type="submit" class="btn btn-default">
-                      <i class="fas fa-search"></i>
-                    </button>
-              
-                  </div>
-                </form>
-                </div>
-              </div>
-            </div>
+      
             <!-- display data -->
             <div class="card-body table-responsive p-0">
               <table class="table table-hover text-nowrap">
@@ -120,6 +103,7 @@
       </div>
       <!-- /.row (main row) -->
     </div><!-- /.container-fluid -->
+  </div>
   </section>
   <!-- /.content -->
 </div>

@@ -25,11 +25,8 @@ class DosenController extends Controller
         $countMahasiswa= count($bimbingan);
         $bimbingan2= bimbingan::where('status','submit')->get();
         $countSubmit= count($bimbingan);
-        $dt_mahasiswa = User::join('bimbingan', 'mahasiswa.npm', '=', 'bimbingan.npm')
-        ->where('bimbingan.domen_id', '=', $domen_id)
-        ->selectRaw('mahasiswa.npm, COUNT(mahasiswa.npm) as count_npm')
-        ->groupBy('mahasiswa.npm')
-        ->get();
+        $dt_mahasiswa = User::withCount('bimbingan')->having('bimbingan_count','>=',14)->get();
+        $dt_mahasiswa= count($dt_mahasiswa);
         $submit= 'submit';
 
         $coba = laporan::selectRaw("case when status= 'submit' then 'mahasiswa submit' 
@@ -46,14 +43,8 @@ class DosenController extends Controller
         ->where('domen_id',$domen_id)->where('type','Tugas Akhir')->groupBy('status')->get();
 
 
-        $i=0;
-            foreach ($dt_mahasiswa as $d){
-                if($d->count_npm >=14  && $d->status =='disetujui'){
-                    $i+=1;
-                }
-            }
         $mentor = dosen::select('status')->where('domen_id',$domen_id)->get();
-        return view('layout.dsn.dbimbingan', compact('i','countSubmit','countMahasiswa',
+        return view('layout.dsn.dbimbingan', compact('dt_mahasiswa','countSubmit','countMahasiswa',
         'coba','tugasAkhir'));
     }
     public function setujup($id){
@@ -163,7 +154,7 @@ class DosenController extends Controller
         ->where('laporan.domen_id','like','%'.$domen_id.'%')
         ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
         'laporan.dokumen as dokumen','laporan.laporan_id','laporan.status_domen','mahasiswa.npm as npm']);
-    
+ 
         // dd($data);
         return view('layout.dsn.dashboardp',compact('data'));
     }
@@ -367,12 +358,15 @@ class DosenController extends Controller
             'status_domen'=>'Harap diisi status mahasiswa',
             'comment.required'=> 'Harap isi komentar',
         ]);
-
+   
+        
         $data['status']=$request->status_domen;
        
         $data['komentar']= $request->comment;
         
         $id= $request->id;
+        $npm = bimbingan::select('npm')->where('bimbingan_id',$id)->first()->npm;
+  
         $data2['npm']= bimbingan::where('bimbingan_id',$id)->first()->npm;
         $data2['tanggal']= Carbon::now()->format('Y-m-d');
         $type= bimbingan::where('bimbingan_id',$id)->first()->type;
@@ -393,9 +387,9 @@ class DosenController extends Controller
             Bimbingan::find($id)->update($data);
             comment::create($data2);
             if($data2['type'] == 'Bimbinganp'){
-                return redirect()->route('dmn.dbimbingan');
+                return redirect()->route('dmn.bimbingan',['id'=>$npm]);
             }else{
-                return redirect()->route('dmn.dbimbingan2');
+                return redirect()->route('dmn.bimbingan2',['id'=>$npm]);
             }
         }
 

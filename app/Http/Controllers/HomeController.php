@@ -29,8 +29,8 @@ class HomeController extends Controller
         ->join('bimbingan','bimbingan.npm','=','bimbingan.npm')
         ->where('laporan.type','Proposal')
         ->get(['mahasiswa.name as mahasiswa','domen.name as domen','laporan.laporan_id as id',
-        'laporan.judul as judul','laporan.tanggal_mulai as mulai','laporan.status as status',
-          'mahasiswa.npm as npm']);
+        'laporan.judul as judul','laporan.tanggal_mulai as mulai','laporan.status as status'
+          ,'laporan.status_domen as status_domen','mahasiswa.npm as npm']);
         
         return view('layout.admin.dashboard',compact('data'));
     }
@@ -108,9 +108,25 @@ class HomeController extends Controller
     // function to store user
     public function store(Request $request){
       $validator= Validator::make($request->all(),[
+        "npm"=>"required",
+        "name"=>"required",
         "email"=> "required|email",
         "name"=> "required",
+        "status"=>"required",
         "password"=> "required",
+        "dosen"=> "required",
+        "tanggal_mulai"=>"required",
+        "angkatan"=>"required"
+      ],[
+          'npm.required'=>'Harap isi kolom npmnya',
+          'name.required'=>'Harap isi kolom namanya',
+          'email.required'=> 'Harap isi kolom emailnya',
+          'status.required'=>'Harap pilih status',
+          'password.required'=>'Harap isi kolom passwordnya',
+          'dosen.required'=>'Harap pilih Dosen Pembimbing',
+          'angkatan.required'=> 'Harap isi kolom angkatan',
+          'tanggal_mulai.required'=> 'Harap pilih tanggal mulainya'
+
       ]);
       if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
       
@@ -125,13 +141,19 @@ class HomeController extends Controller
        
       $status=$request->status;
 
-      if($status== 'Dosen'){
-        $data['domen_id']=$request->domen_id;
-        dosen::create($data);
-      }elseif($status == 'Mentor'){
-        $data['domen_id']= IdGenerator::generate(
-          ['table'=> 'domen','field'=> 'domen_id','length'=>5,'prefix'=>'MN']);
-        dosen::create($data);
+     
+      if($status == 'Magang'){
+        $data['npm']=$request->npm;
+        $data['angkatan']=$request->angkatan;
+        User::create($data);
+        $name=$request->dosen;
+        $dosen_id=dosen::select('domen_id')->where('name','like','%'.$name.'%')->first()->domen_id;
+        $data2['type']= 'Laporan Akhir';
+        $data2['domen_id']= $dosen_id;
+        $data2['npm']=$request->npm;
+        $data2['status']= 'belum submit';
+        laporan::create($data2);
+       return redirect()->route('admin.mahasiswa');
       }
       // elseif($status == 'Magang'){
       //   $data['npm']= $request->npm;
@@ -145,7 +167,7 @@ class HomeController extends Controller
         $data2['type']= 'Proposal';
         $data2['domen_id']= $dosen_id;
         $data2['npm']=$request->npm;
-        $data2['status']= 'submit';
+        $data2['status']= 'belum submit';
         $data['angkatan']=$request->angkatan;
         User::create($data);
         laporan::create($data2);
@@ -157,14 +179,47 @@ class HomeController extends Controller
           $data3['type']= 'Tugas Akhir';
           $data3['domen_id']= $dosen_id;
           $data3['npm']=$request->npm;
-          $data3['status']= 'submit';
+          $data3['status']= 'belum submit';
           laporan::create($data3);
+
+ 
+            return redirect()->route('admin.mahasiswa');
       }
   
 
       //   dd($data3);
-      return redirect()->route('admin.dashboard');
+     
     }
+    public function store2(Request $request){
+      $validator= Validator::make($request->all(),[
+        "domen_id"=>'required',
+        "name"=>'required',
+        "email"=>'required',
+        "password"=> 'required',
+        "status"=>'required',
+      ],[
+        "domen_id.required"=>'Harap isi kolom nidnnya',
+        "name.required"=>'Harap isi kolom namanya',
+        "email.required"=>'Harap isi kolom emailnya',
+        'password.required'=>'Harap isi kolom password',
+        'status.required'=>'Harap pilih statusnya'
+      ]);
+      if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+      $status=$request->status;
+      $data['email']= $request->email;
+      $data['name']= $request->name;
+      $data['password']=Hash::make($request->password); 
+      $data['status']=$request->status;
+      if($status== 'Dosen'){
+        $data['domen_id']=$request->domen_id;
+        dosen::create($data);
+      }elseif($status == 'Mentor'){
+        $data['domen_id']= IdGenerator::generate(
+          ['table'=> 'domen','field'=> 'domen_id','length'=>5,'prefix'=>'MN']);
+        dosen::create($data);
+    }
+    return redirect()->route('admin.domen');
+  }
     
     // function to navigate edit mahasiswa
     public function edit(Request $request,$id){
@@ -185,7 +240,13 @@ class HomeController extends Controller
       $validator= Validator::make($request->all(),[
         "email"=> "required|email",
         "name"=> "required",
-        "password"=> "nullable",
+        "password"=> "required",
+        'status'=>"required",
+      ],[
+        'email.required'=> 'Harap isi kolom email',
+        'name.required'=> 'Harap isi kolom nama',
+        'password.required'=>'Harap isi kolom password',
+        'status.required'=>'Harap pilih status'
       ]);
       if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
@@ -195,21 +256,43 @@ class HomeController extends Controller
         $data['password']=Hash::make($request->password); 
       }
       $data['status']=$request->status;
-      $data2['tanggal_mulai']=$request->tanggal_mulai;
-      $data2['tanggal_berakhir']=$request->tanggal_berakhir;
+      $status= $request->status;
+  
+      
+      User::where('npm',$id)->update($data);
+
+      return redirect()->route('admin.mahasiswa');
+   
+    }
+    public function update2(Request $request,$id){
+      $validator= Validator::make($request->all(),[
+        "email"=> "required|email",
+        "name"=> "required",
+        "password"=> "required",
+        'status'=>"required",
+      ],[
+        'email.required'=> 'Harap isi kolom email',
+        'name.required'=> 'Harap isi kolom nama',
+        'password.required'=>'Harap isi kolom password',
+        'status.required'=>'Harap pilih status'
+      ]);
+      if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+
+      $data['email']= $request->email;
+      $data['name']= $request->name;
+      if($request->password){
+        $data['password']=Hash::make($request->password); 
+      }
+      $data['status']=$request->status;
       $status= $request->status;
       if($status== 'Dosen'){
         dosen::find($id)->update($data);
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.domen');
       }elseif($status == 'Mentor'){
         dosen::find($id)->update($data);
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.domen');
       }
-      else{
-      User::where('npm',$id)->update($data);
-
-      return redirect()->route('admin.dashboard');
-      }
+     
     }
     public function update3(Request $request){
         $data['status']=$request->status;
@@ -229,14 +312,14 @@ class HomeController extends Controller
         $data->delete();
       }
 
-      return redirect()->route('admin.dashboard');
+      return redirect()->route('admin.mahasiswa');
     }
     // function to delete dosen
     public function delete2(Request $request,$id){
       DB::table('domen')->where('domen_id',$id)->delete();
 
 
-      return redirect()->route('admin.dashboard');
+      return redirect()->route('admin.domen');
     }
 }
 

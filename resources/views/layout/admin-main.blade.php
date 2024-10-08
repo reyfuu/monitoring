@@ -15,14 +15,14 @@ if (Session::has('npm')) {
   @yield('title')
   <style>
     table{
-
-      width: 450px;
+      table-layout: fixed;
+      width: 100%;
       word-wrap: break-word;
     }
 
     td{
 
-      width: 200px
+      width: 200px;
     }
   </style>
   <link rel="stylesheet" href="{{asset('css/app.css')}}">

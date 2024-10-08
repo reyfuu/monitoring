@@ -57,8 +57,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(laporan_harian::class,'npm');
     }
-    public function bimbingans(){
-        return $this->hasMany(Bimbingan::class);
+    public function bimbingan(){
+        return $this->hasMany(Bimbingan::class, 'npm','npm');
     }
     public function isKonsultasiSelesai(){
         return $this->bimbingans()->count()>=14; 

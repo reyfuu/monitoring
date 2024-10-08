@@ -29,7 +29,7 @@
     <section class="content">
         <div class="container">
           {{-- form start --}}
-            <form action="{{ route('admin.store') }}" method="post">
+            <form action="{{ route('admin.store2') }}" method="post">
                 @csrf
                 <div class="col-md-12">
                     <div class="card card-primary">
@@ -39,41 +39,41 @@
                     <div class="card-body">
                       <div class="form-group">
                         <label for="">NIDN</label>
-                        <input type="text" class="form-control" name="domen_id" placeholder="NIDN" required>
+                        <input type="text" class="form-control" name="domen_id" placeholder="NIDN" >
                         @error('domen_id')
-                            <small>{{$message}}</small>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                         <div class="form-group">
                             <label for="">Nama</label>
-                            <input type="text" class="form-control" name="name" placeholder="Name" required>
+                            <input type="text" class="form-control" name="name" placeholder="Name" >
                             @error('name')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" name="email" placeholder="Email" required>
+                            <input type="email" class="form-control" name="email" placeholder="Email" >
                             @error('email')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="">Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Enter Password" required>
+                            <input type="password" class="form-control" name="password" placeholder="Enter Password" >
                             @error('password')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <label for="">Status</label>
-                        <select class="form-control" name="status" aria-label="Default select example" required>
+                        <select class="form-control" name="status" aria-label="Default select example" >
                           <option hidden disabled selected value>select the value</option>
                           <option value="Dosen">Dosen</option>
                           <option value="Mentor">Mentor</option>
                         </select>
                         @error('status')
-                         <small>{{$message}}</small>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                         </div>
                         <div class="form-group text-center">

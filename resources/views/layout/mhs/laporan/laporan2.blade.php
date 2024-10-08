@@ -24,7 +24,7 @@
     <section class="content">
         <div class="container">
           <div class="col-md-12">
-            <div class="card card-primary">
+        
                 {{-- show days --}}
     
 
@@ -45,6 +45,7 @@
                       </div>
                     </div>
                   </div>
+            </div>
 
                   
 

@@ -15,7 +15,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard </li>
+            <li class="breadcrumb-item active">Dashboard Bimbingan Proposal</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -38,6 +38,7 @@
               <th>Deskripsi</th>
               <th>Status</th>
               <th>Komentar</th>   
+              <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
@@ -46,13 +47,15 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $d->tanggal }}</td>
                 <td>{{ $d->topik }}</td>
-                <td>{{ $d->isi }}</td>
+                <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->isi }}</td>
                 <td>@if ($d->status )
                   {{ $d->status }}
                 @else
                 
                 @endif</td>
-                <td>{{ $d->komentar }}</td>
+                <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->komentar }}</td>
                 <td>
 
                     @if ($d->status == 'disetujui')

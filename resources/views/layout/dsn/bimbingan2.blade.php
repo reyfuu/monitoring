@@ -15,7 +15,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard </li>
+            <li class="breadcrumb-item active">Daftar Bimbingan Tugas Akhir </li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -46,7 +46,8 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $d->tanggal }}</td>
                 <td>{{ $d->topik }}</td>
-                <td>{{ $d->isi }}</td>
+                <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->isi }}</td>
                 <td>
                 @if ($d->status)
                   {{ $d->status }}
@@ -56,9 +57,11 @@
                 </td>
                 <td>
                     <a href="{{ route('dmn.detailb2', $d->bimbingan_id) }}" class="btn btn-primary text-end">Detail</a>
+                    <br>
                     @if ($d->status == 'disetujui')
                       
                     @else
+                    <br>
                     <a href="{{ route('dmn.setujubt',['id'=>$d->bimbingan_id]) }}" class=" btn btn-success text-end" >Ubah Persetujuan</a>
                     @endif
                     

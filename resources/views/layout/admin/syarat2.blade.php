@@ -10,12 +10,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard Admin</h1>
+            <h1 class="m-0">Daftar Syarat Mahasiswa</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard </li>
+              <li class="breadcrumb-item active">Daftar Syarat Mahasiswa </li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -32,61 +32,38 @@
                 <th>File Upload</th>
                 <th>Tanggal Validasi</th>
                 <th>Valid</th>
-                <th>AKsi</th>
+                <th>Aksi</th>
               </thead>
               <tbody>
-                @php
-                $syarat=[
-                'Kredit Poin Kegiatan Kemahasiswaan > 200 Poin---Kredit Poin Kegiatan Kemahasiswaan (KPKK) dengan nilai lebih besar dari 200 ',
-                'Lulus 120 SKS---Telah lulus 120 SKS',
-                'Lulus In House---Telah lulus in house',
-                'Lulus LKMM Etika Moral---Telah lulus LKMM Etika Moral',
-                'Lulus LKMM-TD---Telah lulus LKMM-TD',
-                'Lulus LKMM-TM---Telah lulus LKMM-TM',
-                'Lulus Out Bond---Telah lulus out bond',
-                'Lunas Administrasi Keuangan---Telah melunasi administrasi keuangan ( SPP semester sebelumnya dan Dana Pengembangan)',
-                'Maksimal Nilai D 10 % Dari Total SKS---Maksimal untuk nilai D adalah 10 % dari total SKS',
-                'Sedang Menempuh 144 SKS---Sedang menempuh 144 SKS saat mengajukan proposal',
-                'TOEFL > 400---Skor test TOEFL lebih besar dari 400'
+            @php
+            $syarat=[
+                'Lulus 135 SKS',
+                'Lulus Mata Kuliah Magang',
+                'Minimal IPK 2,5'
               ];
-                $keterangan = [
-                'Kredit Poin Kegiatan Kemahasiswaan > 200 Poin',
-                'Lulus 120 SKS',
-                'Lulus In House',
-                'Lulus LKMM Etika Moral',
-                'Lulus LKMM-TD',
-                'Lulus LKMM-TM',
-                'Lulus Out Bond',
-                'Lunas Administrasi Keuangan',
-                'Maksimal Nilai D 10 % Dari Total SKS',
-                'Sedang Menempuh 144 SKS',
-                'TOEFL > 400'
+            $keterangan=[
+              'Lulus 135 SKS',
+                'Lulus Magang',
+                'Minimal IPK 2,5'
             ];
-            $file = [
-                'kpk',
-                'sks',
-                'inhouse',
-                'wm',
-                'lkmmtd',
-                'lkmmtm',
-                'outbond',
-                'spp',
-                'nilai',
-                'sumsks',
-                'toefl'
-
+                $file = [
+                  'sks',
+                  'magang',
+                  'ipk'
               ];
-                @endphp
-                @foreach ($syarat as $index => $s)
+            @endphp
+            @foreach ($syarat as $index => $s)
+                
+        
                 <tr>
-                    <td >{{ $loop->iteration  }}</td>
+                    <td >{{ $loop->iteration }}</td>
                     <td>{{ $s }}</td>
-                    <td>{{ $keterangan[$index] }} </td>
+                    <td>{{ $keterangan[$index] }}</td>
               
                     <td >
                       @foreach ($data as $d)
     
-                      @if ($d['syarat'] == $file[$index])
+                      @if ($d['syarat'] ==  $file[$index]  )
                       <a href="{{ route('admin.viewSyarat',['id' => $d['file'] ])}}" >
                         <img src="{{ asset('img/pdf.png') }}" width="50%">
                       </a>
@@ -117,10 +94,13 @@
                      @endforeach
                     </td>
                     <td>
-                    @foreach ($data as $d)
-                      @if ($d['syarat'] == $file[$index])
-                           <a class=" btn btn-success text-end" data-toggle="modal" data-target="#modal{{ $d['id_syarat'] }}" >Ubah Persetujuan</a>
-                    </tr>
+                    
+                     @foreach ($data as $d)
+                     @if ($d['syarat'] == $file[$index] && $d['status'] == 'disetujui')
+                          
+                    @elseif($d['syarat'] == $file[$index] )
+                    <a class=" btn btn-success text-end" data-toggle="modal" data-target="#modal{{ $d['id_syarat'] }}" >Ubah Persetujuan</a>
+                    @endif
                       <div class="modal fade" id="modal{{ $d['id_syarat'] }}">
                         <div class="modal-dialog">
                           <div class="modal-content">
@@ -151,9 +131,10 @@
                         </div>
                         <!-- /.modal-dialog -->
                       </div>
-                      @endif
+
                       @endforeach
-                    </td> 
+                 
+                    </tr>
                 @endforeach
             </tbody>
 

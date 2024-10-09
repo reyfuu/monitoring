@@ -300,9 +300,9 @@ class HomeController extends Controller
         if($data['status'] == 'disetujui'){
           $data['dateac']=Carbon::now();
         }
-  
+        $npm= syarat::where('id_syarat',$id)->first()->npm;
         syarat::where('id_syarat',$id)->update($data);
-        return redirect()->route('admin.syarat');
+        return redirect()->route('admin.syarat2',['id'=> $npm ]);
     }
     // function to delete mahasiswa
     public function delete(Request $request,$id){

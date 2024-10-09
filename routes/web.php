@@ -62,6 +62,10 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::post('/store5',[MahasiswaController::class, 'store5'])->name('store5');
     Route::put('/store5',[MahasiswaController::class],'store5')->name('putstore');
     Route::post('/store6',[MahasiswaController::class, 'store6'])->name('store6');
+    Route::post('/storeMagang',[MahasiswaController::class,'storeMagang'])->name('storeMagang');
+    Route::put('/storeMagang',[MahasiswaController::class,'storeMagang'])->name('putMagang');
+    Route::post('/storeIpk',[MahasiswaController::class,'storeIpk'])->name('storeIpk');
+    Route::put('/storeIpk',[MahasiswaController::class,'storeIpk'])->name('putIpk');
 
 
     Route::post('/update',[MahasiswaController::class, 'update'])->name('update');

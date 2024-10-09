@@ -14,7 +14,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard </li>
+              <li class="breadcrumb-item active">Dashboard Syarat Proposal</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -39,6 +39,23 @@
             </ul>
           </div>
           @endif
+          @php
+          $syarat=[
+              'Lulus 135 SKS',
+              'Lulus Mata Kuliah Magang',
+              'Minimal IPK 2,5'
+            ];
+          $keterangan=[
+            'Lulus 135 SKS',
+              'Lulus Magang',
+              'Minimal IPK 2,5'
+          ];
+              $file = [
+                'sks',
+                'magang',
+                'ipk'
+            ];
+          @endphp
             <table class="table table-hover text-nowrap">
               <thead>
                 <th>No</th>
@@ -51,66 +68,67 @@
               </thead>
               <tbody>
                 <tr>
-                  @php
-                  $syarat=[
-                  'Kredit Poin Kegiatan Kemahasiswaan > 200 Poin---Kredit Poin Kegiatan Kemahasiswaan (KPKK) dengan nilai lebih besar dari 200 Poin
-                      ',
-                  'Lulus 120 SKS---Telah lulus 120 SKS',
-                  'Lulus In House---Telah lulus in house',
-                  'Lulus LKMM Etika Moral---Telah lulus LKMM Etika Moral',
-                  'Lulus LKMM-TD---Telah lulus LKMM-TD',
-                  'Lulus LKMM-TM---Telah lulus LKMM-TM',
-                  'Lulus Out Bond---Telah lulus out bond',
-                  'Lunas Administrasi Keuangan---Telah melunasi administrasi keuangan ( SPP semester sebelumnya dan Dana Pengembangan)',
-                  'Maksimal Nilai D 10 % Dari Total SKS---Maksimal untuk nilai D adalah 10 % dari total SKS',
-                  'Sedang Menempuh 144 SKS---Sedang menempuh 144 SKS saat mengajukan proposal',
-                  'TOEFL > 400---Skor test TOEFL lebih besar dari 400'
-                ];
-                  $keterangan = [
-                  'Kredit Poin Kegiatan Kemahasiswaan > 200 Poin',
-                  'Lulus 120 SKS',
-                  'Lulus In House',
-                  'Lulus LKMM Etika Moral',
-                  'Lulus LKMM-TD',
-                  'Lulus LKMM-TM',
-                  'Lulus Out Bond',
-                  'Lunas Administrasi Keuangan',
-                  'Maksimal Nilai D 10 % Dari Total SKS',
-                  'Sedang Menempuh 144 SKS',
-                  'TOEFL > 400'
-              ];
-              $file = [
-                  'kpk',
-                  'sks',
-                  'inhouse',
-                  'wm',
-                  'lkmmtd',
-                  'lkmmtm',
-                  'outbond',
-                  'spp',
-                  'nilai',
-                  'sumsks',
-                  'toefl'
-  
-                ];
-                  @endphp
-                  @foreach ($syarat as $index=>$s)
-      
-
-                  <form action="{{ route('mhs.store5') }}" method="post" enctype="multipart/form-data">
+                
+                  <form id="sks" action="{{ route('mhs.store5') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <td >{{ $loop->iteration }}</td>
-                    <td style="white-space: pre-wrap;word-wrap: break-word;" >{{ $s }}</td>
-                    <td style="white-space: pre-wrap;word-wrap: break-word;">{{ $keterangan[$index] }}</td>
+                    <td>
+                      1</td>
+                    <td style="white-space: pre-wrap;word-wrap: break-word;" >Lulus 135 SKS---Telah lulus 135 SKS</td>
+                    <td style="white-space: pre-wrap;word-wrap: break-word;">Lulus 135 SKS</td>
                     <td >
-                        <input type="file" class="form-control" name="file{{ $file[$index] }}" >
+           
+                        <input type="file" class="form-control" name="file" >
       
                         <div style="white-space: pre-wrap;word-wrap: break-word;" class="text-info">jpg, JPG, png, PNG, pdf, jpeg, JPEG (maxsize: 2 MB)</div>
-                    </td >
+                      </td >
                     <td>
-                     @foreach ($data as $d)
+                         @foreach ($datasks as $d)
                          
-                     @if ($d->dateac && $d->syarat==$file[$index])
+                     @if ($d->dateac )
+                     {{ $d->dateac }}
+           
+                    @else
+             
+                    @endif
+                      @endforeach
+                    </td>
+                    <td>
+                      @foreach ($datasks as $d)
+                      @if ($d->status  )
+                        {{ $d->status }}
+               
+                     @endif
+                     @endforeach
+                    </td>
+
+                    <td>
+                      @if ($statussks == 'disetujui')
+                          
+                      @else
+                      <button  type="submit" class="btn btn-success text-end">Simpan</button> 
+                      @endif
+                        
+                    </td>
+                 
+                  </form>
+                </tr>
+                <tr>
+                  <form id="magang" action="{{ route('mhs.storeMagang') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <td >2</td>
+                    <td style="white-space: pre-wrap;word-wrap: break-word;" >Telah Melaksanakan Tugas Magang</td>
+                    <td style="white-space: pre-wrap;word-wrap: break-word;">Lulus Mata Kuliah Magang</td>
+                    <td >
+                      <form action="{{ route('mhs.storeMagang') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" class="form-control" name="file" >
+      
+                        <div style="white-space: pre-wrap;word-wrap: break-word;" class="text-info">jpg, JPG, png, PNG, pdf, jpeg, JPEG (maxsize: 2 MB)</div>
+                      </td >
+                    <td>
+                     @foreach ($datamagang as $d)
+                         
+                     @if ($d->dateac )
                      {{ $d->dateac }}
            
                     @else
@@ -120,8 +138,8 @@
    
                     </td>
                     <td>
-                      @foreach ($data as $d)
-                      @if ($d->status  && $d->syarat== $file[$index])
+                      @foreach ($datamagang as $d)
+                      @if ($d->status )
                         {{ $d->status }}
                
                      @endif
@@ -131,21 +149,67 @@
 
                     <td>
                 
+                      @if ($statusmagang == 'disetujui')
+                          
+                      @else
+                      <button  type="submit" class="btn btn-success text-end">Simpan</button> 
+                      @endif
+                          
 
-                          <button  type="submit" class="btn btn-success text-end">Simpan</button> 
-
-                 
                     </td>
-           
                   </form>
-
                 </tr>
-                @endforeach
+                <tr>
+                  <form action="{{ route('mhs.storeIpk') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <td >3</td>
+                    <td style="white-space: pre-wrap;word-wrap: break-word;" >IPK minimal 2,5</td>
+                    <td style="white-space: pre-wrap;word-wrap: break-word;">IPK minimal 2,5</td>
+                    <td >
+                        <input type="file" class="form-control" name="file" >
+      
+                        <div style="white-space: pre-wrap;word-wrap: break-word;" class="text-info">jpg, JPG, png, PNG, pdf, jpeg, JPEG (maxsize: 2 MB)</div>
+
+                      </td >
+                    <td>
+                     @foreach ($dataipk as $d)
+                         
+                     @if ($d->dateac )
+                     {{ $d->dateac }}
+           
+                    @else
+             
+                    @endif
+                      @endforeach
+   
+                    </td>
+                    <td>
+                      @foreach ($dataipk as $d)
+                      @if ($d->status  )
+                        {{ $d->status }}
+               
+                     @endif
+                     @endforeach
+                     
+                    </td>
+
+                    <td>
+                      @if ($statusipk == 'disetujui')
+                          
+                      @else
+                      <button  type="submit" class="btn btn-success text-end">Simpan</button> 
+                      @endif
+
+                       
+                        </form>
+                    </td>
+             
+                </tr>
+
             </tbody>
         </table>
     </div>
 </div>
 </section>
 </div>
-   
 @endsection

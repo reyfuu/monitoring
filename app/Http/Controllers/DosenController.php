@@ -25,7 +25,10 @@ class DosenController extends Controller
         $countMahasiswa= count($bimbingan);
         $bimbingan2= bimbingan::where('status','submit')->get();
         $countSubmit= count($bimbingan);
-        $dt_mahasiswa = User::withCount('bimbingan')->having('bimbingan_count','>=',14)->get();
+        $dt_mahasiswa = User::wherehas('bimbingan',function($query){
+            $domen_id= session('domen_id');
+            $query->where('domen_id',$domen_id);
+        })->withCount('bimbingan')->having('bimbingan_count','>=',14)->get();
         $dt_mahasiswa= count($dt_mahasiswa);
         $submit= 'submit';
 

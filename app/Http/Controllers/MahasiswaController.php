@@ -59,9 +59,10 @@ class MahasiswaController extends Controller
         $bimbingan = bimbingan::where('npm',$npm)->where('Type','Proposal')->
         where('status','disetujui')->get();
         $bimbingan = count($bimbingan);
-
+        $syarat= syarat::where('npm',$npm)->get();
+        $syarat= count($syarat);
         if(!$dokumen->dokumen){
-            return view('layout.mhs.proposal.proposal');
+            return view('layout.mhs.proposal.proposal',compact('syarat'));
         }
 
             if($dokumen->status_domen == 'disetujui'){
@@ -340,14 +341,17 @@ class MahasiswaController extends Controller
         $bimbingan = bimbingan::where('npm',$npm)->where('Type','Tugas Akhir')->
         where('status','disetujui')->get();
         $bimbingan = count($bimbingan);
+        $syarat= syarat::where('npm',$npm)->get();
+        $syarat= count($syarat);
+
         if(!$dokumen->dokumen){
-            return view('layout.mhs.ta.ta');
+            return view('layout.mhs.ta.ta',compact('syarat'));
         }
 
             if($dokumen->status_domen == 'disetujui'){
 
                 if($bimbingan >= 14){
-                    return view('layout.mhs.ta.ta3');
+                    return view('layout.mhs.ta.ta3',compact('syarat'));
                 }else{
                     $comment= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
                     $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
@@ -359,7 +363,7 @@ class MahasiswaController extends Controller
                 $id= $dokumen->laporan_id;
 
 
-                return view('layout.mhs.ta.ta2',compact('comment','proposal','id','status'));
+                return view('layout.mhs.ta.ta2',compact('comment','proposal','id','status','syarat'));
                 }
                 
             }else{
@@ -373,7 +377,7 @@ class MahasiswaController extends Controller
                 $id= $dokumen->laporan_id;
 
 
-                return view('layout.mhs.ta.ta2',compact('comment','proposal','id','status'));
+                return view('layout.mhs.ta.ta2',compact('comment','proposal','id','status','syarat'));
             }
        
         }
@@ -386,8 +390,9 @@ class MahasiswaController extends Controller
         $bimbingan = bimbingan::where('npm',$npm)->where('Type','Tugas Akhir')->
         where('status','disetujui')->get();
         $bimbingan = count($bimbingan);
+        
         if(!$dokumen->dokumen){
-            return view('layout.mhs.ta.ta');
+            return view('layout.mhs.ta.ta',);
         }if($dokumen->status_domen == 'disetujui'){
 
             if($bimbingan >= 14){

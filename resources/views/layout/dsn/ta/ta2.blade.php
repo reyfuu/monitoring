@@ -2,10 +2,11 @@
 @section('title')
 
 <title>Tugas Akhir</title>
-@notifyCss
+
 {{-- finish tugas akhir --}}
 @endsection
 @section('content')
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -51,7 +52,5 @@
     </section>
     <!-- /.content -->
   </div>
-    <!-- /.content -->
-    <x-notify::notify />
-    @notifyJs
+
 @endsection

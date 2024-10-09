@@ -5,6 +5,16 @@
 {{-- revisi proposal --}}
 @endsection
 @section('content')
+{{-- @if ($syarat !== 3)
+<div class="content-wrapper">
+  <section class="content">
+    <div class="container">
+      <h1>Silahkan isi syarat Tugas Akhir </h1>
+    </div>
+  </section>
+
+</div>
+@else --}}
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -144,4 +154,5 @@
     <!-- /.content -->
   </div>
     </div>
+  {{-- @endif --}}
 @endsection

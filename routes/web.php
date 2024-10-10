@@ -66,6 +66,7 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::put('/storeMagang',[MahasiswaController::class,'storeMagang'])->name('putMagang');
     Route::post('/storeIpk',[MahasiswaController::class,'storeIpk'])->name('storeIpk');
     Route::put('/storeIpk',[MahasiswaController::class,'storeIpk'])->name('putIpk');
+    Route::post('/comment',[MahasiswaController::class,'comment'])->name('comment');
 
 
     Route::post('/update',[MahasiswaController::class, 'update'])->name('update');

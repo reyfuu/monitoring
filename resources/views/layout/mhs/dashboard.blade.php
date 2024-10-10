@@ -26,12 +26,12 @@
   <section class="content">
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
-        @if($notifikasi == 'sudah acc')
+        {{-- @if($notifikasi == 'sudah acc')
         <div class="alert alert-success">Proposal sudah di acc</div>       
     @endif
     @if ($notifikasi2 == 'sudah acc')
       <div class="alert alert-success">Tugas Akhir sudah di acc</div>     
-    @endif
+    @endif --}}
 
       
         <div class="small-box bg-info">

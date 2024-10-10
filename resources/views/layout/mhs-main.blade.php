@@ -67,9 +67,44 @@ if (Session::has('domen_id')) {
       <!-- chat menu need add  -->
       
       <!-- Notifications Dropdown Menu -->
-   
+      <li class="nav-item dropdown">
+        <a href="" class="nav-link" data-toggle="dropdown">
+          <i class="far fa-bell"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg">
+          <p class="dropdown-item">audi</p>
+        </div>
+      </li>
       {{-- Logout & user --}}
       <li class="nav-item dropdown">
+        <a  class="nav-link chatbox-toggle" data-toggle="dropdown">
+          <i class="far fa-comment"></i>
+        </a>
+        <div class="chatbox">
+          <div class="chatbox-header">Konsultasi</div>
+          <div class="chatbox-body">
+            
+              <div class="message user">
+                <p class="content">hello</p>
+              </div>
+              <div class="message other">
+                <p class="content">hello juga</p>
+              </div>
+          </div>
+          <form action="{{ route('mhs.comment') }}" method="POST"  onsubmit="return validateForm()">
+            @csrf
+          <div class="chatbox-footer d-flex align-item-center">
+
+        <input type="text"  name="message" class="form-control mr-2" id="message" placeholder="Type a message..." />
+        <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i></button>
+
+          </div>
+        </form>
+      
+      </div>
+      </li>
+      <li class="nav-item dropdown">
+
         <a href="" class="nav-link" data-toggle="dropdown">
           <i class="far fa-user"></i>
         </a>
@@ -173,6 +208,8 @@ if (Session::has('domen_id')) {
     </div>
     <!-- /.sidebar -->
   </aside>
+ 
+
 
   <!-- Content Wrapper. Contains page content -->
 @yield('content')
@@ -219,5 +256,21 @@ if (Session::has('domen_id')) {
 <!-- <script src="{{asset('lte/dist/js/demo.js')}}"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="{{asset('lte/dist/js/pages/dashboard.js')}}"></script> -->
+<script>
+  const toggleButton = document.querySelector('.chatbox-toggle');
+  const chatbox = document.querySelector('.chatbox');
+
+  toggleButton.addEventListener('click', () => {
+      chatbox.style.display = chatbox.style.display === 'none' ? 'flex' : 'none';
+  });
+  function validateForm() {
+            const message = document.getElementById('message').value.trim();
+            if (message === '') {
+                alert('Harap isi pesan');
+                return false;
+            }
+            return true;
+  }
+</script>
 </body>
 </html>

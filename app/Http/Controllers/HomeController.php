@@ -56,7 +56,7 @@ class HomeController extends Controller
       ->where('laporan.type','Tugas Akhir')
       ->get(['mahasiswa.name as mahasiswa','domen.name as domen','laporan.laporan_id as id',
       'laporan.judul as judul','laporan.tanggal_mulai as mulai','laporan.status as status',
-      'mahasiswa.npm as npm']);
+      'laporan.status_domen as status_domen','mahasiswa.npm as npm']);
 
       return view('layout.admin.ta',compact('data'));
     }

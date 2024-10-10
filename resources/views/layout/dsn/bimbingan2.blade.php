@@ -37,6 +37,7 @@
               <th>Topik</th>
               <th>Deskripsi</th>
               <th>Status</th>
+              <th>Komentar</th>
               <th>AKsi</th>     
             </tr>
           </thead>
@@ -55,9 +56,10 @@
                  
                 @endif
                 </td>
+                <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->komentar }}</td>
                 <td>
-                    <a href="{{ route('dmn.detailb2', $d->bimbingan_id) }}" class="btn btn-primary text-end">Detail</a>
-                    <br>
+                    
                     @if ($d->status == 'disetujui')
                       
                     @else

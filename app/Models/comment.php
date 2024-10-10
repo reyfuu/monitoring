@@ -24,7 +24,7 @@ class comment extends Model
         'npm',
         'tanggal',
         'isi',
-        'notifikasi',
-        'type',
+        'sender',
+        'receiver',
     ];
 }

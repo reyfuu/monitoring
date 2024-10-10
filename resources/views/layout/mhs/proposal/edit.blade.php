@@ -71,13 +71,15 @@
                     <input type="text" name="status" value="{{ $data->type }}" hidden >   
                       @endforeach
                         
+                      <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                      </div>
                     </div>
 
                   </div>
+
                 </div>
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary">Simpan</button>
-                </div>
+
             </form>
             {{-- end form --}}
         </div>

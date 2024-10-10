@@ -32,10 +32,10 @@ class MahasiswaController extends Controller
         ->where('status','disetujui')->get();
         $count= count($bimbingan);
         $judul= laporan::select('judul')->where('npm',$npm)->where('type','Proposal')->get();
-        $notifikasi= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->
-        orderBy('comment_id','desc')->first()->notifikasi ?? '';
-        $notifikasi2= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
-        orderBy('comment_id','desc')->first()->notifikasi ?? '';
+        // $notifikasi= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->
+        // orderBy('comment_id','desc')->first()->notifikasi ?? '';
+        // $notifikasi2= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
+        // orderBy('comment_id','desc')->first()->notifikasi ?? '';
         $submit = laporan::where('tanggal_submit','<',Carbon::now()->subDays(30))->
         where('npm',$npm)->where('type','Proposal')->get();
 
@@ -43,7 +43,7 @@ class MahasiswaController extends Controller
             $belum_submit= 'Peringatan Proposal belum di submit dalam 30 hari ';
         }
   
-        return view('layout.mhs.dashboard',compact('npm','count','judul','notifikasi','belum_submit','notifikasi2'));
+        return view('layout.mhs.dashboard',compact('npm','count','judul','belum_submit'));
     }
     public function magang(){
         $npm= session('npm');
@@ -854,6 +854,19 @@ class MahasiswaController extends Controller
           laporan::where('npm',$npm)->where('Type','Tugas Akhir')->update($data3);
         
           return redirect()->route('mhs.ta')->with('success','Tugas Akhir Berhasil disimpan');
+    }
+    public function comment(Request $request){
+        $npm= session('npm');
+        $data['tanggal'] = Carbon::now()->format('Y-m-d');
+        $data['npm']= $npm;
+        $data['comment_id'] = IdGenerator::generate(
+            ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
+        $data['domen_id']= laporan::where('npm',$npm)->first()->domen_id;
+        $data['isi']= $request->message;
+        $data['sender']=$npm;
+        $data['receiver']= laporan::where('npm',$npm)->first()->domen_id;
+        comment::create($data);
+        return redirect()->route('mhs.home'); 
     }
 
     

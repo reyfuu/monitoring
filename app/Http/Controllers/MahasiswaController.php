@@ -36,6 +36,7 @@ class MahasiswaController extends Controller
         // orderBy('comment_id','desc')->first()->notifikasi ?? '';
         // $notifikasi2= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
         // orderBy('comment_id','desc')->first()->notifikasi ?? '';
+        $comment= comment::select('isi','receiver')->where('npm',$npm)->get();
         $submit = laporan::where('tanggal_submit','<',Carbon::now()->subDays(30))->
         where('npm',$npm)->where('type','Proposal')->get();
 
@@ -43,7 +44,7 @@ class MahasiswaController extends Controller
             $belum_submit= 'Peringatan Proposal belum di submit dalam 30 hari ';
         }
   
-        return view('layout.mhs.dashboard',compact('npm','count','judul','belum_submit'));
+        return view('layout.mhs.dashboard',compact('npm','count','judul','belum_submit','comment'));
     }
     public function magang(){
         $npm= session('npm');
@@ -62,7 +63,8 @@ class MahasiswaController extends Controller
         $syarat= syarat::where('npm',$npm)->get();
         $syarat= count($syarat);
         if(!$dokumen->dokumen){
-            return view('layout.mhs.proposal.proposal',compact('syarat'));
+            $comment= comment::select('isi','receiver')->where('npm',$npm)->get();
+            return view('layout.mhs.proposal.proposal',compact('comment'));
         }
 
             if($dokumen->status_domen == 'disetujui'){
@@ -863,8 +865,8 @@ class MahasiswaController extends Controller
             ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
         $data['domen_id']= laporan::where('npm',$npm)->first()->domen_id;
         $data['isi']= $request->message;
-        $data['sender']=$npm;
-        $data['receiver']= laporan::where('npm',$npm)->first()->domen_id;
+        $data['sender']='mahasiswa';
+        $data['receiver']= 'dosen';
         comment::create($data);
         return redirect()->route('mhs.home'); 
     }

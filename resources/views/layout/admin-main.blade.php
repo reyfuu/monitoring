@@ -114,13 +114,13 @@ if (Session::has('npm')) {
               </p>
             </a>
           </li>
-          <li class="nav-item ">
+          {{-- <li class="nav-item ">
             <a href="{{ route('admin.syarat') }}" class="nav-link">
               <p class="mx-2">
                 Syarat
               </p>
             </a>
-          </li>
+          </li> --}}
           <li class="nav-item ">
             <a href="{{ route('admin.mahasiswa') }}" class="nav-link"> 
               <p class="mx-2">

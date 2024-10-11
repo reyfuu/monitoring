@@ -23,7 +23,7 @@ if (Session::has('npm')) {
       width: 200px;
     }
   </style>
-  <link rel="stylesheet" href="{{asset('css/dsn-app.css')}}">
+  <link rel="stylesheet" href="{{asset('css/dsn-app.css?v=1.0.1')}}">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -62,7 +62,41 @@ if (Session::has('npm')) {
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
-     
+      <li class="nav-item dropdown">
+        <a class="nav-link chatbox-toggle" data-toggle="dropdown">
+            <i class="far fa-comment"></i>
+        </a>
+        <div id="chat-container">
+          <div id="chat-list">
+              <div class="chat-item" data-chat-id="1">
+                  <div class="chat-name">Teman 1</div>
+                  <div class="chat-preview">Pesan terakhir...</div>
+              </div>
+              <div class="chat-item" data-chat-id="2">
+                  <div class="chat-name">Teman 2</div>
+                  <div class="chat-preview">Pesan terakhir...</div>
+              </div>
+              <!-- Tambah chat lainnya -->
+          </div>
+  
+          <div id="chat-window">
+              <div class="chat-header">Chat dengan <span id="chat-friend-name"></span></div>
+              <div class="chat-body">
+                  <div class="message user">
+                      <p class="content">isi</p>
+                  </div>
+                  <div class="message other">
+                      <p class="content">hai</p>
+                  </div>
+              </div>
+              <div class="chat-footer">
+                  <input type="text" class="form-control mr-2" id="message-input" placeholder="Tulis pesan...">
+                  <button class="btn btn-primary"><i class="far fa-paper-plane"></i></button>
+              </div>
+          </div>
+      </div>
+      </li>
+    
 
  
      
@@ -188,8 +222,7 @@ if (Session::has('npm')) {
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <!-- Bootstrap 4 -->
 <script src="{{asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- ChartJS -->
-<script src="{{asset('lte/plugins/chart.js/Chart.min.js')}}"></script>
+<!-- ChartJS -->  
 <!-- Sparkline -->
 <script src="{{asset('lte/plugins/sparklines/sparkline.js')}}"></script>
 <!-- JQVMap -->
@@ -214,5 +247,28 @@ if (Session::has('npm')) {
 <!-- <script src="{{asset('lte/dist/js/pages/dashboard.js')}}"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @yield('script')
+<script>
+  document.querySelectorAll('.friend').forEach(function(friend) {
+    friend.addEventListener('click', function() {
+        document.querySelector('.chatbox').style.display = 'block';
+        document.querySelector('.chatbox-header').textContent = 'Konsultasi dengan ' + friend.textContent;
+        // Tambahkan logika lainnya jika diperlukan
+    });
+});
+    const toggleButton = document.querySelector('.chatbox-toggle');
+  const chatbox = document.querySelector('#chat-container');
+
+  toggleButton.addEventListener('click', () => {
+      chatbox.style.display = chatbox.style.display === 'none' ? 'flex' : 'none';
+  });
+  function validateForm() {
+            const message = document.getElementById('message').value.trim();
+            if (message === '') {
+                alert('Harap isi pesan');
+                return false;
+            }
+            return true;
+  }
+</script>
 </body>
 </html>

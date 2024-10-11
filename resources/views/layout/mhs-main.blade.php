@@ -25,8 +25,7 @@ if (Session::has('domen_id')) {
     }
   </style>
 
-  <link rel="stylesheet" href="{{asset('css/app.css')}}">
-  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+  <link rel="stylesheet" href="{{asset('css/app.css?v=1.0.1')}}">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -83,13 +82,21 @@ if (Session::has('domen_id')) {
         <div class="chatbox">
           <div class="chatbox-header">Konsultasi</div>
           <div class="chatbox-body">
-            
+            @foreach ($commentMahasiswa as $c)
+                
+        
+              @if ($c->receiver == 'mahasiswa')
               <div class="message user">
-                <p class="content">hello</p>
+                <p class="content">{{ $c->isi }}</p>
               </div>
+              @else
               <div class="message other">
-                <p class="content">hello juga</p>
+                <p class="content">{{ $c->isi }}</p>
               </div>
+              @endif
+
+
+              @endforeach
           </div>
           <form action="{{ route('mhs.comment') }}" method="POST"  onsubmit="return validateForm()">
             @csrf
@@ -173,11 +180,11 @@ if (Session::has('domen_id')) {
              
                 </a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a href="{{ route('mhs.syarat') }}" class="nav-link">
                   Syarat Ujian
                 </a>
-              </li>
+              </li> --}}
             </ul>
           </li>
           <li class="nav-item ">

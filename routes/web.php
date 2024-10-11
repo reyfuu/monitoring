@@ -97,7 +97,7 @@ Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],fu
     Route::get('/persetujuan2/{id}',[DosenController::class,'setujup'])->name('setujup');
     Route::get('/persetujuan3/{id}',[DosenController::class,'setujut'])->name('setujut');
     Route::get('/persetujuan4/{id}',[DosenController::class,'setujubt'])->name('setujubt');
-
+    Route::post('/comment',[DosenController::class,'comment'])->name('comment');
     
 
     Route::get('/laporan',[DosenController::class,'laporan'])->name('laporan');

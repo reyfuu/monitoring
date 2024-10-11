@@ -89,10 +89,13 @@ if (Session::has('npm')) {
                       <p class="content">hai</p>
                   </div>
               </div>
+              <form action="{{ route('dmn.comment') }}" method="post" onsubmit="return validateForm()">
+                @csrf
               <div class="chat-footer">
-                  <input type="text" class="form-control mr-2" id="message-input" placeholder="Tulis pesan...">
-                  <button class="btn btn-primary"><i class="far fa-paper-plane"></i></button>
+                  <input id="message" type="text" class="form-control mr-2" id="message-input" name="message" placeholder="Tulis pesan...">
+                  <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i></button>
               </div>
+            </form>
           </div>
       </div>
       </li>

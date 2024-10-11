@@ -6,7 +6,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Session;
+use App\Models\dosen;
 use App\Models\comment;
+use App\Models\laporan;
 use Illuminate\Support\Facades\View;
 
 class commentShare
@@ -20,10 +22,23 @@ class commentShare
     {
         $npm= session('npm');
         $domen_id= session('domen_id');
-        $commentMahasiswa = comment::select('isi','receiver')->where('npm',$npm)->get();
-        $commentDosen = comment::select('isi','receiver')->where('npm',$npm)->get();
+        if($npm){
+            $commentMahasiswa = comment::select('isi','receiver')->where('npm',$npm)->get();
+            $dosen = laporan::join('domen','domen.domen_id','=','laporan.domen_id')->first('domen.name as name');
+        
 
-        View::share('commentMahasiswa',$commentMahasiswa);
+            View::share('commentMahasiswa',$commentMahasiswa);
+            View::share('namaDosen',$dosen);
+        }elseif($domen_id){
+            
+            
+            $siswa= laporan::distinct()->join('mahasiswa','mahasiswa.npm','=','laporan.npm')->get('mahasiswa.name as name');
+            $commentDosen = comment::select('isi','receiver')->where('npm',$npm)->get();
+            View::share('namaSiswa',$siswa);
+        }
+
+
+       
 
         return $next($request);
     }

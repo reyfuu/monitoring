@@ -324,6 +324,19 @@ class DosenController extends Controller
             return redirect()->route('dmn.proposal');
         }
     }
+    public function comment(Request $request){
+        $domen_id= session('domen_id');
+        $data['tanggal'] = Carbon::now()->format('Y-m-d');
+        $data['domen_id']= $domen_id;
+        $data['comment_id'] = IdGenerator::generate(
+            ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
+        $data['npm']= laporan::where('domen_id',$domen_id)->first()->npm;
+        $data['isi']= $request->message;
+        $data['sender']='dosen';
+        $data['receiver']= 'mahasiswa';
+        comment::create($data);
+        return redirect()->route('dmn.dashboard'); 
+    }
     public function update(Request $request){
         $request->validate([
             'status'=>'required',

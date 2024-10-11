@@ -80,7 +80,12 @@ if (Session::has('domen_id')) {
           <i class="far fa-comment"></i>
         </a>
         <div class="chatbox">
-          <div class="chatbox-header">Konsultasi</div>
+          <div class="chatbox-header">
+            <img src="{{ asset('img/avatar-default.svg') }}" width="10%" alt="">
+            {{ $namaDosen->name }}
+
+
+          </div>
           <div class="chatbox-body">
             @foreach ($commentMahasiswa as $c)
                 

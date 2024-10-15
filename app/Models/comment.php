@@ -10,21 +10,20 @@ class comment extends Model
 {
     
     use HasFactory;
-    public $timestamps = false;
-
     public $incrementing = false;
-    protected $table='comment';
-
+    public $timestamps = false;
     protected $primaryKey='comment_id';
+    protected $table='comments';
 
 
     protected $fillable = [
         'comment_id',
-        'domen_id',
-        'npm',
-        'tanggal',
-        'isi',
         'sender',
         'receiver',
+        'npm',
+        'domen_id',
+        'message',
+        'created_at'
     ];
+
 }

@@ -44,6 +44,7 @@ if (Session::has('npm')) {
   <link rel="stylesheet" href="{{asset('lte/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('lte/plugins/summernote/summernote-bs4.min.css')}}">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -63,43 +64,11 @@ if (Session::has('npm')) {
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item dropdown">
-        <a class="nav-link chatbox-toggle" data-toggle="dropdown">
+        <a href="{{ route('dmn.chat') }}" class="nav-link chatbox-toggle"  id="buttonComment">
             <i class="far fa-comment"></i>
         </a>
-        <div id="chat-container">
-          <div id="chat-list">
-              <div class="chat-item" data-chat-id="1">
-                  <div class="chat-name">Teman 1</div>
-                  <div class="chat-preview">Pesan terakhir...</div>
-              </div>
-              <div class="chat-item" data-chat-id="2">
-                  <div class="chat-name">Teman 2</div>
-                  <div class="chat-preview">Pesan terakhir...</div>
-              </div>
-              <!-- Tambah chat lainnya -->
-          </div>
-  
-          <div id="chat-window">
-              <div class="chat-header">Chat dengan <span id="chat-friend-name"></span></div>
-              <div class="chat-body">
-                  <div class="message user">
-                      <p class="content">isi</p>
-                  </div>
-                  <div class="message other">
-                      <p class="content">hai</p>
-                  </div>
-              </div>
-              <form action="{{ route('dmn.comment') }}" method="post" onsubmit="return validateForm()">
-                @csrf
-              <div class="chat-footer">
-                  <input id="message" type="text" class="form-control mr-2" id="message-input" name="message" placeholder="Tulis pesan...">
-                  <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i></button>
-              </div>
-            </form>
-          </div>
-      </div>
+       
       </li>
-    
 
  
      
@@ -121,6 +90,7 @@ if (Session::has('npm')) {
 
   </nav>
   <!-- /.navbar -->
+
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -215,9 +185,6 @@ if (Session::has('npm')) {
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
 <!-- jQuery -->
 <script src="{{asset('lte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -250,28 +217,6 @@ if (Session::has('npm')) {
 <!-- <script src="{{asset('lte/dist/js/pages/dashboard.js')}}"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @yield('script')
-<script>
-  document.querySelectorAll('.friend').forEach(function(friend) {
-    friend.addEventListener('click', function() {
-        document.querySelector('.chatbox').style.display = 'block';
-        document.querySelector('.chatbox-header').textContent = 'Konsultasi dengan ' + friend.textContent;
-        // Tambahkan logika lainnya jika diperlukan
-    });
-});
-    const toggleButton = document.querySelector('.chatbox-toggle');
-  const chatbox = document.querySelector('#chat-container');
 
-  toggleButton.addEventListener('click', () => {
-      chatbox.style.display = chatbox.style.display === 'none' ? 'flex' : 'none';
-  });
-  function validateForm() {
-            const message = document.getElementById('message').value.trim();
-            if (message === '') {
-                alert('Harap isi pesan');
-                return false;
-            }
-            return true;
-  }
-</script>
 </body>
 </html>

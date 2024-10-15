@@ -16,7 +16,29 @@ use Carbon\Carbon;
 
 class DosenController extends Controller
 {
-    
+    public function chat(User $user){
+        $domen_id= session('domen_id');
+        $LoggedUserInfo= dosen::find($domen_id);
+        $siswa= laporan::distinct()->join('mahasiswa','mahasiswa.npm','=','laporan.npm')->
+        where('laporan.domen_id',$domen_id)->get(['mahasiswa.npm as npm','mahasiswa.name as name']);
+
+       return view('layout.chat',compact('siswa','LoggedUserInfo'));
+
+    }
+    public function getchat($id){
+        $domen_id= session('domen_id');
+        $LoggedUserInfo= dosen::find($domen_id);
+        $siswa= laporan::distinct()->join('mahasiswa','mahasiswa.npm','=','laporan.npm')->
+        where('laporan.domen_id',$domen_id)->get(['mahasiswa.npm as npm','mahasiswa.name as name']);
+        $name= user::where('npm',$id)->first()->name;
+     
+       return view('layout.chat2',compact('siswa','name','id'));
+
+    }
+    public function fetchMessages($npm){
+        $chat= comment::where('npm',$npm)->orderBy('created_at','asc')->get();
+        return response()->json($chat);
+    }
     public function dashboard(){
 
         $domen_id= session('domen_id');
@@ -324,18 +346,18 @@ class DosenController extends Controller
             return redirect()->route('dmn.proposal');
         }
     }
-    public function comment(Request $request){
+    public function message(Request $request){
         $domen_id= session('domen_id');
-        $data['tanggal'] = Carbon::now()->format('Y-m-d');
-        $data['domen_id']= $domen_id;
         $data['comment_id'] = IdGenerator::generate(
-            ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
-        $data['npm']= laporan::where('domen_id',$domen_id)->first()->npm;
-        $data['isi']= $request->message;
-        $data['sender']='dosen';
-        $data['receiver']= 'mahasiswa';
+            ['table' => 'comments', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
+        $data['message']= $request->userMessages;
+        $data['receiver']='mahasiswa';
+        $data['sender']='domen';
+        $data['domen_id']=$domen_id;
+        $data['npm']=$request->npm;
+        $data['created_at']=now();
         comment::create($data);
-        return redirect()->route('dmn.dashboard'); 
+        return redirect()->route('dmn.chat'); 
     }
     public function update(Request $request){
         $request->validate([

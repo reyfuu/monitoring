@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -55,6 +56,10 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
 
     Route::get('/bimbingan2',[MahasiswaController::class, 'bimbingan2'])->name('bimbingan2');
 
+    Route::get('/chat',[MahasiswaController::class,'chat'])->name('chat');
+    Route::get('/fetchChat',[MahasiswaController::class,'fetchMessages'])->name('fetchMessages');
+    Route::post('/message',[MahasiswaController::class,'message'])->name('message');
+
     Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
     Route::put('/store2',[MahasiswaController::class, 'store2'])->name('store2');
     Route::post('/store3',[MahasiswaController::class, 'store3'])->name('store3');
@@ -97,8 +102,12 @@ Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],fu
     Route::get('/persetujuan2/{id}',[DosenController::class,'setujup'])->name('setujup');
     Route::get('/persetujuan3/{id}',[DosenController::class,'setujut'])->name('setujut');
     Route::get('/persetujuan4/{id}',[DosenController::class,'setujubt'])->name('setujubt');
-    Route::post('/comment',[DosenController::class,'comment'])->name('comment');
-    
+    Route::get('/chat',[DosenController::class,'chat'])->name('chat');
+    Route::get('/chat/{id}',[DosenController::class,'getchat'])->name('getchat');
+    Route::get('/fetchChat/{npm}',[DosenController::class,'fetchMessages'])->name('fetchMessages');
+    Route::post('/message',[DosenController::class,'message'])->name('message');
+
+   
 
     Route::get('/laporan',[DosenController::class,'laporan'])->name('laporan');
     Route::put('/laporan2',[DosenController::class,'laporan2'])->name('laporan2');

@@ -2,6 +2,7 @@
 @section('title')
     <title>Dashboard</title>
 @endsection
+
 @section('content')
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -21,7 +22,6 @@
     </div><!-- /.container-fluid -->
   </div>
   <!-- /.content-header -->
-
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
@@ -58,6 +58,7 @@
 
 
   </section>
+
   <!-- /.content -->
 </div>
 @section('script')
@@ -139,4 +140,6 @@
 
 </script>
 @endsection
+
 @endsection
+

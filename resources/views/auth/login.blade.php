@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="{{ asset('lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css')}}">
+
+
 </head>
 <body class="hold-transition login-page " id="background">
 <div class="login-box">

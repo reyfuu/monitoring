@@ -25,7 +25,25 @@ use Illuminate\Support\Facades\Log;
 
 
 class MahasiswaController extends Controller
-{
+{     
+    public function fetchMessages($npm){
+            $npm= session('npm');
+            $chat= comment::where('npm',$npm)->orderBy('created_at','asc')->get();
+            return response()->json($chat);
+        }
+    public function message(Request $request){
+            $npm= session('npm');
+            $data['comment_id'] = IdGenerator::generate(
+                ['table' => 'comments', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
+            $data['message']= $request->userMessages;
+            $data['receiver']='mahasiswa';
+            $data['sender']='domen';
+            $data['domen_id']=$request->domen_id;
+            $data['npm']=$npm;
+            $data['created_at']=now();
+            comment::create($data);
+            return redirect()->route('mhs.chat'); 
+        }
     public function home(){
         $npm= session('npm');
         $bimbingan=Bimbingan::where('npm','like','%'.$npm.'%')
@@ -36,7 +54,6 @@ class MahasiswaController extends Controller
         // orderBy('comment_id','desc')->first()->notifikasi ?? '';
         // $notifikasi2= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
         // orderBy('comment_id','desc')->first()->notifikasi ?? '';
-        $comment= comment::select('isi','receiver')->where('npm',$npm)->get();
         $submit = laporan::where('tanggal_submit','<',Carbon::now()->subDays(30))->
         where('npm',$npm)->where('type','Proposal')->get();
 
@@ -44,7 +61,14 @@ class MahasiswaController extends Controller
             $belum_submit= 'Peringatan Proposal belum di submit dalam 30 hari ';
         }
   
-        return view('layout.mhs.dashboard',compact('npm','count','judul','belum_submit','comment'));
+        return view('layout.mhs.dashboard',compact('npm','count','judul','belum_submit'));
+    }
+    public function chat(){
+        $npm=session('npm');
+        $name= laporan::distinct()->join('domen','domen.domen_id','=','laporan.domen_id')->
+        where('laporan.npm',$npm)->get('domen.name as name');
+        $id= $npm;
+        return view('layout.mhs.chat',compact('name','id'));
     }
     public function magang(){
         $npm= session('npm');
@@ -101,6 +125,8 @@ class MahasiswaController extends Controller
             }
        
         }
+   
+    
     public function viewProposal($id){
         return response()->file(public_path('storage/dokumen/'.$id,['Content-Type'=>'application/pdf']));
     }

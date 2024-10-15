@@ -74,46 +74,14 @@ if (Session::has('domen_id')) {
           <p class="dropdown-item">audi</p>
         </div>
       </li>
+      @php
+          $npm=session('npm');
+      @endphp
       {{-- Logout & user --}}
       <li class="nav-item dropdown">
-        <a  class="nav-link chatbox-toggle" data-toggle="dropdown">
+        <a href="{{ route('mhs.chat') }}" class="nav-link chatbox-toggle" >
           <i class="far fa-comment"></i>
         </a>
-        <div class="chatbox">
-          <div class="chatbox-header">
-            <img src="{{ asset('img/avatar-default.svg') }}" width="10%" alt="">
-            {{ $namaDosen->name }}
-
-
-          </div>
-          <div class="chatbox-body">
-            @foreach ($commentMahasiswa as $c)
-                
-        
-              @if ($c->receiver == 'mahasiswa')
-              <div class="message user">
-                <p class="content">{{ $c->isi }}</p>
-              </div>
-              @else
-              <div class="message other">
-                <p class="content">{{ $c->isi }}</p>
-              </div>
-              @endif
-
-
-              @endforeach
-          </div>
-          <form action="{{ route('mhs.comment') }}" method="POST"  onsubmit="return validateForm()">
-            @csrf
-          <div class="chatbox-footer d-flex align-item-center">
-
-        <input type="text"  name="message" class="form-control mr-2" id="message" placeholder="Type a message..." />
-        <button type="submit" class="btn btn-primary"><i class="far fa-paper-plane"></i></button>
-
-          </div>
-        </form>
-      
-      </div>
       </li>
       <li class="nav-item dropdown">
 
@@ -235,8 +203,6 @@ if (Session::has('domen_id')) {
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <!-- jQuery -->
 <script src="{{asset('lte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -268,21 +234,5 @@ if (Session::has('domen_id')) {
 <!-- <script src="{{asset('lte/dist/js/demo.js')}}"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="{{asset('lte/dist/js/pages/dashboard.js')}}"></script> -->
-<script>
-  const toggleButton = document.querySelector('.chatbox-toggle');
-  const chatbox = document.querySelector('.chatbox');
-
-  toggleButton.addEventListener('click', () => {
-      chatbox.style.display = chatbox.style.display === 'none' ? 'flex' : 'none';
-  });
-  function validateForm() {
-            const message = document.getElementById('message').value.trim();
-            if (message === '') {
-                alert('Harap isi pesan');
-                return false;
-            }
-            return true;
-  }
-</script>
 </body>
 </html>

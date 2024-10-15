@@ -1,26 +1,23 @@
 import './bootstrap';
+import '../css/app.css';
 
+import { createApp,h  } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolveComponent, resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ZiggyVue } from 'vendor/tightenco/ziggy';
 
-  var ctx = document.getElementById('myChart').getContext('2d'); // 2d context
-  var ctx = $('#myChart'); // jQuery instance
-  var ctx = 'myChart'; // element id
+const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-  new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
+createInertiaApp({
+  title: (title) => '${title} - ${appName}',
+  resolve: (name) => resolvePageComponent('./Pages/${name}.vue', import.meta.glob('./Pages/**/*.vue')),
+  setup({el,App,props,plugin}){
+    return createApp({render: ()=> h(App,props)})
+    .use(plugin)
+    .use(ZiggyVue)
+    .mount(el);
+  },
+  progress:{
+    color:'#4B5563',
+  }
+})

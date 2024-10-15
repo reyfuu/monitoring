@@ -24,21 +24,22 @@ class commentShare
         $domen_id= session('domen_id');
         if($npm){
             $commentMahasiswa = comment::select('isi','receiver')->where('npm',$npm)->get();
-            $dosen = laporan::join('domen','domen.domen_id','=','laporan.domen_id')->first('domen.name as name');
+            $dosen = laporan::join('domen','domen.domen_id','=','laporan.domen_id')->
+            where('laporan.npm',$npm)->first('domen.name as name');
         
-
+            $commentMahasiswa= response()->json($commentMahasiswa);
             View::share('commentMahasiswa',$commentMahasiswa);
             View::share('namaDosen',$dosen);
         }elseif($domen_id){
             
-            
-            $siswa= laporan::distinct()->join('mahasiswa','mahasiswa.npm','=','laporan.npm')->get('mahasiswa.name as name');
+            $siswa= laporan::distinct()->join('mahasiswa','mahasiswa.npm','=','laporan.npm')->
+            where('laporan.domen_id',$domen_id)->get(['mahasiswa.name as name',
+        'mahasiswa.npm as npm']);
             $commentDosen = comment::select('isi','receiver')->where('npm',$npm)->get();
             View::share('namaSiswa',$siswa);
+            view::share('commentDosen',$commentDosen);
         }
 
-
-       
 
         return $next($request);
     }

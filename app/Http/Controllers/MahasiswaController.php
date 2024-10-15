@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Log;
 
 class MahasiswaController extends Controller
 {     
-    public function fetchMessages($npm){
+    public function fetchMessages(){
             $npm= session('npm');
             $chat= comment::where('npm',$npm)->orderBy('created_at','asc')->get();
             return response()->json($chat);
@@ -36,8 +36,8 @@ class MahasiswaController extends Controller
             $data['comment_id'] = IdGenerator::generate(
                 ['table' => 'comments', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
             $data['message']= $request->userMessages;
-            $data['receiver']='mahasiswa';
-            $data['sender']='domen';
+            $data['receiver']='domen';
+            $data['sender']='mahasiswa';
             $data['domen_id']=$request->domen_id;
             $data['npm']=$npm;
             $data['created_at']=now();
@@ -67,7 +67,7 @@ class MahasiswaController extends Controller
         $npm=session('npm');
         $name= laporan::distinct()->join('domen','domen.domen_id','=','laporan.domen_id')->
         where('laporan.npm',$npm)->get('domen.name as name');
-        $id= $npm;
+       $id = laporan::where('npm',$npm)->first()->domen_id;
         return view('layout.mhs.chat',compact('name','id'));
     }
     public function magang(){

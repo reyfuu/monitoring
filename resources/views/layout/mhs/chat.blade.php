@@ -33,7 +33,7 @@
                 <form id="messageForm" method="POST" onsubmit="return validateForm()">
                     @csrf
                     <div class="input-group">
-                   
+                      <input type="text" id="domen_id" name="domen_id" value="{{ $id }}" hidden>
                         <input type="text" id="pesan" class="form-control" placeholder="pesan" id="messageInput" name="message">
                         <button class="btn btn-primary" id="sendButton" type="submit" id="sendMessageButton">Send</button>
                     </div>
@@ -68,17 +68,17 @@ $.ajaxSetup({
 
 
 $(document).ready(function() {
-  const npm = $('#npm').val();
-  function fetchMessages(npm){
+  const domen_id = $('#domen_id').val();
+  console.log(domen_id);
+  function fetchMessages(){
     $.ajax({
         url:'/mhs/fetchChat',
         method: 'GET',
         success: function(data){
         
           $('#chatMessageContainer').empty();
-          console.log(data);
           data.forEach(function(chat){
-            var messageclass = (chat.sender == 'dosen') ? 'sender ': 'receiver';
+            var messageclass = (chat.sender == 'mahasiswa') ? 'sender ': 'receiver';
 
             $('#chatMessageContainer').append(
               '<div class= "chat-message '+messageclass+'">'+
@@ -92,11 +92,11 @@ $(document).ready(function() {
       }
     });
   }
-  fetchMessages(npm);
+  fetchMessages();
     $("#messageForm").on('submit',function(event){
       event.preventDefault();
     const message = $("#pesan").val();
-    const npm = $('#npm').val();
+    const domen_id = $('#domen_id').val();
     const errorMessage = $("#error-message");
     
     if (message == "") {
@@ -110,12 +110,14 @@ $(document).ready(function() {
           url: '/mhs/message',
           method: 'POST',
           data:{
+         
             userMessages: message,
-            npm:npm,
+            domen_id:domen_id,
             _token: '{{ csrf_token() }}'
           },
+   
           success: function (response){
-            fetchMessages(npm);
+            fetchMessages();
             $('#pesan').val('');
             console.log('success');
           },

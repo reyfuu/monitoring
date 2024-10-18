@@ -9,6 +9,7 @@ use App\Models\laporan;
 use App\Models\laporan_harian;
 use App\Models\laporan_mingguan;
 use App\Models\User;
+use App\Models\notifikasi;
 use App\Models\evaluasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session as FacadesSession;
@@ -17,6 +18,13 @@ use Carbon\Carbon;
 
 class DosenController extends Controller
 {
+    public function markAsRead($id){
+        $data['is_read']= true;
+        $id2= notifikasi::where('notifikasi_id',$id)->first()->npm;
+
+        notifikasi::where('notifikasi_id',$id)->update($data);
+        return redirect()->to('dmn/chat/'.$id2);
+    }
     public function chat(User $user){
         $domen_id= session('domen_id');
         $LoggedUserInfo= dosen::find($domen_id);
@@ -298,7 +306,7 @@ class DosenController extends Controller
         $data['tanggal'] = Carbon::now()->format('Y-m-d');
         $data['npm']= laporan::where('laporan_id','like','%'.$laporan_id.'%')->first()->npm;
         $data['comment_id'] = IdGenerator::generate(
-            ['table' => 'comment', 'field' => 'comment_id', 'length' => 10, 'prefix' => 'CM']);
+            ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
         $data['domen_id']= FacadesSession::get('domen_id');
         $data['isi']= $request->comment;
         comment::create($data);
@@ -358,6 +366,17 @@ class DosenController extends Controller
         $data['npm']=$request->npm;
         $data['created_at']=now();
         comment::create($data);
+        $data2['notifikasi_id'] = IdGenerator::generate(
+            ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+        $data2['npm']= $request->npm;
+        $data2['domen_id']=$domen_id;
+        $data2['sender']= 'dosen';
+        $data2['receiver']= 'mahasiswa';
+        $name= dosen::where('domen_id',$domen_id)->first()->name;
+        $data2['message']='Anda memiliki pesan baru dari '. $name;
+        $data2['created_at']=now();
+        $data2['is_read']=false;
+        Notifikasi::create($data2);
         return redirect()->route('dmn.chat'); 
     }
     public function update(Request $request){

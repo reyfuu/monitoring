@@ -71,7 +71,14 @@ if (Session::has('domen_id')) {
           <i class="far fa-bell"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
-          <p class="dropdown-item">audi</p>
+          @if ($mahasiswaNotifikasi->isEmpty())
+          <p class="dropdown-item">Notifikasi tidak ada</p>
+          @else
+          @foreach ($mahasiswaNotifikasi as $n)
+          <a href="{{ route('mhs.markAsRead',['id'=> $n->notifikasi_id]) }}" ><p class="dropdown-item">{{ $n->message }}</p></a>
+          @endforeach
+          @endif
+
         </div>
       </li>
       @php
@@ -144,7 +151,6 @@ if (Session::has('domen_id')) {
               <li class="nav-item">
                 <a href="{{ route('mhs.proposal') }}" class="nav-link">
                  Proposal
-             
                 </a>
               </li>
               <li class="nav-item">

@@ -28,6 +28,13 @@ use Illuminate\Support\Facades\Log;
 
 class MahasiswaController extends Controller
 {     
+    public function markAsRead($id){
+        $data['is_read']= true;
+
+
+        notifikasi::where('notifikasi_id',$id)->update($data);
+        return redirect()->to('mhs/chat/');
+    }
     public function fetchMessages(){
             $npm= session('npm');
             $chat= comment::where('npm',$npm)->orderBy('created_at','asc')->get();

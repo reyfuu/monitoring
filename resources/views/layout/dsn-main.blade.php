@@ -60,16 +60,35 @@ if (Session::has('npm')) {
       </li>
 
     </ul>
+
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
+      <li class="nav-item dropdown">
+        <a href="" class="nav-link" data-toggle="dropdown">
+          <i class="far fa-bell"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg">
+
+              
+          @if ($dosenNotifikasi->isEmpty())
+          <p class="dropdown-item">Notifikasi tidak ada</p>
+          @else
+          @foreach ($dosenNotifikasi as $n)
+          <a href="{{ route('dmn.markAsRead',['id'=> $n->notifikasi_id]) }}" ><p class="dropdown-item">{{ $n->message }}</p></a>
+          @endforeach
+          @endif
+
+  
+        </div>
+      </li>
       <li class="nav-item dropdown">
         <a href="{{ route('dmn.chat') }}" class="nav-link chatbox-toggle"  id="buttonComment">
             <i class="far fa-comment"></i>
         </a>
        
       </li>
-
+  
  
      
       {{-- Logout & user --}}

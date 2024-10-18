@@ -72,7 +72,7 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::post('/storeIpk',[MahasiswaController::class,'storeIpk'])->name('storeIpk');
     Route::put('/storeIpk',[MahasiswaController::class,'storeIpk'])->name('putIpk');
     Route::post('/comment',[MahasiswaController::class,'comment'])->name('comment');
-
+    Route::get('/mark-as-read/{id}', [MahasiswaController::class, 'markAsRead'])->name('markAsRead');
 
     Route::post('/update',[MahasiswaController::class, 'update'])->name('update');
     Route::put('/update3/{id}',[MahasiswaController::class, 'update3'])->name('update3');
@@ -106,7 +106,7 @@ Route::group(['prefix'=> 'dmn', 'middleware' => ['auth:dosen'],'as'=> 'dmn.'],fu
     Route::get('/chat/{id}',[DosenController::class,'getchat'])->name('getchat');
     Route::get('/fetchChat/{npm}',[DosenController::class,'fetchMessages'])->name('fetchMessages');
     Route::post('/message',[DosenController::class,'message'])->name('message');
-
+    Route::get('/mark-as-read/{id}', [DosenController::class, 'markAsRead'])->name('markAsRead');
    
 
     Route::get('/laporan',[DosenController::class,'laporan'])->name('laporan');

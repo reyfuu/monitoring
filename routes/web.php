@@ -59,7 +59,7 @@ Route::group(['prefix'=> 'mhs', 'middleware' => ['auth'],'as'=> 'mhs.'],function
     Route::get('/chat',[MahasiswaController::class,'chat'])->name('chat');
     Route::get('/fetchChat',[MahasiswaController::class,'fetchMessages'])->name('fetchMessages');
     Route::post('/message',[MahasiswaController::class,'message'])->name('message');
-
+    Route::get('/check-new-messages',[MahasiswaController::class,'new-messages'])->name('new-messages');
     Route::post('/store',[MahasiswaController::class, 'store'])->name('store');
     Route::put('/store2',[MahasiswaController::class, 'store2'])->name('store2');
     Route::post('/store3',[MahasiswaController::class, 'store3'])->name('store3');

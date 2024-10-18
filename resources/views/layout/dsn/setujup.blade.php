@@ -40,15 +40,17 @@
                                 <option value="disetujui">disetujui</option>
                                 <option value="direvisi">direvisi</option>
                             </select>
+  
                             <label for="">Komentar</label>
-                            <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+                            <textarea name="eval" class="form-control" cols="30" rows="10"></textarea>
                             <input type="text" name="status" value="Proposal" hidden>
-                            @error('comment')
+                            @error('eval')
                             <div class="alert alert-danger">
                               <p>{{ $message }}</p>
                             </div>
     
                             @enderror
+                    
                             <input type="hidden" name="laporan_id" value="{{ $id }}">
            
                         </div>

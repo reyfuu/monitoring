@@ -95,7 +95,7 @@ if (Session::has('npm')) {
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('dmn.laporan') }}" class="brand-link">
+    <a href="{{ route('dmn.dashboard') }}" class="brand-link">
       <img src="{{asset('img/logo.png')}}" alt="TAMP Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">TAMP</span>
     </a>

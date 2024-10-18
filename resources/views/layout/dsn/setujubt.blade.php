@@ -42,20 +42,24 @@
                               <option value="disetujui">disetujui</option>
                               <option value="direvisi">direvisi</option>
                           </select>
-                        <div class="form-group">
-                            <label for="">Komentar</label>
-                            <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
-                            <input type="text" name="status" value="Proposal" hidden>
-                            @error('comment')
-                              <div class="alert alert-danger">
-                                <p>{{ $message }}</p>
-                              </div>
-                            @enderror
-                        </div>
+                        
                             <input type="text" name="id" value="{{ $id }}" hidden>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary text-center">Simpan</button>
+ 
+                        </div>
+                        <div class="form-group">
+                          <label for="">Komentar</label>
+                          <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+                          <input type="text" name="status" value="Proposal" hidden>
+                          @error('comment')
+                            <div class="alert alert-danger">
+                              <p>{{ $message }}</p>
                             </div>
+                          @enderror
+                      </div>
+                        <div class="form-group">
+                          <div class="text-center">
+                            <button type="submit" class="btn btn-primary text-center">Simpan</button>
+                        </div>
                         </div>
                     </div>
                 </div>

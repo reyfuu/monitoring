@@ -2,19 +2,8 @@
 @section('title')
 
 <title>Tugas Akhir</title>
-{{-- revisi proposal --}}
 @endsection
 @section('content')
-{{-- @if ($syarat !== 3)
-<div class="content-wrapper">
-  <section class="content">
-    <div class="container">
-      <h1>Silahkan isi syarat Tugas Akhir </h1>
-    </div>
-  </section>
-
-</div>
-@else --}}
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -26,7 +15,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Proposal</li>
+              <li class="breadcrumb-item active">Tugas Akhir</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -34,7 +23,7 @@
       <div class="container">
           <ul class="base-timeline">
               <li class="base-timeline__item base-timeline__item--active">
-                  <span class="base-timeline__summary-text">Proposal</span>
+                  <span class="base-timeline__summary-text">Tugas Akhir</span>
               </li>
               <li class="base-timeline__item base-timeline__item--active">
                   <span class="base-timeline__summary-text">Revisi</span>
@@ -46,25 +35,26 @@
       </div>
     </div>
     <!-- /.content-header -->
-    @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-  @endif
-  @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 
     <!-- Main content -->
     <section class="content">
         <div class="container">
             {{-- form start --}}
+            @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+          @endif
+          @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        
             <form action="{{ route('mhs.update') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="col-md-12">
@@ -91,9 +81,9 @@
                           </div>
                           <div class="modal-body">
                             <label for="">Status Tugas Akhir</label>
-                            <p>{{ $status->status }}</p>
+                            <p>{{ $status->status_domen }}</p>
                             <label for="">Daftar Revisi</label>
-                            @foreach ($comment as $c)
+                            @foreach ($eval as $c)
                               <p>{{ $c->isi }}</p>
                               @endforeach
                             </table>
@@ -106,7 +96,7 @@
                         <a href="{{ route('mhs.editTA',['id'=>$id]) }}" class="btn btn-warning"> <i class="fas fa-pen"></i> Update
                            Tugas Akhir</a>
                       </div>
-                      @foreach ($proposal as $data)
+                      @foreach ($data as $data)
                     <div class="form-group">
                         <label for="">NPM</label>
                         <input type="text" class="form-control" value="{{ $data->npm }}" readonly>
@@ -153,6 +143,5 @@
 
     <!-- /.content -->
   </div>
-    </div>
-  {{-- @endif --}}
+
 @endsection

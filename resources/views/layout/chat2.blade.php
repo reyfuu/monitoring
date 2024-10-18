@@ -89,7 +89,7 @@ $(document).ready(function() {
         success: function(data){
         
           $('#chatMessageContainer').empty();
-          console.log(data);
+
           data.forEach(function(chat){
             var messageclass = (chat.sender == 'mahasiswa') ? 'sender ': 'receiver';
 

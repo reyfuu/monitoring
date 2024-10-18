@@ -44,7 +44,7 @@
                     <th>Judul</th>
                     <th>File</th>
                     <th>Status</th>
-                    <th>Detail</th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -52,7 +52,8 @@
                   @foreach ($data as $d)
                   <tr>
                       <td>{{ $d->mahasiswa }}</td>
-                      <td>{{ $d->judul }}</td>
+                      <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->judul }}</td>
                       <td>
          
                         @if ($d->dokumen)
@@ -72,8 +73,7 @@
                       </td>
 
                       <td>
-                        <a href="{{ route('dmn.rekapt',$d->npm) }}" class="btn btn-primary text-end" >Detail</a>
-                        <br>
+
                         @if ($d->status == 'Finish')
                        
                         @else

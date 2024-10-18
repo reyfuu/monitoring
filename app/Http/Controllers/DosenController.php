@@ -9,6 +9,7 @@ use App\Models\laporan;
 use App\Models\laporan_harian;
 use App\Models\laporan_mingguan;
 use App\Models\User;
+use App\Models\evaluasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session as FacadesSession;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
@@ -391,10 +392,10 @@ class DosenController extends Controller
     public function update2(Request $request){
         $request->validate([
             'status_domen'=>'required',
-            'comment'=>'required',
+     
         ],[
             'status_domen'=>'Harap diisi status mahasiswa',
-            'comment.required'=> 'Harap isi komentar',
+
         ]);
    
         
@@ -438,9 +439,9 @@ class DosenController extends Controller
      
 
         $request->validate([
-            'comment'=>'required',
+            'eval'=>'required',
         ],[
-            'comment.required'=>'Harap isi Komentar',
+            'eval.required'=>'Harap isi Komentar',
         ]);
 
 
@@ -449,12 +450,12 @@ class DosenController extends Controller
         $data['tanggal'] = Carbon::now()->format('Y-m-d');
         $data['npm']= laporan::where('laporan_id','like','%'.$id.'%')->first()->npm;
         $data['type']= laporan::where('laporan_id','like','%'.$id.'%')->first()->type;
-        $data['comment_id'] = IdGenerator::generate(
-            ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
+        $data['eval_id'] = IdGenerator::generate(
+            ['table' => 'evaluasi', 'field' => 'eval_id', 'length' => 5, 'prefix' => 'EV']);
         $data['domen_id']= session('domen_id');
         $data['notifikasi']= 'sudah acc';
-        $data['isi']= $request->comment;
-        comment::create($data);
+        $data['isi']= $request->eval;
+        evaluasi::create($data);
 
         $data2['status_domen']=$request->status_domen;
         if($data2['status_domen'] == 'disetujui'){

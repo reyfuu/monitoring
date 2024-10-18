@@ -69,7 +69,6 @@ $.ajaxSetup({
 
 $(document).ready(function() {
   const domen_id = $('#domen_id').val();
-  console.log(domen_id);
   function fetchMessages(){
     $.ajax({
         url:'/mhs/fetchChat',
@@ -126,6 +125,15 @@ $(document).ready(function() {
           }
         });
       });
+      // $.ajax({
+      //   url:'/new-messages',
+      //   type:'/GET',
+      //   success: function (=response){
+      //     if(response.hasMessage){
+
+      //     }
+      //   }
+      // })
 
 });
 

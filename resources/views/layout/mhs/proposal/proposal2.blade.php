@@ -84,8 +84,7 @@
                             <p>{{ $status->status_domen }}</p>
                   
                             <label for="">Daftar Revisi</label>
-                            @foreach ($komment as $c)
-                         
+                            @foreach ($eval as $c)
                             <p>{{ $c->isi }}</p>
                             @endforeach
 

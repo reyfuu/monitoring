@@ -71,10 +71,10 @@ if (Session::has('domen_id')) {
           <i class="far fa-bell"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
-          @if ($mahasiswaNotifikasi->isEmpty())
+          @if ($notifikasi_idm->isEmpty())
           <p class="dropdown-item">Notifikasi tidak ada</p>
           @else
-          @foreach ($mahasiswaNotifikasi as $n)
+          @foreach ($notifikasi_idm as $n)
           <a href="{{ route('mhs.markAsRead',['id'=> $n->notifikasi_id]) }}" ><p class="dropdown-item">{{ $n->message }}</p></a>
           @endforeach
           @endif
@@ -92,7 +92,7 @@ if (Session::has('domen_id')) {
       </li>
       <li class="nav-item dropdown">
 
-        <a href="" class="nav-link" data-toggle="dropdown">
+        <a class="nav-link" data-toggle="dropdown">
           <i class="far fa-user"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
@@ -167,7 +167,7 @@ if (Session::has('domen_id')) {
             </ul>
           </li>
           <li class="nav-item ">
-            <a href="{{ route('mhs.ta') }}" class="nav-link">
+            <a class="nav-link">
               <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Laporan Akhir

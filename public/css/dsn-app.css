@@ -226,7 +226,7 @@ ul li .active .uil{
     padding: 15px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .chat-list {
@@ -350,13 +350,15 @@ ul li .active .uil{
     flex-direction: row-reverse;
 }
 
-.chat-message .timestamp {
-    font-size: 0.8em;
-    color: #888;
-}
 
-.chat-message.sender .timestamp {
-    margin-right: 10px;
+
+
+.timestamp2{
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    margin-left: inherit;
+    text-align: inherit;
 }
 
 .profile_card {

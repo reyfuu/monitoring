@@ -51,18 +51,30 @@ class MahasiswaController extends Controller
             $data['npm']=$npm;
             $data['created_at']=now();
             comment::create($data);
-            $data2['notifikasi_id'] = IdGenerator::generate(
-                ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
-            $data2['npm']= $npm;
-            $data2['domen_id']=$request->domen_id;
-            $data2['sender']= 'mahasiswa';
-            $data2['receiver']= 'dosen';
-            $name= user::where('npm',$npm)->first()->name;
-            $data2['message']='Anda memiliki pesan baru '. $name;
-            $data2['created_at']=now();
-            $data2['is_read']=false;
-            Notifikasi::create($data2);
-            return redirect()->route('mhs.chat'); 
+            $notifikasi_id= notifikasi::where('sender','mahasiswa')->where('npm',$npm)->first()->notifikasi_id;
+
+            if($notifikasi_id ){
+                $data3['is_read']= false;
+                notifikasi::where('notifikasi_id',$notifikasi_id)->update($data3);
+
+                return redirect()->route('mhs.chat'); 
+              
+            }else{
+                $data2['notifikasi_id'] = IdGenerator::generate(
+                    ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+                $data2['npm']= $npm;
+                $data2['domen_id']=$request->domen_id;
+                $data2['sender']= 'mahasiswa';
+                $data2['receiver']= 'dosen';
+                $name= user::where('npm',$npm)->first()->name;
+                $data2['message']='Anda memiliki pesan baru dari '. $name;
+                $data2['created_at']=now();
+                $data2['is_read']=false;
+                Notifikasi::create($data2);
+                return redirect()->route('mhs.chat'); 
+            }
+            
+          
         }
     public function home(){
         $npm= session('npm');

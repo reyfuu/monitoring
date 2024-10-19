@@ -78,6 +78,11 @@ $.ajaxSetup({
     }
     return true;
 }
+  function formatTimestamp(timestamp){
+    const date = new Date(timestamp);
+    const option ={day:'2-digit',month: 'short',hour:'2-digit', minute:'2-digit'};
+    return date.toLocaleString('id-ID',option);
+  }
 
 
 $(document).ready(function() {
@@ -96,7 +101,9 @@ $(document).ready(function() {
             $('#chatMessageContainer').append(
               '<div class= "chat-message '+messageclass+'">'+
                 '<p class= "message-content">'+ chat.message +'</p>'+
+                '<small class= "timestamp2">'+ formatTimestamp(chat.created_at)+'</small>'+
               '</div>'
+         
             );
           });
         },

@@ -19,8 +19,13 @@ class DosenMiddleware
     {
         if(Auth::guard('dosen')){
             $domen_id= session('domen_id');
-           $data= notifikasi::where('domen_id',$domen_id)->where('receiver','dosen')->where('is_read',false)->get();
-            View::share('dosenNotifikasi',$data);
+           $data= notifikasi::select('message')->
+           where('domen_id',$domen_id)->where('receiver','dosen')->
+           groupBy('message')->where('is_read',false)->get();
+        $notifikasi_id= notifikasi::select('notifikasi_id','message')->where('domen_id',$domen_id)->where('receiver','dosen')
+        ->where('is_read',false)->get();
+           View::share('dosenNotifikasi',$data);
+           view::share('notifikasi_idd',$notifikasi_id);
         }
         return $next($request);
     }

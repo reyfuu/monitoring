@@ -71,10 +71,10 @@ if (Session::has('npm')) {
         <div class="dropdown-menu dropdown-menu-lg">
 
               
-          @if ($dosenNotifikasi->isEmpty())
+          @if ($notifikasi_idd->isEmpty())
           <p class="dropdown-item">Notifikasi tidak ada</p>
           @else
-          @foreach ($dosenNotifikasi as $n)
+          @foreach ($notifikasi_idd as $n)
           <a href="{{ route('dmn.markAsRead',['id'=> $n->notifikasi_id]) }}" ><p class="dropdown-item">{{ $n->message }}</p></a>
           @endforeach
           @endif
@@ -83,7 +83,7 @@ if (Session::has('npm')) {
         </div>
       </li>
       <li class="nav-item dropdown">
-        <a href="{{ route('dmn.chat') }}" class="nav-link chatbox-toggle"  id="buttonComment">
+        <a href="{{ route('dmn.chat') }}" class="nav-link chatbox-toggle"  >
             <i class="far fa-comment"></i>
         </a>
        
@@ -137,33 +137,32 @@ if (Session::has('npm')) {
           </li>
 
            <li class="nav-item ">
-            <a href="{{ route('dmn.proposal') }}" class="nav-link">
+            <a  class="nav-link">
               <img src="{{ asset('img/book-open.png')}}" style="width: 20%" alt="">
               <p class="mx-2">
                 Proposal
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{ route('dmn.proposal') }}" class="nav-link">
                  Proposal
-             
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{{ route('dmn.dbimbingan') }}" class="nav-link">
-                  <p class="mx-2">
                     Bimbingan
-                  </p>
                 </a>
               </li>
             </ul>
           </li>
           <li class="nav-item ">
-            <a href="{{ route('dmn.ta') }}" class="nav-link">
+            <a class="nav-link">
               <img src="{{ asset('img/clipboard.png') }}" style="width: 20%" alt="">
               <p class="mx-2">
                 Tugas Akhir
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -175,9 +174,9 @@ if (Session::has('npm')) {
               </li>
               <li class="nav-item">
                 <a href="{{ route('dmn.dbimbingan2') }}" class="nav-link">
-                  <p class="mx-2">
+        
                     Bimbingan
-                  </p>
+
                 </a>
               </li>
             </ul>

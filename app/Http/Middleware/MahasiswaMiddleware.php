@@ -19,8 +19,13 @@ class MahasiswaMiddleware
     {
         if(Auth::guard('user')){
             $npm= session('npm');
-            $data= notifikasi::where('npm',$npm)->where('receiver','mahasiswa')->where('is_read',false)->get();
+            $data= notifikasi::select('message')->where('npm',$npm)->where('receiver','mahasiswa')
+            ->where('is_read',false)->distinct()->groupBy('message')->get();
+            $notikasi_idm= notifikasi::select('notifikasi_id','message')->where('npm',$npm)->where('receiver','mahasiswa')
+            ->where('is_read',false)->distinct()->get();
+       
             view::share('mahasiswaNotifikasi',$data);
+            view::share('notifikasi_idm',$notikasi_idm);
         }
         return $next($request);
     }

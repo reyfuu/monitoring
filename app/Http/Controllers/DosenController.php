@@ -46,6 +46,7 @@ class DosenController extends Controller
     }
     public function fetchMessages($npm){
         $chat= comment::where('npm',$npm)->orderBy('created_at','asc')->get();
+
         return response()->json($chat);
     }
     public function dashboard(){
@@ -366,18 +367,27 @@ class DosenController extends Controller
         $data['npm']=$request->npm;
         $data['created_at']=now();
         comment::create($data);
-        $data2['notifikasi_id'] = IdGenerator::generate(
-            ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
-        $data2['npm']= $request->npm;
-        $data2['domen_id']=$domen_id;
-        $data2['sender']= 'dosen';
-        $data2['receiver']= 'mahasiswa';
-        $name= dosen::where('domen_id',$domen_id)->first()->name;
-        $data2['message']='Anda memiliki pesan baru dari '. $name;
-        $data2['created_at']=now();
-        $data2['is_read']=false;
-        Notifikasi::create($data2);
-        return redirect()->route('dmn.chat'); 
+        $notifikasi_id= notifikasi::where('sender','dosen')->where
+        ('npm',$data['npm'])->where('domen_id',$domen_id)->first()->notifikasi_id;
+        if($notifikasi_id){
+            $data3['is_read']=false;
+            notifikasi::where('notifikasi_id',$notifikasi_id)->update($data3);
+            return redirect()->route('dmn.chat'); 
+        }else{
+            $data2['notifikasi_id'] = IdGenerator::generate(
+                ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+            $data2['npm']= $request->npm;
+            $data2['domen_id']=$domen_id;
+            $data2['sender']= 'dosen';
+            $data2['receiver']= 'mahasiswa';
+            $name= dosen::where('domen_id',$domen_id)->first()->name;
+            $data2['message']='Anda memiliki pesan baru dari '. $name;
+            $data2['created_at']=now();
+            $data2['is_read']=false;
+            Notifikasi::create($data2);
+            return redirect()->route('dmn.chat'); 
+            }
+        
     }
     public function update(Request $request){
         $request->validate([

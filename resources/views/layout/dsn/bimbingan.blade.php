@@ -52,7 +52,8 @@
                   {{ $d->status }}
                 @else
                 
-                @endif</td>
+                @endif
+                </td>
                   <td>
                     @if ($d->status == 'disetujui')
                         

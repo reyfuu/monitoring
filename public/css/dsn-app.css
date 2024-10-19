@@ -342,15 +342,12 @@ ul li .active .uil{
     /* Example color for sender */
     color: white;
     text-align: right;
-    margin-left: auto;
     /* Align right */
 }
 
 .chat-message.sender {
     flex-direction: row-reverse;
 }
-
-
 
 
 .timestamp2{

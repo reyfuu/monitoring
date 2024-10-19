@@ -67,6 +67,12 @@ if (Session::has('npm')) {
       <li class="nav-item dropdown">
         <a href="" class="nav-link" data-toggle="dropdown">
           <i class="far fa-bell"></i>
+          @if ($jumlah_notifikasi == 0)
+          <span class="badge badge-danger navbar-badge"></span>
+          @else
+          <span class="badge badge-danger navbar-badge">{{ $jumlah_notifikasi }}</span>
+          @endif
+ 
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
 

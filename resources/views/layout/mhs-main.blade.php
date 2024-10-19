@@ -69,6 +69,11 @@ if (Session::has('domen_id')) {
       <li class="nav-item dropdown">
         <a href="" class="nav-link" data-toggle="dropdown">
           <i class="far fa-bell"></i>
+          @if ($jumlah_notifikasim == 0)
+          <span class="badge badge-danger navbar-badge"></span>
+          @else
+          <span class="badge badge-danger navbar-badge">{{ $jumlah_notifikasim }}</span>
+          @endif
         </a>
         <div class="dropdown-menu dropdown-menu-lg">
           @if ($notifikasi_idm->isEmpty())

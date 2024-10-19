@@ -53,8 +53,10 @@
 
 
                   <tr>
-                  <td >{{ $data->nama }}</td>
-                  <td>{{ $data->topik }}</td>
+                  <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $data->nama }}</td>
+                  <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $data->topik }}</td>
                   <td>{{ $data->status2 }}</td>
         
           

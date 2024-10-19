@@ -59,7 +59,6 @@
                   @if ($d->status == 'disetujui')
                       
                   @else
-                  <br>
                   <a href="{{ route('dmn.setujubt',['id'=>$d->bimbingan_id]) }}" class=" btn btn-success text-end" >Ubah Persetujuan</a>
                   @endif
                 </td>

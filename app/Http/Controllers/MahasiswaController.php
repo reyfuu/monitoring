@@ -430,7 +430,7 @@ class MahasiswaController extends Controller
                 }
                 
             }else{
-                dd($bimbingan);
+          
                 $eval = evaluasi::where('npm',$npm)->where('type','Tugas Akhir')->get();
                 $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Tugas Akhir')->first();
                 $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->

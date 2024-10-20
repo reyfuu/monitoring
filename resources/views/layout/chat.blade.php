@@ -13,10 +13,12 @@
                 <ul class="list-group list-group-flush">
                      @foreach ($siswa as $s)
                     <li class="list-group-item d-flex align-items-center chat-item">
-                        <img src="{{ asset('img/avatar-default.svg') }}"   class="profile_img rounded-circle mr-3" style="width: 40px; height: 40px;" alt="Profile Picture">
+                        <img src="{{ asset('img/avatar-default.svg') }}"   class="profile_img rounded-circle mr-3"alt="Profile Picture">
                         <div class="profile_info">
-                            <a href="{{ route('dmn.getchat',['id'=> $s->npm]) }}" class="profile_name text-center font-weight-bold">{{  $s->name}}</a>
-                            <span class="id" id="sourceNpm" style="display: none">{{ $s->npm }}</span>
+                            <a href="{{ route('dmn.getchat',['id'=> $s->npm]) }}" 
+                              style="      white-space: pre-wrap;
+      word-wrap: break-word;"class="profile_name text-center font-weight-bold">{{  $s->name}}</a>
+        
                         </div>
                     </li>
                   @endforeach 

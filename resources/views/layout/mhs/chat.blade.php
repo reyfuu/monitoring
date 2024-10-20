@@ -90,6 +90,7 @@ $(document).ready(function() {
               '</div>'
             );
           });
+          fetchMessages();
         },
         error:function (error){
           console.error(error);
@@ -121,7 +122,6 @@ $(document).ready(function() {
           },
    
           success: function (response){
-            fetchMessages();
             $('#pesan').val('');
             console.log('success');
        
@@ -131,16 +131,6 @@ $(document).ready(function() {
           }
         });
       });
-      // $.ajax({
-      //   url:'/new-messages',
-      //   type:'/GET',
-      //   success: function (=response){
-      //     if(response.hasMessage){
-
-      //     }
-      //   }
-      // })
-
 });
 
   </script>

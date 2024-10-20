@@ -96,10 +96,11 @@
                         <div class="form-group">
                           <label>Angkatan</label>
                           <input class="form-control" name="angkatan" placeholder="Enter Angkatan" >
+                          @error('angkatan')
+                          <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         </div>
-                        @error('angkatan')
-                       
-                      @enderror
+              
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>

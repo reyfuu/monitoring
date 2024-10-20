@@ -25,7 +25,7 @@ class Bimbingan extends Model
         'npm',
         'tanggal',
         'type',
-        'komentar'
+        'status_domen'
     ];
     public function mahasiswa(){
         return $this->belongsTo(User::class,'npm','npm');

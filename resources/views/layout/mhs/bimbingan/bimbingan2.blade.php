@@ -47,8 +47,8 @@
                       <td style="      white-space: pre-wrap;
       word-wrap: break-word;">{{ $name }}</td>
                       <td>
-                      @if ($d->status)
-                      {{ $d->status }}  
+                      @if ($d->status_domen)
+                      {{ $d->status_domen }}  
              
                       @endif
                       </td>
@@ -62,8 +62,7 @@
                         <br>
                         @endif 
                         <br>
-                    
-                        <a data-toggle="modal" data-target="#modal2{{ $d->bimbingan_id }}"  class="btn btn-success" >  Komentar Dosen</a>
+
 
                       </td>
                     </tr>

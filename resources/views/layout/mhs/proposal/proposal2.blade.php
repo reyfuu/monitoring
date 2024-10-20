@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Upload Proposal</h1>
+            <h1 class="m-0">Revisi Proposal</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -36,24 +36,25 @@
       </div>
     </div>
     <!-- /.content-header -->
-    @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-  @endif
-  @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+
 
     <!-- Main content -->
     <section class="content">
         <div class="container">
+          @if (session('success'))
+          <div class="alert alert-success">
+              {{ session('success') }}
+          </div>
+        @endif
+        @if ($errors->any())
+          <div class="alert alert-danger">
+              <ul>
+                  @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                  @endforeach
+              </ul>
+          </div>
+      @endif
             {{-- form start --}}
             <form action="{{ route('mhs.update') }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -94,9 +95,14 @@
                       </div>
                     </div>
                     @foreach ($data as $d)
+                      @if ($status->status_domen =='disetujui')
+                          
+                      @else
                       <div class="form-group">
                         <a href="{{ route('mhs.editProposal',['id'=>$d->laporan_id]) }}" class="btn btn-warning"> <i class="fas fa-pen"></i> Update Proposal</a>
                       </div>
+                      @endif
+
                  
                     <div class="form-group">
                         <label for="">NPM</label>

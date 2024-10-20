@@ -55,7 +55,7 @@
                 @endif
                 </td>
                   <td>
-                    @if ($d->status == 'disetujui')
+                    @if ($d->status == 'Finish')
                         
                     @else
                     <a href="{{ route('dmn.setujubp',['id'=>$d->bimbingan_id]) }}" class=" btn btn-success text-end"  >Ubah Persetujuan</a>

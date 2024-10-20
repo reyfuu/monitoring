@@ -48,9 +48,9 @@
                         </div>
                         <div class="form-group">
                           <label for="">Komentar</label>
-                          <textarea name="comment" class="form-control" cols="30" rows="10"></textarea>
+                          <textarea name="eval" class="form-control" cols="30" rows="10"></textarea>
                           <input type="text" name="status" value="Proposal" hidden>
-                          @error('comment')
+                          @error('eval')
                             <div class="alert alert-danger">
                               <p>{{ $message }}</p>
                             </div>

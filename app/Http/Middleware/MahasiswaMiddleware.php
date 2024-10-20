@@ -23,6 +23,7 @@ class MahasiswaMiddleware
             ->where('is_read',false)->distinct()->groupBy('message')->get();
             $notikasi_idm= notifikasi::select('notifikasi_id','message')->where('npm',$npm)->where('receiver','mahasiswa')
             ->where('is_read',false)->distinct()->get();
+
             $jumlah_notifikasi= count($notikasi_idm);
             view::share('mahasiswaNotifikasi',$data);
             view::share('notifikasi_idm',$notikasi_idm);

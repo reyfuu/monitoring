@@ -118,14 +118,14 @@ class HomeController extends Controller
         "tanggal_mulai"=>"required",
         "angkatan"=>"required"
       ],[
-          'npm.required'=>'Harap isi kolom npmnya',
-          'name.required'=>'Harap isi kolom namanya',
-          'email.required'=> 'Harap isi kolom emailnya',
-          'status.required'=>'Harap pilih status',
-          'password.required'=>'Harap isi kolom passwordnya',
-          'dosen.required'=>'Harap pilih Dosen Pembimbing',
-          'angkatan.required'=> 'Harap isi kolom angkatan',
-          'tanggal_mulai.required'=> 'Harap pilih tanggal mulainya'
+          'npm.required'=>'Masukkan  npm',
+          'name.required'=>'Masukkan nama',
+          'email.required'=> 'Masukkan email',
+          'status.required'=>'Masukkan status',
+          'password.required'=>'Masukkan password',
+          'dosen.required'=>'Pilih Dosen Pembimbing',
+          'angkatan.required'=> 'Masukkan angkatan',
+          'tanggal_mulai.required'=> 'Pilih tanggal mulainya'
 
       ]);
       if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -198,11 +198,11 @@ class HomeController extends Controller
         "password"=> 'required',
         "status"=>'required',
       ],[
-        "domen_id.required"=>'Harap isi kolom nidnnya',
-        "name.required"=>'Harap isi kolom namanya',
-        "email.required"=>'Harap isi kolom emailnya',
-        'password.required'=>'Harap isi kolom password',
-        'status.required'=>'Harap pilih statusnya'
+        "domen_id.required"=>'Masukkan isi kolom nidnnya',
+        "name.required"=>'Masukkan isi kolom namanya',
+        "email.required"=>'Masukkan isi kolom emailnya',
+        'password.required'=>'Masukkan isi kolom password',
+        'status.required'=>'Masukkan pilih statusnya'
       ]);
       if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
       $status=$request->status;
@@ -243,10 +243,10 @@ class HomeController extends Controller
         "password"=> "required",
         'status'=>"required",
       ],[
-        'email.required'=> 'Harap isi kolom email',
-        'name.required'=> 'Harap isi kolom nama',
-        'password.required'=>'Harap isi kolom password',
-        'status.required'=>'Harap pilih status'
+        'email.required'=> 'Masukkan isi kolom email',
+        'name.required'=> 'Masukkan isi kolom nama',
+        'password.required'=>'Masukkan isi kolom password',
+        'status.required'=>'Masukkan pilih status'
       ]);
       if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
@@ -271,10 +271,10 @@ class HomeController extends Controller
         "password"=> "required",
         'status'=>"required",
       ],[
-        'email.required'=> 'Harap isi kolom email',
-        'name.required'=> 'Harap isi kolom nama',
-        'password.required'=>'Harap isi kolom password',
-        'status.required'=>'Harap pilih status'
+        'email.required'=> 'Masukkan isi kolom email',
+        'name.required'=> 'Masukkan isi kolom nama',
+        'password.required'=>'Masukkan isi kolom password',
+        'status.required'=>'Masukkan pilih status'
       ]);
       if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 

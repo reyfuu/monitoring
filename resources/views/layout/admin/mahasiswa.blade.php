@@ -50,8 +50,10 @@
                   @foreach ($data as $d )
                   <tr>
                       <td>{{$loop->iteration}}</td>
-                      <td>{{$d->name}}</td>
-                      <td>{{$d->email}}</td>
+                      <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{$d->name}}</td>
+                      <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{$d->email}}</td>
                       <td>{{$d->status}}</td>
                       <td>
                           <a href="{{ route('admin.edit',['id' =>$d->npm ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>

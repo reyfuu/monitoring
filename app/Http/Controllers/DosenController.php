@@ -297,8 +297,8 @@ class DosenController extends Controller
             'status'=>'required',
             'comment'=>'required',
         ],[
-            'status.required'=>'Harap status diisi',
-            'comment.required'=>'Harap komentar diisi',
+            'status.required'=>'Masukkan status diisi',
+            'comment.required'=>'Masukkan komentar diisi',
         ]
     );
         $status= $request->status;
@@ -330,8 +330,8 @@ class DosenController extends Controller
             'status'=> 'required',
             'isi'=> 'required'
         ],[
-            'status.required'=> 'Harap status diisi',
-            'isi.required'=> 'Harap komentar diisi'
+            'status.required'=> 'Masukkan status diisi',
+            'isi.required'=> 'Masukkan komentar diisi'
         ]);
         $status = $request->status;
 
@@ -368,7 +368,7 @@ class DosenController extends Controller
         $data['created_at']=now();
         comment::create($data);
         $notifikasi_id= notifikasi::where('sender','dosen')->where
-        ('npm',$data['npm'])->where('domen_id',$domen_id)->first()->notifikasi_id;
+        ('npm',$data['npm'])->where('domen_id',$domen_id)->first();
         if($notifikasi_id){
             $data3['is_read']=false;
             notifikasi::where('notifikasi_id',$notifikasi_id)->update($data3);
@@ -394,8 +394,8 @@ class DosenController extends Controller
             'status'=>'required',
             'comment'=>'required',
         ],[
-            'status'=>'Harap status diisi',
-            'comment'=>'Harap komentar diisi',
+            'status'=>'Masukkan status diisi',
+            'comment'=>'Masukkan komentar diisi',
         ]);
         $status= $request->status;
         $id= $request->id;
@@ -421,28 +421,34 @@ class DosenController extends Controller
     public function update2(Request $request){
         $request->validate([
             'status_domen'=>'required',
-     
+            'eval'=>'required',
         ],[
-            'status_domen'=>'Harap diisi status mahasiswa',
-
+            'status_domen'=>'Masukkan diisi status mahasiswa',
+            'eval.required'=> ' Masukkan komentar '
         ]);
    
-        
-        $data['status']=$request->status_domen;
+
        
-        $data['komentar']= $request->comment;
+          $data['status_domen']=$request->status_domen;
+        if($data['status_domen'] == 'disetujui'){  
+            $data['status']= 'Finish';
+  
+        }else{
+            $data['status']= 'sudah dilihat';
+        }
         
         $id= $request->id;
         $npm = bimbingan::select('npm')->where('bimbingan_id',$id)->first()->npm;
   
         $data2['npm']= bimbingan::where('bimbingan_id',$id)->first()->npm;
-        $data2['tanggal']= Carbon::now()->format('Y-m-d');
+        $data2['created_at']=now();
+        $data2['sender']='domen';
+        $data2['receiver']='mahasiswa';
         $type= bimbingan::where('bimbingan_id',$id)->first()->type;
         $data2['comment_id']= IdGenerator::generate(
-            ['table' => 'comment', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
+            ['table' => 'comments', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
         $data2['domen_id']= session('domen_id');
-        $data2['isi']= $request->comment;
-        $data2['notifikasi']= 'sudah acc';
+        $data2['message']= $request->eval;
         if($type == 'Proposal'){
             $data2['type']= 'Bimbinganp';
         }else{
@@ -470,7 +476,7 @@ class DosenController extends Controller
         $request->validate([
             'eval'=>'required',
         ],[
-            'eval.required'=>'Harap isi Komentar',
+            'eval.required'=>'Masukkan isi Komentar',
         ]);
 
 
@@ -482,13 +488,14 @@ class DosenController extends Controller
         $data['eval_id'] = IdGenerator::generate(
             ['table' => 'evaluasi', 'field' => 'eval_id', 'length' => 5, 'prefix' => 'EV']);
         $data['domen_id']= session('domen_id');
-        $data['notifikasi']= 'sudah acc';
         $data['isi']= $request->eval;
         evaluasi::create($data);
 
         $data2['status_domen']=$request->status_domen;
-        if($data2['status_domen'] == 'disetujui'){
+    
+        if($data2['status_domen'] == 'disetujui'){  
             $data2['status']= 'Finish';
+  
         }else{
             $data2['status']= 'sudah dilihat';
         }
@@ -496,8 +503,33 @@ class DosenController extends Controller
         $status= $request->status;
         laporan::where('laporan_id',$id)->update($data2);
         if($status == 'Proposal'){
+            if($data2['status_domen'] == 'disetujui'){  
+                $data3['notifikasi_id']= IdGenerator::generate(
+                    ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+                $data3['npm']= $data['npm'];
+                $data3['domen_id']=session('domen_id');
+                $data3['sender']='dosen';
+                $data3['receiver']='mahasiswa';
+                $data3['created_at']=now();
+                $data3['is_read']= false;
+                $data3['message']='Proposal sudah disetujui';
+                notifikasi::create($data3);
+            }
+
             return redirect()->route('dmn.proposal');
         }else{
+            if($data2['status_domen'] == 'disetujui'){  
+                $data3['notifikasi_id']= IdGenerator::generate(
+                    ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+                $data3['npm']= $data['npm'];
+                $data3['domen_id']=session('domen_id');
+                $data3['sender']='dosen';
+                $data3['receiver']='mahasiswa';
+                $data3['created_at']=now();
+                $data3['is_read']= false;
+            $data3['message']='Tugas Akhir sudah disetujui';
+            notifikasi::create($data3);
+            }
             return redirect()->route('dmn.ta');
         }
    

@@ -51,7 +51,8 @@
                   <tr>
                       <td>{{$loop->iteration}}</td>
                       <td style="white-space: pre-wrap;word-wrap: break-word;">{{$d->name}}</td>
-                      <td>{{$d->email}}</td>
+                      <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{$d->email}}</td>
                       <td>{{$d->status}}</td>
                       <td>
                        

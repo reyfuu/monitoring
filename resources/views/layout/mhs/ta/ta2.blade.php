@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Upload Tugas Akhir</h1>
+            <h1 class="m-0">Revisi Tugas Akhir</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -91,11 +91,15 @@
                         </div>
                       </div>
                     </div>
+                    @if ($status->status_domen == 'disetujui')
 
-                      <div class="form-group">
-                        <a href="{{ route('mhs.editTA',['id'=>$id]) }}" class="btn btn-warning"> <i class="fas fa-pen"></i> Update
-                           Tugas Akhir</a>
-                      </div>
+                    @else
+                    <div class="form-group">
+                      <a href="{{ route('mhs.editTA',['id'=>$id]) }}" class="btn btn-warning"> <i class="fas fa-pen"></i> Update
+                         Tugas Akhir</a>
+                    </div>
+                    @endif
+
                       @foreach ($data as $data)
                     <div class="form-group">
                         <label for="">NPM</label>

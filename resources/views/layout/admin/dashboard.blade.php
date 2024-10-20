@@ -49,7 +49,8 @@
 
               <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $d->mahasiswa }}</td>
+              <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->mahasiswa }}</td>
               <td style="      white-space: pre-wrap;
       word-wrap: break-word;">{{ $d->judul }}</td>
               <td style="      white-space: pre-wrap;

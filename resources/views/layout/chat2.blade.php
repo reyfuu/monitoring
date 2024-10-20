@@ -64,7 +64,7 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-
+ 
     const toggleButton = document.querySelector('.chatbox-toggle');
     const chatbox = document.querySelector('#chat-container');
 
@@ -88,11 +88,12 @@ $.ajaxSetup({
 $(document).ready(function() {
   const npm = $('#npm').val();
   function fetchMessages(npm){
+
     $.ajax({
         url:'/dmn/fetchChat/'+npm,
         method: 'GET',
         success: function(data){
-        
+          
           $('#chatMessageContainer').empty();
 
           data.forEach(function(chat){
@@ -106,6 +107,7 @@ $(document).ready(function() {
          
             );
           });
+          fetchMessages(npm);
         },
         error:function (error){
           console.error(error);
@@ -135,7 +137,6 @@ $(document).ready(function() {
             _token: '{{ csrf_token() }}'
           },
           success: function (response){
-            fetchMessages(npm);
             $('#pesan').val('');
             console.log('success');
           },
@@ -144,8 +145,8 @@ $(document).ready(function() {
           }
         });
       });
-      
- 
+  
+   
 });
 
   </script>

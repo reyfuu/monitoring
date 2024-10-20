@@ -51,7 +51,7 @@ class MahasiswaController extends Controller
             $data['npm']=$npm;
             $data['created_at']=now();
             comment::create($data);
-            $notifikasi_id= notifikasi::where('sender','mahasiswa')->where('npm',$npm)->first()->notifikasi_id;
+            $notifikasi_id= notifikasi::where('sender','mahasiswa')->where('npm',$npm)->first();
 
             if($notifikasi_id ){
                 $data3['is_read']= false;
@@ -79,7 +79,7 @@ class MahasiswaController extends Controller
     public function home(){
         $npm= session('npm');
         $bimbingan=Bimbingan::where('npm','like','%'.$npm.'%')
-        ->where('status','disetujui')->get();
+        ->where('status_domen','disetujui')->get();
         $count= count($bimbingan);
         $judul= laporan::select('judul')->where('npm',$npm)->where('type','Proposal')->get();
         // $notifikasi= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->
@@ -114,8 +114,9 @@ class MahasiswaController extends Controller
         $npm= session('npm');
         $dokumen= laporan::where('npm',$npm)->where('type','Proposal')->first();
         $bimbingan = bimbingan::where('npm',$npm)->where('Type','Proposal')->
-        where('status','disetujui')->get();
+        where('status_domen','disetujui')->get();
         $bimbingan = count($bimbingan);
+  
         $syarat= syarat::where('npm',$npm)->get();
         $syarat= count($syarat);
         if(!$dokumen->dokumen){
@@ -193,7 +194,7 @@ class MahasiswaController extends Controller
         if(!$dokumen->dokumen){
             return view('layout.mhs.proposal.proposal');
         }
-        if($dokumen->status == "submit" ){
+        if($dokumen->status_domen == "submit" ){
             $eval = evaluasi::where('npm',$npm)->where('type','Proposal')->get();
             $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
             $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
@@ -205,7 +206,7 @@ class MahasiswaController extends Controller
         
             return view('layout.mhs.proposal.proposal2',compact('eval','data','status'));
         }
-        elseif($dokumen->status == "Revisi" ){
+        elseif($dokumen->status_domen == "direvisi" ){
             $eval = evaluasi::where('npm',$npm)->where('type','Proposal')->get();
             $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
             $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
@@ -230,7 +231,7 @@ class MahasiswaController extends Controller
             'laporan.laporan_id')->
             where('laporan.npm','like','%'.$npm.'%')->where('type','Proposal')->
             get();
-            dd($data);
+
                 return view('layout.mhs.proposal.proposal2',compact('eval','data','status'));
             }
         }
@@ -401,11 +402,11 @@ class MahasiswaController extends Controller
 
         $dokumen= laporan::where('npm',$npm)->where('type','Tugas Akhir')->first();
         $bimbingan = bimbingan::where('npm',$npm)->where('Type','Tugas Akhir')->
-        where('status','disetujui')->get();
+        where('status_domen','disetujui')->get();
         $bimbingan = count($bimbingan);
+
         $syarat= syarat::where('npm',$npm)->get();
         $syarat= count($syarat);
-
         if(!$dokumen->dokumen){
             
             return view('layout.mhs.ta.ta');
@@ -414,7 +415,7 @@ class MahasiswaController extends Controller
             if($dokumen->status_domen == 'disetujui'){
 
                 if($bimbingan >= 14){
-                    return view('layout.mhs.ta.ta3',compact('eval'));
+                    return view('layout.mhs.ta.ta3');
                 }else{
                     $eval = evaluasi::where('npm',$npm)->where('type','Tugas Akhir')->get();   
                 $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Tugas Akhir')->first();
@@ -574,8 +575,7 @@ class MahasiswaController extends Controller
         $bimbingan = Bimbingan::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
         $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
         $name= dosen::select('name')->where('domen_id',$domen_id)->first()->name;
-       
-
+      
         return view('layout.mhs.bimbingan.bimbingan2',compact('bimbingan','name'));
     }
     // function to store proposal or laporan
@@ -585,9 +585,9 @@ class MahasiswaController extends Controller
             "judul"=>'required',
             "deskripsi"=>'required',
         ],[
-            'file.required'=>'Harap isi file dokumennya',
-            'judul.required'=>'Harap isikolom judulnya',
-            'deskripsi.required'=>'Harap isi kolom abstraknya'
+            'file.required'=>'Masukkan isi file dokumennya',
+            'judul.required'=>'Masukkan isikolom judulnya',
+            'deskripsi.required'=>'Masukkan isi kolom abstraknya'
         ]);
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
@@ -704,10 +704,10 @@ class MahasiswaController extends Controller
             "isi"=>"required",
             "dosen"=>'required'
         ],[
-            'tanggal.required'=>'Harap pilih tanggal Bimbingannya',
-            'topik.required'=>'harap isi kolom topik',
-            'isi.required'=>'Harap di isi kolom Bahasannya',
-            "dosen.required"=>'Harap pilih dosen pembimbingnya'
+            'tanggal.required'=>'Masukkan pilih tanggal Bimbingannya',
+            'topik.required'=>'Masukkan isi kolom topik',
+            'isi.required'=>'Masukkan di isi kolom Bahasannya',
+            "dosen.required"=>'Masukkan pilih dosen pembimbingnya'
         ]);
  
         $data['tanggal']= $request->tanggal;
@@ -752,7 +752,7 @@ class MahasiswaController extends Controller
         $validator= Validator::make($request->all(),[
             "file"=> "required|file|max:2048|mimes:png,jpg,jpeg,pdf",
         ],[
-            'file.required'=> 'Harap upload filenya',
+            'file.required'=> 'Masukkan upload filenya',
             'file.max'=>'File tidak boleh lebih dari 2MB.',
         ]);
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -799,7 +799,7 @@ class MahasiswaController extends Controller
         $validator= Validator::make($request->all(),[
             "file"=> "required|file|max:2048|mimes:png,jpg,jpeg,pdf",
         ],[
-            'file.required'=> 'Harap upload filenya',
+            'file.required'=> 'Masukkan upload filenya',
             'file.max'=>'File tidak boleh lebih dari 2MB.',
         ]);
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -843,7 +843,7 @@ class MahasiswaController extends Controller
         $validator= Validator::make($request->all(),[
             "file"=> "required|file|max:2048|mimes:png,jpg,jpeg,pdf",
         ],[
-            'file.required'=> 'Harap upload filenya',
+            'file.required'=> 'Masukkan upload filenya',
             'file.max'=>'File tidak boleh lebih dari 2MB.',
         ]);
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
@@ -892,9 +892,9 @@ class MahasiswaController extends Controller
             "judul"=> "required",
             'deskripsi'=> "required"
         ],[
-            'file.required'=>'Harap isi kolom dokumen',
-            'judul.required'=> 'Harap isi kolom judulnya',
-            'deskripsi.required'=> 'Harap isi kolom abstraknya'
+            'file.required'=>'Masukkan isi kolom dokumen',
+            'judul.required'=> 'Masukkan isi kolom judulnya',
+            'deskripsi.required'=> 'Masukkan isi kolom abstraknya'
         ]);
         if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
         $npm=  session('npm');
@@ -938,12 +938,12 @@ class MahasiswaController extends Controller
         $validator= Validator::make($request->all(),[
             "revisi"=> "required|mimes:pdf|max:5120"
         ],[
-            'revisi.required'=>'Harap upload file revisi dalam bentuk pdf'
+            'revisi.required'=>'Masukkan upload file revisi dalam bentuk pdf'
         ]);
         $request->validate([
             "revisi"=> "required|mimes:pdf|max:5120"
         ],[
-            'revisi.required'=>'Harap upload file revisi dalam bentuk pdf'
+            'revisi.required'=>'Masukkan upload file revisi dalam bentuk pdf'
         ]);
     
         $data['judul']= $request->judul;
@@ -956,9 +956,8 @@ class MahasiswaController extends Controller
         $npm=FacadesSession::get('npm');
         Storage::disk('public')->put($path,file_get_contents($dokumen));
         $data['dokumen']=$filename;
-        $data3['notifikasi']= 'sudah dibaca';
+
         $data['tanggal_submit']=Carbon::now(); 
-        comment::where('npm',$npm)->update($data3);
         if($status== 'Proposal'){
             laporan::where('npm',$npm)->where('type',$status)->update($data);
    

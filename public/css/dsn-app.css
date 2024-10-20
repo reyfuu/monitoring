@@ -239,6 +239,7 @@ ul li .active .uil{
     align-items: center;
     padding: 10px;
     cursor: pointer;
+    flex-direction: column;
 }
 
 .chat-item:hover {
@@ -328,6 +329,8 @@ ul li .active .uil{
     height: 40px;
 }
 
+
+
 .chat-message .message-content {
     display: inline-block;
     padding: 10px;
@@ -377,12 +380,24 @@ ul li .active .uil{
     transform: translateY(-5px);
     /* Lift the card on hover */
 }
+.chat-item .profile_img{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.chat-item .profile_info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .profile_img {
     width: 60px;
     /* Avatar size */
     height: 60px;
     margin-right: 15px;
+
     border: 2px solid #007bff;
     /* Border color matching badge */
 }
@@ -392,12 +407,17 @@ ul li .active .uil{
     flex-direction: column;
     justify-content: center;
 }
+.chat-item .profile_name{
+    font-weight: bold;
+    text-align: center;
+}
 
 .profile_name {
     font-size: 1.1em;
     /* Slightly larger font size */
     font-weight: bold;
     color: #343a40;
+    text-align: center;
     /* Darker text color */
     margin-bottom: 5px;
 }

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session as FacadesSession;
 
 class LoginController extends Controller
@@ -24,10 +25,14 @@ class LoginController extends Controller
 
     // function to auth login
     public function login_proses(Request $request){
-        $request->validate([
+        $validator= Validator::make($request->all(),[
             'email'=> 'required',
             'password'=> 'required',
+        ],[
+            'email.required'=> 'email salah',
+            'password.required'=> 'password salah'
         ]);
+
 
         $data=[
             'email' => $request->email,
@@ -60,7 +65,7 @@ class LoginController extends Controller
             return redirect()->route('admin.dashboard');
         }
         else{
-            return redirect()->route('login')->with('failed','Email or password incorrect');
+            return redirect()->route('login')->with('failed','Email atau kata sandi salah');
         }
     }
 

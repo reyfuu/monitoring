@@ -68,7 +68,7 @@
                         </div>
                         <label for="">Status</label>
                         <select class="form-control" name="status" aria-label="Default select example" >
-                          <option hidden disabled selected value>select the value</option>
+                          <option hidden disabled selected value>Pilih status </option>
                           <option value="Dosen">Dosen</option>
                           <option value="Mentor">Mentor</option>
                         </select>

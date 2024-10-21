@@ -50,7 +50,10 @@
                       <div class="form-group">
                         <label for="">Judul</label>
                         <input type="text" name="judul" class="form-control" value="{{ $data->judul }}" >
-                    </div>
+                        @error('judul')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                      </div>
 
                     <div class="form-group">
                         <label for=""> Revisi</label>
@@ -70,6 +73,9 @@
                     </div> 
                     <input type="text" name="status" value="{{ $data->type }}" hidden >   
                       @endforeach
+                      @error('abstrak')
+                      <div class="alert alert-danger">{{ $message }}</div>
+                      @enderror
                         
                       <div class="form-group text-center">
                         <button type="submit" class="btn btn-primary">Simpan</button>

@@ -108,7 +108,7 @@ class HomeController extends Controller
     // function to store user
     public function store(Request $request){
       $validator= Validator::make($request->all(),[
-        "npm"=>"required",
+        "npm"=>"required|unique:mahasiswa,npm",
         "name"=>"required",
         "email"=> "required|email",
         "name"=> "required",
@@ -118,6 +118,7 @@ class HomeController extends Controller
         "tanggal_mulai"=>"required",
         "angkatan"=>"required"
       ],[
+          'npm.unique'=> 'npm sudah diambil',
           'npm.required'=>'Masukkan  npm',
           'name.required'=>'Masukkan nama',
           'email.required'=> 'Masukkan email',
@@ -227,7 +228,8 @@ class HomeController extends Controller
       $npm= User::select('npm')->where('npm','like','%'.$id.'%')->first()->npm;
       $tanggal_mulai=laporan::select('tanggal_mulai')->where('npm','like','%'.$npm.'%')->first()->tanggal_mulai;
       $tanggal_berakhir=laporan::select('tanggal_berakhir')->where('npm','like','%'.$npm.'%')->first()->tanggal_berakhir;
-      return view('layout.admin.edit',compact('id2','tanggal_mulai','tanggal_berakhir'));
+      $data=dosen::get();
+      return view('layout.admin.edit',compact('id2','tanggal_mulai','tanggal_berakhir','data'));
     }
     // function to navigate edit dosen
     public function edit2(Request $request,$id){
@@ -242,11 +244,13 @@ class HomeController extends Controller
         "name"=> "required",
         "password"=> "required",
         'status'=>"required",
+        'dosen'=> 'required'
       ],[
         'email.required'=> 'Masukkan isi kolom email',
         'name.required'=> 'Masukkan isi kolom nama',
         'password.required'=>'Masukkan isi kolom password',
-        'status.required'=>'Masukkan pilih status'
+        'status.required'=>'Masukkan pilih status',
+        'dosen.required'=> 'Pilih Dosen pembimbingnya'
       ]);
       if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
 
@@ -256,8 +260,11 @@ class HomeController extends Controller
         $data['password']=Hash::make($request->password); 
       }
       $data['status']=$request->status;
+      $name=$request->dosen;
+      $dosen_id=dosen::select('domen_id')->where('name','like','%'.$name.'%')->first()->domen_id;
+      $data2['domen_id']=$dosen_id;
       $status= $request->status;
-  
+      laporan::where('npm',$id)->update($data2);
       
       User::where('npm',$id)->update($data);
 

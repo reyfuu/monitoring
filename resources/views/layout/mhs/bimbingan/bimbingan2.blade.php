@@ -36,6 +36,7 @@
                     <th>No </th>
                     <th>Tanggal</th>
                     <th>Dosen Pembimbing</th>
+                    <th>Bahasan</th>
                     <th>Disetujui</th>
                     <th>Aksi</th>
                   </thead>
@@ -46,14 +47,17 @@
                       <td>{{ $d->tanggal }}</td>
                       <td style="      white-space: pre-wrap;
       word-wrap: break-word;">{{ $name }}</td>
+                        <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->isi }}</td>
                       <td>
-                      @if ($d->status_domen)
-                      {{ $d->status_domen }}  
-             
-                      @endif
+                        @if ($d->status_domen)
+                        {{ $d->status_domen }}  
+                        @else
+                          belum dilihat
+                        @endif
                       </td>
                       <td>          
-                        @if ($d->status == 'disetujui')
+                        @if ($d->status_domen == 'disetujui')
                             
                         @else
                         <a href="{{ route('mhs.edit',['id' =>$d->bimbingan_id ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>

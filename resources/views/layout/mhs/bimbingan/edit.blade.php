@@ -39,25 +39,25 @@
                     <div class="card-body">
                       <div class="form-group">
                         <label for="">Topik</label>
-                        <input type="text" class="form-control" name="topik" value="{{ $data->topik }}"  required>
+                        <input type="text" class="form-control" name="topik" value="{{ $data->topik }}"  >
                         @error('topik')
-                            <small>{{$message}}</small>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                         <div class="form-group">
                             <label for="">Bahasan</label>
-                            <textarea  class="form-control" name="isi"  required>{{ $data->isi }}</textarea>
+                            <textarea  class="form-control" name="isi"  >{{ $data->isi }}</textarea>
                             @error('isi')
-                                <small>{{$message}}</small>
+                            <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                           <label for="">Tanggal </label>
                           <input type="datetime-local" class="form-control" name="tanggal" 
-                            value="{{ $data->tanggal }}" required>
+                            value="{{ $data->tanggal }}" >
                           @error('tanggal')
-                            <small>{{$message}}</small>
+                          <div class="alert alert-danger">{{ $message }}</div>
                           @enderror
                           <input type="text" value="{{ $data->type }}"name="type" hidden>
                         </div>

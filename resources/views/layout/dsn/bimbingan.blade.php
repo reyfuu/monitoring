@@ -45,7 +45,8 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $d->tanggal }}</td>
-                <td>{{ $d->topik }}</td>
+                <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">{{ $d->topik }}</td>
                 <td style="      white-space: pre-wrap;
       word-wrap: break-word;">{{ $d->isi }}</td>
                 <td>@if ($d->status )

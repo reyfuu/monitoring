@@ -66,6 +66,16 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <label for="">Dosen / Mentor</label>
+                        <select class="form-control" name="dosen" aria-label="Default select example" >
+                          <option hidden disabled selected value>Pilih Opsi</option>
+                            @foreach ($data as $d)
+                                <option value="{{ $d->name }}">{{ $d->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('dosen')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         <label for="">Status</label>
                         <select class="form-control" name="status" wire:model="selectedClass" aria-label="Default select example" >
                           <option hidden disabled selected value>Pilih Opsi</option>

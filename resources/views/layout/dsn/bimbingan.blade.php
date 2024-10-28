@@ -37,6 +37,7 @@
               <th>Topik</th>
               <th>Deskripsi</th>
               <th>Status</th>
+              <th>Komentar</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -55,6 +56,8 @@
                 
                 @endif
                 </td>
+                <td style="white-space: pre-wrap; word-wrap: break-word;">{{ $d->komentar }}</td>
+
                   <td>
                     @if ($d->status == 'Finish')
                         

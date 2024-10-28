@@ -33,10 +33,14 @@
                 @method('put')
                 <div class="col-md-12">
                     <div class="card card-primary">
-           
+                
 
                 <form>
                     <div class="card-body">
+                      <div class="form-group">
+                        <h4>Revisi dari dosen</h4>
+                        <p class="text-justify">{{ $data->komentar }}</p>
+                      </div>
                       <div class="form-group">
                         <label for="">Topik</label>
                         <input type="text" class="form-control" name="topik" value="{{ $data->topik }}"  >
@@ -54,7 +58,7 @@
                         </div>
                         <div class="form-group">
                           <label for="">Tanggal </label>
-                          <input type="datetime-local" class="form-control" name="tanggal" 
+                          <input type="date" class="form-control" name="tanggal" 
                             value="{{ $data->tanggal }}" >
                           @error('tanggal')
                           <div class="alert alert-danger">{{ $message }}</div>

@@ -575,6 +575,7 @@ class MahasiswaController extends Controller
             "deskripsi"=>'required',
         ],[
             'file.required'=>'Masukkan isi file dokumennya',
+            'file.mimes'=> "Upload file revisi dalam bentuk pdf",
             'judul.required'=>'Masukkan isi kolom judulnya',
             'deskripsi.required'=>'Masukkan isi kolom abstraknya'
         ]);
@@ -742,11 +743,12 @@ class MahasiswaController extends Controller
         // $dokumen = syarat::where('syarat','like','%%')->get();
 
         $validator= Validator::make($request->all(),[
-            "file"=> "required|file|max:10458|mimes:png,jpg,jpeg,pdf",
+            "file"=> "required|file|max:10458|mimes:pdf",
             "judul"=> "required",
             'deskripsi'=> "required"
         ],[
             'file.required'=>'Masukkan isi kolom dokumen',
+            'file.mimes'=> "Upload file revisi dalam bentuk pdf",
             'judul.required'=> 'Masukkan isi kolom judulnya',
             'deskripsi.required'=> 'Masukkan isi kolom abstraknya'
         ]);
@@ -795,7 +797,8 @@ class MahasiswaController extends Controller
             "judul"=> "required",
             "abstrak"=>'required'
         ],[
-            'revisi.required'=>'Masukkan upload file revisi dalam bentuk pdf',
+            'revisi.required'=>'Upload file revisi dalam bentuk pdf',
+            'revisi.mimes'=> "Upload file revisi dalam bentuk pdf",
              "judul.required"=>"Masukkan isi kolom judul",
              'abstrak.required'=>"Masukkan isi kolom abstrak"
         ]);

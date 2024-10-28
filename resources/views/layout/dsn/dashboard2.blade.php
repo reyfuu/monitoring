@@ -57,7 +57,14 @@
       word-wrap: break-word;">{{ $data->nama }}</td>
                   <td style="      white-space: pre-wrap;
       word-wrap: break-word;">{{ $data->topik }}</td>
-                  <td>{{ $data->status2 }}</td>
+                  <td>
+                  @if ($data->bimbingan_count  >=14)
+                      Finish
+                  @else
+                      Belum selesai
+                  @endif  
+                  {{ $data->bimbingan_count  }}
+                </td>
         
           
                   <td><a href="{{ route('dmn.bimbingan2',['id'=>$data->npm]) }}" class="btn btn-primary" name="submit">Lihat Detail</a></td>

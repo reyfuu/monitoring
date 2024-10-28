@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session as FacadesSession;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 
 class DosenController extends Controller
 {
@@ -129,11 +131,15 @@ class DosenController extends Controller
 
         $bimbingan= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
         ->join('domen','domen.domen_id','=','laporan.domen_id')
-        ->where('type','Proposal')->where('domen.domen_id','=',$domen_id)
-        ->get(['laporan.Type as status2','mahasiswa.name as nama',
-        'laporan.judul as topik','laporan.laporan_id as id',
-        'mahasiswa.npm as npm'
+        ->join('bimbingan','bimbingan.npm','=','laporan.npm' )
+        ->where('laporan.type','Proposal')->where('domen.domen_id','=',$domen_id)
+        ->distinct('mahasiswa.npm')  
+        ->groupBy('mahasiswa.npm', 'laporan.status', 'mahasiswa.name', 'laporan.judul', 'laporan.laporan_id', 'domen.domen_id')
+        ->get(['laporan.status as status2','mahasiswa.name as nama',
+        'laporan.judul as topik','laporan.laporan_id as id','laporan.type as type',
+        DB::raw('SUM(CASE WHEN bimbingan.status = "Finish" AND bimbingan.type="Proposal" THEN 1 ELSE 0 END) as bimbingan_count'),'mahasiswa.npm as npm'
         ]);
+
 
         $isi= Bimbingan::where('domen_id',$domen_id)->get();
     
@@ -148,14 +154,17 @@ class DosenController extends Controller
     public function dbimbingan2(){
         $domen_id= session('domen_id');
 
-
         $bimbingan= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
         ->join('domen','domen.domen_id','=','laporan.domen_id')
-        ->where('type','Tugas Akhir')->where('domen.domen_id','=',$domen_id)
-        ->get(['laporan.Type as status2','mahasiswa.name as nama',
-        'laporan.judul as topik','laporan.laporan_id as id',
-        'mahasiswa.npm as npm'
+        ->join('bimbingan','bimbingan.npm','=','laporan.npm' )
+        ->where('laporan.type','Tugas Akhir')->where('domen.domen_id','=',$domen_id)
+        ->distinct('mahasiswa.npm')  
+        ->groupBy('mahasiswa.npm', 'laporan.status', 'mahasiswa.name', 'laporan.judul', 'laporan.laporan_id', 'domen.domen_id')
+        ->get(['laporan.status as status2','mahasiswa.name as nama',
+        'laporan.judul as topik','laporan.laporan_id as id','laporan.type as type',
+        DB::raw('SUM(CASE WHEN bimbingan.status = "Finish" AND bimbingan.type="Tugas Akhir" THEN 1 ELSE 0 END) as bimbingan_count'),'mahasiswa.npm as npm'
         ]);
+
 
         $isi= Bimbingan::where('domen_id',$domen_id)->get();
     
@@ -432,7 +441,7 @@ class DosenController extends Controller
           $data['status_domen']=$request->status_domen;
         if($data['status_domen'] == 'disetujui'){  
             $data['status']= 'Finish';
-  
+            
         }else{
             $data['status']= 'sudah dilihat';
         }
@@ -449,6 +458,7 @@ class DosenController extends Controller
             ['table' => 'comments', 'field' => 'comment_id', 'length' => 5, 'prefix' => 'CM']);
         $data2['domen_id']= session('domen_id');
         $data2['message']= $request->eval;
+        $data['komentar']=$request->eval;
         if($type == 'Proposal'){
             $data2['type']= 'Bimbinganp';
         }else{
@@ -459,7 +469,7 @@ class DosenController extends Controller
         }else{
 
             Bimbingan::find($id)->update($data);
-            comment::create($data2);
+
             if($data2['type'] == 'Bimbinganp'){
                 return redirect()->route('dmn.bimbingan',['id'=>$npm]);
             }else{

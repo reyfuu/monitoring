@@ -103,7 +103,6 @@ $(document).ready(function() {
     const message = $("#pesan").val();
     const domen_id = $('#domen_id').val();
     const errorMessage = $("#error-message");
-    console.log(message);
     if (message == "") {
         alert("Harap diisi pesan anda");
         return false;

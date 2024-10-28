@@ -86,14 +86,11 @@ class MahasiswaController extends Controller
         // orderBy('comment_id','desc')->first()->notifikasi ?? '';
         // $notifikasi2= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
         // orderBy('comment_id','desc')->first()->notifikasi ?? '';
-        $submit = laporan::where('tanggal_submit','<',Carbon::now()->subDays(30))->
-        where('npm',$npm)->where('type','Proposal')->get();
+ 
 
-        if($submit){
-            $belum_submit= 'Peringatan Proposal belum di submit dalam 30 hari ';
-        }
+     
   
-        return view('layout.mhs.dashboard',compact('npm','count','judul','belum_submit'));
+        return view('layout.mhs.dashboard',compact('npm','count','judul'));
     }
     public function chat(){
         $npm=session('npm');
@@ -117,8 +114,8 @@ class MahasiswaController extends Controller
         where('status_domen','disetujui')->get();
         $bimbingan = count($bimbingan);
   
-        $syarat= syarat::where('npm',$npm)->get();
-        $syarat= count($syarat);
+      
+  
         if(!$dokumen->dokumen){
             $eval = evaluasi::where('npm',$npm)->where('type','Proposal')->get();
             return view('layout.mhs.proposal.proposal',compact('eval'));
@@ -324,26 +321,8 @@ class MahasiswaController extends Controller
       }
 
     //   function to show weekly laporan
-    public function syarat(){
-        $npm= session('npm');
-        $datasks= syarat::where('npm',$npm)->where('syarat','sks')->get
-        (['syarat','file','status','dateac']);
-        $datamagang= syarat::where('npm',$npm)->where('syarat','magang')->get
-        (['syarat','file','status','dateac']);
-        $dataipk= syarat::where('npm',$npm)->where('syarat','ipk')->get
-        (['syarat','file','status','dateac']);
-        $statussks= syarat::where('npm',$npm)->where('syarat','sks')->first()->status ?? null;
-        $statusipk= syarat::where('npm',$npm)->where('syarat','ipk')->first()->status ?? null;
-        $statusmagang= syarat::where('npm',$npm)->where('syarat','magang')->first()->status ?? null;
+   
 
-        return view('layout.mhs.proposal.syarat',compact('datasks','datamagang','dataipk','statussks','statusipk','statusmagang'));
-    }
-   function getStatus($s){
-        return[
-            'status' => $s->status ?? 'status tidak ada',
-            'syarat' => $s->syarat ?? 'syarat tidak ada'
-        ];
-    }
     public function laporan(){
         $npm= session('npm');
         $tanggal_mulai= laporan::select('tanggal_mulai')->where('npm','like','%'.$npm.'%')->first()->tanggal_mulai;
@@ -417,8 +396,6 @@ class MahasiswaController extends Controller
         where('status_domen','disetujui')->get();
         $bimbingan = count($bimbingan);
 
-        $syarat= syarat::where('npm',$npm)->get();
-        $syarat= count($syarat);
         if(!$dokumen->dokumen){
             
             return view('layout.mhs.ta.ta');
@@ -439,7 +416,7 @@ class MahasiswaController extends Controller
                 'Laporan.dokumen as dokumen','domen.name as domen','Laporan.deskripsi as deskripsi']);
                 $id= $dokumen->laporan_id;
 
-                return view('layout.mhs.ta.ta2',compact('eval','id','data','status','syarat'));
+                return view('layout.mhs.ta.ta2',compact('eval','id','data','status'));
                 }
                 
             }else{
@@ -613,7 +590,6 @@ class MahasiswaController extends Controller
         $npm=FacadesSession::get('npm');
         Storage::disk('public')->put($path,file_get_contents($dokumen));
         $data['dokumen']=$filename;
-        $data['tanggal_submit']= Carbon::now();
         if($status== 'Proposal'){
             laporan::where('npm',$npm)->where('type',$status)->update($data);
             return redirect()->route('mhs.proposal2')->with('success','proposal berhasil diupdate');
@@ -756,143 +732,9 @@ class MahasiswaController extends Controller
         return redirect()->route('mhs.laporan');
     }
     // ini store sks
-    public function store5(Request $request){
-        $npm= session('npm');
-
-        // $dokumen = syarat::where('syarat','like','%%')->get();
-
-        $validator= Validator::make($request->all(),[
-            "file"=> "required|file|max:2048|mimes:png,jpg,jpeg,pdf",
-        ],[
-            'file.required'=> 'Masukkan upload filenya',
-            'file.max'=>'File tidak boleh lebih dari 2MB.',
-        ]);
-        if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
-        
-        $file= $request->file('file');
-        $name= $file->getClientOriginalName();
-        
-            $dokumen2= syarat::where('syarat','sks')->where('npm',$npm)->first();
-            // dd($dokumen2);
-
-            if($dokumen2){
-                $data['file']= $name;
-                $id= $dokumen2->id_syarat;
-                syarat::where('id_syarat',$id)->update($data);
-                $path='documents/'.$name;
-                Storage::disk('public')->put($path,file_get_contents($file));
-                return redirect()->route('mhs.syarat')->with('success','File Berhasil Ditambahkan');
-            }else{
-            
-            $laporan_id= IdGenerator::generate(
-            [  'table'=> 'syarat','field'=> 'id_syarat','length'=>5,'prefix'=>'SY']);
-      
-            $data['id_syarat']= $laporan_id;
-            $data['syarat']= 'sks';
-
-            $data['file']= $name;
-            $data['dateupload']= Carbon::now();
-            $data['npm']= $npm;
-            $data['status']= 'submit';
-          
     
-            syarat::create($data);
-            $path='documents/'.$name;
-            Storage::disk('public')->put($path,file_get_contents($file));
-       
-        return redirect()->route('mhs.syarat')->with('success','File Berhasil Ditambahkan');
-    } 
-}
-    public function storeMagang(Request $request){
-        $npm= session('npm');
-
-        // $dokumen = syarat::where('syarat','like','%%')->get();
-
-        $validator= Validator::make($request->all(),[
-            "file"=> "required|file|max:2048|mimes:png,jpg,jpeg,pdf",
-        ],[
-            'file.required'=> 'Masukkan upload filenya',
-            'file.max'=>'File tidak boleh lebih dari 2MB.',
-        ]);
-        if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
-        
-        $file= $request->file('file');
-        $name= $file->getClientOriginalName();
-        
-        $dokumen2= syarat::where('syarat','magang')->where('npm',$npm)->first();
-      
-            if($dokumen2){
-                $data['file']= $name;
+   
   
-                $id= $dokumen2->id_syarat;
-                syarat::where('id_syarat',$id)->update($data);
-                $path='documents/'.$name;
-                Storage::disk('public')->put($path,file_get_contents($file));
-                return redirect()->route('mhs.syarat')->with('success','File Berhasil Ditambahkan');
-            }else{
-            
-            $laporan_id= IdGenerator::generate(
-            [  'table'=> 'syarat','field'=> 'id_syarat','length'=>5,'prefix'=>'SY']);
-      
-            $data['id_syarat']= $laporan_id;
-            $data['syarat']= 'magang';
-
-            $data['file']= $name;
-            $data['dateupload']= Carbon::now();
-            $data['npm']= $npm;
-            $data['status']= 'submit';
-          
-    
-            syarat::create($data);
-            $path='documents/'.$name;
-            Storage::disk('public')->put($path,file_get_contents($file));
-       
-        return redirect()->route('mhs.syarat')->with('success','File Berhasil Ditambahkan');
-    }
-}
-    public function storeIpk(Request $request){
-        $npm= session('npm');
-        $validator= Validator::make($request->all(),[
-            "file"=> "required|file|max:2048|mimes:png,jpg,jpeg,pdf",
-        ],[
-            'file.required'=> 'Masukkan upload filenya',
-            'file.max'=>'File tidak boleh lebih dari 2MB.',
-        ]);
-        if($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
-        
-        $file= $request->file('file');
-        $name= $file->getClientOriginalName();
-        
-        $dokumen2= syarat::where('syarat','ipk')->where('npm',$npm)->first();
-            if($dokumen2){
-                $data['file']= $name;
-  
-                $id= $dokumen2->id_syarat;
-                syarat::where('id_syarat',$id)->update($data);
-                $path='documents/'.$name;
-                Storage::disk('public')->put($path,file_get_contents($file));
-                return redirect()->route('mhs.syarat')->with('success','File Berhasil Ditambahkan');
-            }else{
-            
-            $laporan_id= IdGenerator::generate(
-            [  'table'=> 'syarat','field'=> 'id_syarat','length'=>5,'prefix'=>'SY']);
-      
-            $data['id_syarat']= $laporan_id;
-            $data['syarat']= 'ipk';
-
-            $data['file']= $name;
-            $data['dateupload']= Carbon::now();
-            $data['npm']= $npm;
-            $data['status']= 'submit';
-          
-    
-            syarat::create($data);
-            $path='documents/'.$name;
-            Storage::disk('public')->put($path,file_get_contents($file));
-       
-        return redirect()->route('mhs.syarat')->with('success','File Berhasil Ditambahkan');
-    }
-}
     public function store6(Request $request){
 
         $npm= session('npm');

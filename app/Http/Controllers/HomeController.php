@@ -68,29 +68,8 @@ class HomeController extends Controller
       $data=dosen::get();
       return view('layout.admin.domen',compact('data'));
     }
-    public function syarat(){
-      $data=syarat::get();
 
-
-      $mahasiswa=user::distinct()->join('syarat','syarat.npm','=','mahasiswa.npm')
-      ->join('laporan','laporan.npm','=','mahasiswa.npm')->where('Type','Proposal')
-      ->select('mahasiswa.npm as npm','mahasiswa.name as name','laporan.judul as judul')
-      ->get();
-
-      return view('layout.admin.syarat',compact('mahasiswa'));
-    }
-    public function syarat2(Request $request,$id){
- 
-        $data= syarat::where('npm',$id)->get(['syarat','file','status','id_syarat','dateac']);
-
-        $data= $data->toArray();
-        return view('layout.admin.syarat2',compact('data'));
-    }
-    public function viewSyarat($id){
-      
-
-      return response()->file(public_path('storage/documents/'.$id,['Content-Type'=>'application/pdf']));
-    }
+   
     // function to choose mahasiswa or dosen
     public function create(){
         return view('layout.admin.create.create');
@@ -301,16 +280,7 @@ class HomeController extends Controller
       }
      
     }
-    public function update3(Request $request){
-        $data['status']=$request->status;
-        $id= $request->id_syarat;
-        if($data['status'] == 'disetujui'){
-          $data['dateac']=Carbon::now();
-        }
-        $npm= syarat::where('id_syarat',$id)->first()->npm;
-        syarat::where('id_syarat',$id)->update($data);
-        return redirect()->route('admin.syarat2',['id'=> $npm ]);
-    }
+    
     // function to delete mahasiswa
     public function delete(Request $request,$id){
       $data=User::find($id);

@@ -46,7 +46,7 @@
                     @csrf
                     <div class="col-md-12">
                         <div class="card card-primary">
-                        <h3 class="text-center py-lg-5">Selamat Laporan Akhir sudah Selesai</h3>
+                        <h3 class="text-center py-lg-5">Selamat Tugas Akhir sudah Selesai</h3>
                   </div>
                  </div>
                 </form>

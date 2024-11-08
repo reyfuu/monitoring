@@ -118,7 +118,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for=""> Revisi</label>
+                        <label for="">File Proposal</label>
                        <a href="{{ route('mhs.viewProposal',['id'=> $d->dokumen]) }}" class="form-control">{{ $d->dokumen }}</a>
 
                     </div>

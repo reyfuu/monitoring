@@ -37,10 +37,13 @@
 
                 <form>
                     <div class="card-body">
+                      @if ($data->komentar)
                       <div class="form-group">
                         <h4>Revisi dari dosen</h4>
                         <p class="text-justify">{{ $data->komentar }}</p>
                       </div>
+                      @endif
+
                       <div class="form-group">
                         <label for="">Topik</label>
                         <input type="text" class="form-control" name="topik" value="{{ $data->topik }}"  >

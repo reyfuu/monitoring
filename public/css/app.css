@@ -291,6 +291,17 @@ body {
 .sender .message-content {
     background-color: #dcf8c6;
 }
+.scrollable{
+    max-height: 300px; /* Adjust the height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden;
+}
+.text2{
+    text-align: center;
+    font-size: 30px;
+    margin-top: 200px;
+    margin-left: 200px;
+}
 
 .card-footer {
     padding: 10px;

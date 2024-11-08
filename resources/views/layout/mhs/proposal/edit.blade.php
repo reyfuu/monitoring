@@ -56,7 +56,7 @@
                       </div>
 
                     <div class="form-group">
-                        <label for=""> Revisi</label>
+                        <label for=""> Upload File Revisi</label>
                        <input type="file" name="revisi" class="form-control">
                        @error('revisi')
                        <div class="alert alert-danger">{{ $message }}</div>

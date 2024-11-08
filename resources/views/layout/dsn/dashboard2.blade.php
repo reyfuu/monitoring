@@ -63,7 +63,6 @@
                   @else
                       Belum selesai
                   @endif  
-                  {{ $data->bimbingan_count  }}
                 </td>
         
           

@@ -74,7 +74,7 @@ if (Session::has('npm')) {
           @endif
  
         </a>
-        <div class="dropdown-menu dropdown-menu-lg">
+        <div class="dropdown-menu dropdown-menu-lg scrollable">
 
               
           @if ($notifikasi_idd->isEmpty())

@@ -30,7 +30,20 @@ class MahasiswaController extends Controller
 {     
     public function markAsRead($id){
         $data['is_read']= true;
-
+        $status = notifikasi::where('notifikasi_id',$id)->first()->type;
+        if($status == 'BimbinganP'){
+            notifikasi::where('notifikasi_id',$id)->update($data);
+            return redirect()->to('mhs/bimbingan');
+        }elseif($status == 'BimbinganT'){
+            notifikasi::where('notifikasi_id',$id)->update($data);
+            return redirect()->to('mhs/bimbingan2');
+        }elseif($status == 'Proposal'){
+            notifikasi::where('notifikasi_id',$id)->update($data);
+            return redirect()->to('mhs/proposal');
+        }elseif($status == 'Tugas Akhir'){
+            notifikasi::where('notifikasi_id',$id)->update($data);
+            return redirect()->to('mhs/ta');
+        }
 
         notifikasi::where('notifikasi_id',$id)->update($data);
         return redirect()->to('mhs/chat/');
@@ -51,10 +64,12 @@ class MahasiswaController extends Controller
             $data['npm']=$npm;
             $data['created_at']=now();
             comment::create($data);
-            $notifikasi_id= notifikasi::where('sender','mahasiswa')->where('npm',$npm)->first();
+            $notifikasi_id= notifikasi::where('sender','mahasiswa')->where('npm',$npm)->where('type','chat')
+            ->first();
 
             if($notifikasi_id ){
                 $data3['is_read']= false;
+                $data3['type']='chat';
                 notifikasi::where('notifikasi_id',$notifikasi_id)->update($data3);
 
                 return redirect()->route('mhs.chat'); 
@@ -70,6 +85,7 @@ class MahasiswaController extends Controller
                 $data2['message']='Anda memiliki pesan baru dari '. $name;
                 $data2['created_at']=now();
                 $data2['is_read']=false;
+                $data2['type']='chat';
                 Notifikasi::create($data2);
                 return redirect()->route('mhs.chat'); 
             }
@@ -81,17 +97,21 @@ class MahasiswaController extends Controller
         $bimbingan=Bimbingan::where('npm','like','%'.$npm.'%')
         ->where('status_domen','disetujui')->get();
         $count= count($bimbingan);
-        $judul= laporan::select('judul')->where('npm',$npm)->where('type','Proposal')->get();
-        // $notifikasi= comment::where('npm','like','%'.$npm.'%')->where('type','Proposal')->
-        // orderBy('comment_id','desc')->first()->notifikasi ?? '';
-        // $notifikasi2= comment::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
-        // orderBy('comment_id','desc')->first()->notifikasi ?? '';
- 
-
+        $judul= laporan::selectRaw(
+            'CASE 
+                WHEN type = "Tugas Akhir" AND status = "Finish" THEN judul
+                WHEN type = "Proposal" AND status != "Finish" THEN judul
+                WHEN type = "Tugas Akhir" AND status != "Finish" THEN judul
+                ELSE NULL
+            END as judul'
+        )->where('npm',$npm)->get();
+        
      
+       
   
         return view('layout.mhs.dashboard',compact('npm','count','judul'));
     }
+
     public function chat(){
         $npm=session('npm');
         $name= laporan::distinct()->join('domen','domen.domen_id','=','laporan.domen_id')->
@@ -395,16 +415,17 @@ class MahasiswaController extends Controller
         $bimbingan = bimbingan::where('npm',$npm)->where('Type','Tugas Akhir')->
         where('status_domen','disetujui')->get();
         $bimbingan = count($bimbingan);
-
+        $proposal= laporan::where('npm',$npm)->where('type','Proposal')->where('status','Finish')->first();
+        
         if(!$dokumen->dokumen){
             
-            return view('layout.mhs.ta.ta');
+            return view('layout.mhs.ta.ta',compact('proposal'));
         }
 
             if($dokumen->status_domen == 'disetujui'){
 
                 if($bimbingan >= 14){
-                    return view('layout.mhs.ta.ta3');
+                    return view('layout.mhs.ta.ta3',compact('proposal'));
                 }else{
                     $eval = evaluasi::where('npm',$npm)->where('type','Tugas Akhir')->get();   
                 $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Tugas Akhir')->first();
@@ -416,7 +437,7 @@ class MahasiswaController extends Controller
                 'Laporan.dokumen as dokumen','domen.name as domen','Laporan.deskripsi as deskripsi']);
                 $id= $dokumen->laporan_id;
 
-                return view('layout.mhs.ta.ta2',compact('eval','id','data','status'));
+                return view('layout.mhs.ta.ta2',compact('eval','id','data','status','proposal'));
                 }
                 
             }else{
@@ -430,7 +451,7 @@ class MahasiswaController extends Controller
                 'Laporan.dokumen as dokumen','domen.name as domen','Laporan.deskripsi as deskripsi']);
                 $id= $dokumen->laporan_id;
 
-                return view('layout.mhs.ta.ta2',compact('data','id','status','eval'));
+                return view('layout.mhs.ta.ta2',compact('data','id','status','eval','proposal'));
             }
        
         }
@@ -439,16 +460,17 @@ class MahasiswaController extends Controller
     // function to show tugas akhir when revisi
     public function ta2(){
         $npm= session('npm');
-        $dokumen= laporan::where('npm',$npm)->where('type','Proposal')->first();
-        $bimbingan = bimbingan::where('npm',$npm)->where('Type','Proposal')->
+        $dokumen= laporan::where('npm',$npm)->where('type','Tugas Akhir')->first();
+        $bimbingan = bimbingan::where('npm',$npm)->where('Type','Tugas Akhir')->
         where('status','disetujui')->get();
         $bimbingan = count($bimbingan);
-
+        $proposal= laporan::where('npm',$npm)->where('type','Proposal')->where('status','Finish')->first();
+    
         if(!$dokumen->dokumen){
-            return view('layout.mhs.ta.ta');
+            return view('layout.mhs.ta.ta',compact('proposal'));
         }
         if($dokumen->status == "submit" ){
-           
+        
             $eval = evaluasi::where('npm',$npm)->where('type','Tugas Akhir')->get();
             $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Tugas Akhir')->first();
             $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
@@ -458,7 +480,7 @@ class MahasiswaController extends Controller
             'laporan.laporan_id')->
             where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
             $id= $dokumen->laporan_id;
-            return view('layout.mhs.ta.ta',compact('eval','data','status','id'));
+            return view('layout.mhs.ta.ta',compact('eval','data','status','id','proposal'));
         }
         elseif($dokumen->status == "Revisi" ){
  
@@ -472,10 +494,10 @@ class MahasiswaController extends Controller
             where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
             get();
             $id= $dokumen->laporan_id;
-            return view('layout.dsn.ta.ta2',compact('eval','data','status','id'));
+            return view('layout.dsn.ta.ta2',compact('eval','data','status','id','proposal'));
         }elseif($dokumen->status_domen == 'disetujui'){
-            if($bimbingan >= 5){
-                return view('layout.mhs.ta.ta3');
+            if($bimbingan >= 14){
+                return view('layout.mhs.ta.ta3',compact('proposal'));
             }else{
        
             $eval = evaluasi::where('npm',$npm)->where('type','Tugas AKhir')->get();
@@ -488,7 +510,7 @@ class MahasiswaController extends Controller
             where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->
             get();
             $id= $dokumen->laporan_id;
-                return view('layout.mhs.ta.ta2',compact('eval','data','status','id'));
+                return view('layout.mhs.ta.ta2',compact('eval','data','status','id','proposal'));
             }
         }
     }
@@ -502,11 +524,12 @@ class MahasiswaController extends Controller
         $bimbingan = bimbingan::where('npm',$npm)->where('Type','Tugas Akhir')->
         where('status','disetujui')->get();
         $bimbingan = count($bimbingan);
+        $proposal= laporan::where('npm',$npm)->where('type','Proposal')->where('status','Finish')->first();
         if(!$dokumen->dokumen){
-            return view('layout.mhs.ta.ta');
+            return view('layout.mhs.ta.ta',compact('proposal'));
         }
         if($bimbingan >= 14){
-            return view('layout.mhs.ta.ta3');
+            return view('layout.mhs.ta.ta3',compact('proposal'));
         }else{
             $eval = evaluasi::where('npm',$npm)->where('type','Tugas Akhir')->get();   
             $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Tugas Akhir')->first();
@@ -518,7 +541,7 @@ class MahasiswaController extends Controller
         $id= $dokumen->laporan_id;
 
 
-        return view('layout.mhs.ta.ta2',compact('data','id','status','eval'));
+        return view('layout.mhs.ta.ta2',compact('data','id','status','eval','proposal'));
         }
 
             if($dokumen->status == 'submit'){
@@ -531,7 +554,7 @@ class MahasiswaController extends Controller
                 'Laporan.dokumen as dokumen','domen.name as domen','Laporan.deskripsi as deskripsi']);
                 $id= $dokumen->laporan_id;
    
-                return view('layout.mhs.ta.ta2',compact('status','data','id','eval'));
+                return view('layout.mhs.ta.ta2',compact('status','data','id','eval','proposal'));
             }elseif($dokumen->status == "Revisi"){
                 $eval = evaluasi::where('npm',$npm)->where('type','Tugas Akhir')->get();   
                 $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Tugas Akhir')->first();
@@ -542,9 +565,9 @@ class MahasiswaController extends Controller
                 'Laporan.dokumen as dokumen','domen.name as domen','Laporan.deskripsi as deskripsi']);
                 $id= $dokumen->laporan_id;
                 
-                return view('layout.mhs.proposal.ta2',compact('data','id','status','eval'));
+                return view('layout.mhs.proposal.ta2',compact('data','id','status','eval','proposal'));
             }elseif($dokumen->status_domen == 'disetujui'){
-                return view('layout.mhs.ta.ta3');
+                return view('layout.mhs.ta.ta3',compact('proposal'));
             }
        
     }
@@ -555,7 +578,7 @@ class MahasiswaController extends Controller
         $bimbingan = Bimbingan::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
         $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
         $name= dosen::select('name')->where('domen_id',$domen_id)->first()->name;
-
+    
 
         return view('layout.mhs.bimbingan.bimbingan',compact('bimbingan','name'));
     }
@@ -564,6 +587,7 @@ class MahasiswaController extends Controller
         $bimbingan = Bimbingan::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
         $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
         $name= dosen::select('name')->where('domen_id',$domen_id)->first()->name;
+ 
       
         return view('layout.mhs.bimbingan.bimbingan2',compact('bimbingan','name'));
     }
@@ -593,6 +617,18 @@ class MahasiswaController extends Controller
         $data['dokumen']=$filename;
         if($status== 'Proposal'){
             laporan::where('npm',$npm)->where('type',$status)->update($data);
+            $data2['notifikasi_id'] = IdGenerator::generate(
+                ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+            $data2['npm']= $npm;
+            $data2['domen_id']=laporan::where('npm',$npm)->first()->domen_id;
+            $data2['sender']= 'mahasiswa';
+            $data2['receiver']= 'dosen';
+            $name= user::where('npm',$npm)->first()->name;
+            $data2['message']='Proposal dari '. $name .' sudah disubmit';
+            $data2['created_at']=now();
+            $data2['is_read']=false;
+            $data2['type']='Proposal';
+            Notifikasi::create($data2);
             return redirect()->route('mhs.proposal2')->with('success','proposal berhasil diupdate');
         }else{
             $laporan_id= IdGenerator::generate(
@@ -710,9 +746,36 @@ class MahasiswaController extends Controller
         $data['npm']= FacadesSession::get('npm');
         $data['status']= 'submit';
         bimbingan::create($data);
+      
         if($data['type'] == 'Proposal'){
+            $npm= session('npm');
+            $data2['notifikasi_id'] = IdGenerator::generate(
+                ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+            $data2['npm']= $npm;
+            $data2['domen_id']=laporan::where('npm',$npm)->first()->domen_id;
+            $data2['sender']= 'mahasiswa';
+            $data2['receiver']= 'dosen';
+            $name= user::where('npm',$npm)->first()->name;
+            $data2['message']='Bimbingan Proposal dari '. $name .' sudah disubmit';
+            $data2['created_at']=now();
+            $data2['is_read']=false;
+            $data2['type']='BimbinganP';
+            Notifikasi::create($data2);
             return redirect()->route('mhs.bimbingan');
         }else{
+            $npm= session('npm');
+            $data2['notifikasi_id'] = IdGenerator::generate(
+                ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+            $data2['npm']= $npm;
+            $data2['domen_id']=laporan::where('npm',$npm)->first()->domen_id;
+            $data2['sender']= 'mahasiswa';
+            $data2['receiver']= 'dosen';
+            $name= user::where('npm',$npm)->first()->name;
+            $data2['message']='Bimbingan Tugas Akhir dari '. $name .' sudah disubmit';
+            $data2['created_at']=now();
+            $data2['is_read']=false;
+            $data2['type']='BimbinganT';
+            Notifikasi::create($data2);
             return redirect()->route('mhs.bimbingan2');
         }
 
@@ -769,6 +832,19 @@ class MahasiswaController extends Controller
           $npm=FacadesSession::get('npm');
           Storage::disk('public')->put($path,file_get_contents($dokumen));
           $data3['dokumen']=$filename;
+          $npm= session('npm');
+          $data2['notifikasi_id'] = IdGenerator::generate(
+              ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+          $data2['npm']= $npm;
+          $data2['domen_id']=laporan::where('npm',$npm)->first()->domen_id;
+          $data2['sender']= 'mahasiswa';
+          $data2['receiver']= 'dosen';
+          $name= user::where('npm',$npm)->first()->name;
+          $data2['message']='Tugas Akhir dari '. $name .' sudah disubmit';
+          $data2['created_at']=now();
+          $data2['is_read']=false;
+          $data2['type']='Tugas Akhir';
+          Notifikasi::create($data2);
     
           laporan::where('npm',$npm)->where('Type','Tugas Akhir')->update($data3);
         
@@ -813,13 +889,35 @@ class MahasiswaController extends Controller
         $npm=FacadesSession::get('npm');
         Storage::disk('public')->put($path,file_get_contents($dokumen));
         $data['dokumen']=$filename;
-        $data['tanggal_submit']=Carbon::now(); 
         if($status == 'Proposal'){
+            $data2['notifikasi_id'] = IdGenerator::generate(
+                ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+            $data2['npm']= $npm;
+            $data2['domen_id']=laporan::where('npm',$npm)->first()->domen_id;
+            $data2['sender']= 'mahasiswa';
+            $data2['receiver']= 'dosen';
+            $name= user::where('npm',$npm)->first()->name;
+            $data2['message']='Proposal dari '. $name .' sudah direvisi';
+            $data2['created_at']=now();
+            $data2['is_read']=false;
+            $data2['type']='Proposal';
+            Notifikasi::create($data2);
             laporan::where('npm',$npm)->where('type',$status)->update($data);
    
             return redirect()->route('mhs.proposal2')->with('success','Proposal Berhasil diupdate');;
         }else{
- 
+            $data2['notifikasi_id'] = IdGenerator::generate(
+                ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+            $data2['npm']= $npm;
+            $data2['domen_id']=laporan::where('npm',$npm)->first()->domen_id;
+            $data2['sender']= 'mahasiswa';
+            $data2['receiver']= 'dosen';
+            $name= user::where('npm',$npm)->first()->name;
+            $data2['message']='Tugas Akhir dari '. $name .' sudah direvisi';
+            $data2['created_at']=now();
+            $data2['is_read']=false;
+            $data2['type']='Tugas Akhir';
+            Notifikasi::create($data2);
             laporan::where('npm',$npm)->where('type',$status)->update($data);
             return redirect()->route('mhs.ta')->with('success','Tugas Akhir Berhasil diupdate');
         }     
@@ -835,7 +933,7 @@ class MahasiswaController extends Controller
             'topik.required'=>'Masukkan isi kolom topik',
             'isi.required'=>'Masukkan di isi kolom Bahasannya',
         ]);
-
+        $npm = session('npm');
         $data['isi']= $request->isi;
         $data['tanggal']= $request->tanggal;
         $data['topik']= $request->topik;
@@ -843,8 +941,32 @@ class MahasiswaController extends Controller
         $type=$request->type;
         Bimbingan::where('bimbingan_id',$id)->update($data);
         if($type == 'Proposal'){
+            $data2['notifikasi_id'] = IdGenerator::generate(
+                ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+            $data2['npm']= $npm;
+            $data2['domen_id']=laporan::where('npm',$npm)->first()->domen_id;
+            $data2['sender']= 'mahasiswa';
+            $data2['receiver']= 'dosen';
+            $name= user::where('npm',$npm)->first()->name;
+            $data2['message']='Bimbingan Proposal dari '. $name .' sudah direvisi';
+            $data2['created_at']=now();
+            $data2['is_read']=false;
+            $data2['type']='BimbinganP';
+            Notifikasi::create($data2);
             return redirect()->route('mhs.bimbingan');
         }else{
+            $data2['notifikasi_id'] = IdGenerator::generate(
+                ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+            $data2['npm']= $npm;
+            $data2['domen_id']=laporan::where('npm',$npm)->first()->domen_id;
+            $data2['sender']= 'mahasiswa';
+            $data2['receiver']= 'dosen';
+            $name= user::where('npm',$npm)->first()->name;
+            $data2['message']='Bimbingan Tugas Akhir dari '. $name .' sudah direvisi';
+            $data2['created_at']=now();
+            $data2['is_read']=false;
+            $data2['type']='BimbinganT';
+            Notifikasi::create($data2);
             return redirect()->route('mhs.bimbingan2');
         }
            

@@ -192,7 +192,15 @@ ul li .active .uil{
         box-sizing: border-box;
 
 }
+/* .card-body::-webkit-scrollbar{
+    display: none;
+}  */
 
+.scrollable{
+    max-height: 300px; /* Adjust the height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden;
+}
 /* modifier with use of the data-year attribute */
 .base-timeline__item--data::before {
   content: attr(data-year);

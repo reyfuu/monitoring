@@ -114,7 +114,6 @@ $(document).ready(function() {
           url: '/mhs/message',
           method: 'POST',
           data:{
-         
             userMessages: message,
             domen_id:domen_id,
             _token: '{{ csrf_token() }}'
@@ -123,7 +122,6 @@ $(document).ready(function() {
           success: function (response){
             $('#pesan').val('');
             console.log('success');
-       
           },
           error:function (error){
             console.error(error);

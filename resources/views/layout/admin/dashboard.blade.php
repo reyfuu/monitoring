@@ -28,46 +28,53 @@
     <div class="container-fluid">
       <!-- Small boxes (Stat box) -->
       {{-- <div class="row"> --}}
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body table-responsive p-0">
 
-
-        <table class="table table-hover text-nowrap">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama Mahasiswa</th>
-              <th>Judul Tugas Akhir</th>
-              <th>Nama pembimbing</th>
-              <th>Tanggal Pengajuan</th>
-              <th>Status</th>
-              <th>Aksi</th>
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>No</th>
+                      <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">Nama Mahasiswa</th>
+                      <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">Judul Proposal</th>
+                      <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">Nama pembimbing</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+        
+                      @foreach ($data as $d)
+        
+                      <tr>
+                      <td>{{ $loop->iteration }}</td>
+                      <td style="      white-space: pre-wrap;
+              word-wrap: break-word;">{{ $d->mahasiswa }}</td>
+                      <td style="      white-space: pre-wrap;
+              word-wrap: break-word;">{{ $d->judul }}</td>
+                      <td style="      white-space: pre-wrap;
+              word-wrap: break-word;">{{ $d->domen }}</td>
+                      <td>{{ $d->status_domen }}</td>
+                      <td style="      white-space: pre-wrap;
+                      word-wrap: break-word;"><a href="{{ route('admin.bimbingan',['id'=>$d->npm]) }}" class="btn btn-primary"> Detail</a></td>
+               
+                    </tr>
+                    @endforeach
+                    
+                  </tbody>
               
-            </tr>
-          </thead>
-          <tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
 
-              @foreach ($data as $d)
-
-              <tr>
-              <td>{{ $loop->iteration }}</td>
-              <td style="      white-space: pre-wrap;
-      word-wrap: break-word;">{{ $d->mahasiswa }}</td>
-              <td style="      white-space: pre-wrap;
-      word-wrap: break-word;">{{ $d->judul }}</td>
-              <td style="      white-space: pre-wrap;
-      word-wrap: break-word;">{{ $d->domen }}</td>
-              <td>{{ $d->mulai }}</td>
-              <td>{{ $d->status_domen }}</td>
-              <td>
-                <a href="{{ route('admin.bimbingan',['id'=>$d->npm]) }}" class="btn btn-primary"> Detail</a>
-                {{-- <a data-toggle="modal" data-target="#modal-delete"  class="btn btn-danger" > <i class="fas fa-trash-alt"></i> Delete</a> --}}
-              </td>
-       
-            </tr>
-            @endforeach
-            
-          </tbody>
-      
-        </table>
         
 
       <!-- /.row (main row) -->

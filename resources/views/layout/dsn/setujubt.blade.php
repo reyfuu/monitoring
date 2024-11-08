@@ -49,7 +49,7 @@
                         <div class="form-group">
                           <label for="">Komentar</label>
                           <textarea name="eval" class="form-control" cols="30" rows="10"></textarea>
-                          <input type="text" name="status" value="Proposal" hidden>
+                          <input type="text" name="status" value="Tugas Akhir" hidden>
                           @error('eval')
                             <div class="alert alert-danger">
                               <p>{{ $message }}</p>

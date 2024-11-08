@@ -23,6 +23,20 @@ class DosenController extends Controller
     public function markAsRead($id){
         $data['is_read']= true;
         $id2= notifikasi::where('notifikasi_id',$id)->first()->npm;
+        $status= notifikasi::where('notifikasi_id',$id)->first()->type;
+        if($status == 'BimbinganP'){
+            notifikasi::where('notifikasi_id',$id)->update($data);
+            return redirect()->to('dmn/bimbingan/'.$id2);
+        }elseif($status == 'BimbinganT'){
+            notifikasi::where('notifikasi_id',$id)->update($data);
+            return redirect()->to('dmn/bimbingan2/'.$id2);
+        }elseif($status== 'Proposal'){
+            notifikasi::where('notifikasi_id',$id)->update($data);
+            return redirect()->route('dmn.proposal');
+        }elseif($status == 'Tugas Akhir'){
+            notifikasi::where('notifikasi_id',$id)->update($data);
+            return redirect()->route('dmn.ta');
+        }
 
         notifikasi::where('notifikasi_id',$id)->update($data);
         return redirect()->to('dmn/chat/'.$id2);
@@ -62,6 +76,7 @@ class DosenController extends Controller
         $dt_mahasiswa = User::wherehas('bimbingan',function($query){
             $domen_id= session('domen_id');
             $query->where('domen_id',$domen_id);
+
         })->withCount('bimbingan')->having('bimbingan_count','>=',14)->get();
         $dt_mahasiswa= count($dt_mahasiswa);
         $submit= 'submit';
@@ -377,9 +392,10 @@ class DosenController extends Controller
         $data['created_at']=now();
         comment::create($data);
         $notifikasi_id= notifikasi::where('sender','dosen')->where
-        ('npm',$data['npm'])->where('domen_id',$domen_id)->first();
+        ('npm',$data['npm'])->where('domen_id',$domen_id)->where('type','chat')->first();
         if($notifikasi_id){
             $data3['is_read']=false;
+            $data3['type']='chat';
             notifikasi::where('notifikasi_id',$notifikasi_id)->update($data3);
             return redirect()->route('dmn.chat'); 
         }else{
@@ -393,6 +409,7 @@ class DosenController extends Controller
             $data2['message']='Anda memiliki pesan baru dari '. $name;
             $data2['created_at']=now();
             $data2['is_read']=false;
+            $data2['type']='chat';
             Notifikasi::create($data2);
             return redirect()->route('dmn.chat'); 
             }
@@ -438,18 +455,13 @@ class DosenController extends Controller
    
 
        
-          $data['status_domen']=$request->status_domen;
-        if($data['status_domen'] == 'disetujui'){  
-            $data['status']= 'Finish';
-            
-        }else{
-            $data['status']= 'sudah dilihat';
-        }
+         
+   
         
         $id= $request->id;
         $npm = bimbingan::select('npm')->where('bimbingan_id',$id)->first()->npm;
   
-        $data2['npm']= bimbingan::where('bimbingan_id',$id)->first()->npm;
+        $data2['npm']= $npm;
         $data2['created_at']=now();
         $data2['sender']='domen';
         $data2['receiver']='mahasiswa';
@@ -461,9 +473,27 @@ class DosenController extends Controller
         $data['komentar']=$request->eval;
         if($type == 'Proposal'){
             $data2['type']= 'Bimbinganp';
+            $data3['type']= 'BimbinganP';
         }else{
             $data2['type']= 'Bimbingant';
+            $data3['type']= 'BimbinganT';
         }
+        $data['status_domen']=$request->status_domen;
+
+        if($data['status_domen'] == 'disetujui' && $type=='Proposal'){  
+            $data['status']= 'Finish';
+            $data3['message']='Bimbingan Proposal sudah disetujui oleh dosen pembimbing';
+        }elseif($data['status_domen'] !== 'disetujui' && $type=='Proposal'){
+            $data['status']= 'sudah dilihat';
+            $data3['message']='Bimbingan Proposal telah direvisi oleh dosen pembimbing ';
+        }elseif($data['status_domen'] == 'disetujui' && $type=='Tugas Akhir'){
+            $data['status']= 'Finish';
+            $data3['message']='Bimbingan Tugas Akhir sudah disetujui oleh dosen pembimbing';
+        }elseif($data['status_domen'] !== 'disetujui' && $type=='Tugas Akhir'){
+            $data['status']= 'sudah dilihat';
+            $data3['message']='Bimbingan Tugas Akhir sudah telah direvisi oleh dosen pembimbing';
+        }
+
         if($data2 == ''){
             return redirect()->to($id->url);
         }else{
@@ -471,8 +501,30 @@ class DosenController extends Controller
             Bimbingan::find($id)->update($data);
 
             if($data2['type'] == 'Bimbinganp'){
+                $data3['notifikasi_id']= IdGenerator::generate(
+                    ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+                $data3['npm']= $npm;
+                $data3['domen_id']=session('domen_id');
+                $data3['sender']='dosen';
+                $data3['receiver']='mahasiswa';
+                $data3['created_at']=now();
+                $data3['is_read']= false;
+                
+                
+                notifikasi::create($data3);
                 return redirect()->route('dmn.bimbingan',['id'=>$npm]);
             }else{
+                $data3['notifikasi_id']= IdGenerator::generate(
+                    ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+                $data3['npm']= $npm;
+                $data3['domen_id']=session('domen_id');
+                $data3['sender']='dosen';
+                $data3['receiver']='mahasiswa';
+                $data3['created_at']=now();
+                $data3['is_read']= false;
+                
+                
+                notifikasi::create($data3);
                 return redirect()->route('dmn.bimbingan2',['id'=>$npm]);
             }
         }
@@ -502,15 +554,22 @@ class DosenController extends Controller
         evaluasi::create($data);
 
         $data2['status_domen']=$request->status_domen;
-    
-        if($data2['status_domen'] == 'disetujui'){  
+        $status= $request->status;
+        if($data2['status_domen'] == 'disetujui' && $status == 'Proposal'){  
             $data2['status']= 'Finish';
-  
-        }else{
+            $data3['message']='Proposal sudah disetujui oleh dosen pembimbing';
+        }elseif($data2['status_domen'] == 'direvisi' && $status =='Proposal'){
             $data2['status']= 'sudah dilihat';
+            $data3['message']= 'Proposal telah direvisi oleh dosen pembimbing';
+        }elseif($data2['status_domen'] == 'disetujui' && $status == 'Tugas Akhir'){
+            $data2['status']= 'Finish';
+            $data3['message']= 'Tugas Akhir telah disetujui oleh dosen pembimbing';
+        }elseif($data2['status_domen'] == 'direvisi' && $status == 'Tugas Akhir'){
+            $data2['status']= 'sudah dilihat';
+            $data3['message']= 'Tugas Akhir telah direvisi oleh dosen pembimbing';
         }
 
-        $status= $request->status;
+       
         laporan::where('laporan_id',$id)->update($data2);
         if($status == 'Proposal'){
             if($data2['status_domen'] == 'disetujui'){  
@@ -522,7 +581,21 @@ class DosenController extends Controller
                 $data3['receiver']='mahasiswa';
                 $data3['created_at']=now();
                 $data3['is_read']= false;
-                $data3['message']='Proposal sudah disetujui';
+         
+                $data3['type']= 'Proposal';
+                notifikasi::create($data3);
+            }else{
+                $data3['notifikasi_id']= IdGenerator::generate(
+                    ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+                $data3['npm']= $data['npm'];
+                $data3['domen_id']=session('domen_id');
+                $data3['sender']='dosen';
+                $data3['receiver']='mahasiswa';
+                $data3['created_at']=now();
+                $data3['is_read']= false;
+         
+                $data3['type']= 'Proposal';
+            
                 notifikasi::create($data3);
             }
 
@@ -537,8 +610,21 @@ class DosenController extends Controller
                 $data3['receiver']='mahasiswa';
                 $data3['created_at']=now();
                 $data3['is_read']= false;
-            $data3['message']='Tugas Akhir sudah disetujui';
-            notifikasi::create($data3);
+                $data3['type']= "Tugas Akhir";
+        
+                notifikasi::create($data3);
+            }else{
+                $data3['notifikasi_id']= IdGenerator::generate(
+                    ['table' => 'notifikasi', 'field' => 'notifikasi_id', 'length' => 5, 'prefix' => 'NT']);
+                $data3['npm']= $data['npm'];
+                $data3['domen_id']=session('domen_id');
+                $data3['sender']='dosen';
+                $data3['receiver']='mahasiswa';
+                $data3['created_at']=now();
+                $data3['is_read']= false;
+                $data3['type']= "Tugas Akhir";
+ 
+                notifikasi::create($data3);
             }
             return redirect()->route('dmn.ta');
         }

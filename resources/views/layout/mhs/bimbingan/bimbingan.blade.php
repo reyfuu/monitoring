@@ -1,7 +1,7 @@
 @extends('layout.mhs-main')
 @section('title')
 
-<title>Dashboard</title>
+<title>Bimbingan</title>
 {{-- dashboard bimbingan  --}}
 @endsection
 @section('content')
@@ -38,6 +38,7 @@
                     <th>Dosen Pembimbing</th>
                     <th>Bahasan</th>
                     <th>Status</th>
+                    <th>Komentar</th>
                     <th>Aksi</th>
                   </thead>
                   <tbody>
@@ -48,26 +49,33 @@
                       <td style="      white-space: pre-wrap;
       word-wrap: break-word;">{{ $name }}</td>
                       <td style="      white-space: pre-wrap;
-                      word-wrap: break-word;">{{ $d->isi }}</td>
-                      <td>
+                      word-wrap: break-word;">{{ $d->isi }}</td>        
+                    <td>
                       @if ($d->status_domen)
                       {{ $d->status_domen }}
                       </span>            
                       @else
-                         belum dilihat   
+                        submit
                       @endif
-                      </td>
+                    </td>
+                    
+                    <td style="      white-space: pre-wrap;
+                    word-wrap: break-word;">@if ($d->komentar){{ $d->komentar }}@else belum ada komentar @endif
+                    </td>
+
                       <td>           
                         @if ($d->status_domen == 'disetujui')
                             
                         @else
+                      
                         <a href="{{ route('mhs.edit',['id' =>$d->bimbingan_id ]) }}" class="btn btn-primary" > <i class="fas fa-pen"></i> Edit</a>
                         <br><br>
                         <a data-toggle="modal" data-target="#modal-delete{{ $d->bimbingan_id }}" href="{{ route('mhs.delete',['id' => $d->bimbingan_id ]) }}" class="btn btn-danger" > <i class="fas fa-trash"></i> Hapus</a>
                         <br>
                         @endif 
                         <br>
-                        
+                    
+                      </td>
                     </tr>
                   </tbody>
                   <div class="modal fade" id="modal-delete{{ $d->bimbingan_id }}">

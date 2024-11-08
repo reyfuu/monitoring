@@ -40,9 +40,17 @@
                 <p>Jumlah Bimbingan yang diapprove</p>
             </div>
         </div>
-        @foreach ($judul as $j)
-        <h3>Judul TA : {{ $j->judul }}</h3>
-        @endforeach
+
+ @foreach ($judul as $item)
+        @if ($item->judul)
+        <h3>Judul: {{ $item->judul }}</h3>
+        @else
+            
+        @endif
+
+
+ @endforeach<!-- Judul Proposal -->
+
 
         
       <!-- /.row (main row) -->

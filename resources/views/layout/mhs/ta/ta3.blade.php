@@ -1,7 +1,7 @@
 @extends('layout.mhs-main')
 @section('title')
 
-<title>tugas AKhir</title>
+<title>Tugas Akhir</title>
 {{-- finish tugas akhir --}}
 @endsection
 @section('content')

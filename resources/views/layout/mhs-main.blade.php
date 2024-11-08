@@ -66,8 +66,8 @@ if (Session::has('domen_id')) {
       <!-- chat menu need add  -->
       
       <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a href="" class="nav-link" data-toggle="dropdown">
+      <li class="nav-item dropdown ">
+        <a href="" class="nav-link " data-toggle="dropdown">
           <i class="far fa-bell"></i>
           @if ($jumlah_notifikasim == 0)
           <span class="badge badge-danger navbar-badge"></span>
@@ -75,7 +75,7 @@ if (Session::has('domen_id')) {
           <span class="badge badge-danger navbar-badge">{{ $jumlah_notifikasim }}</span>
           @endif
         </a>
-        <div class="dropdown-menu dropdown-menu-lg">
+        <div class="dropdown-menu dropdown-menu-lg scrollable">
           @if ($notifikasi_idm->isEmpty())
           <p class="dropdown-item">Notifikasi tidak ada</p>
           @else

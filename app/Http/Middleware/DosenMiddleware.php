@@ -23,7 +23,7 @@ class DosenMiddleware
            where('domen_id',$domen_id)->where('receiver','dosen')->
            groupBy('message')->where('is_read',false)->get();
         $notifikasi_id= notifikasi::select('notifikasi_id','message')->where('domen_id',$domen_id)->where('receiver','dosen')
-        ->where('is_read',false)->get();
+        ->where('is_read',false)->orderBy('created_at','desc')->get();
         $jumlah_notifikasi= count($notifikasi_id);
            View::share('dosenNotifikasi',$data);
            view::share('notifikasi_idd',$notifikasi_id);

@@ -22,6 +22,7 @@ class notifikasi extends Model
         'receiver',
         'message',
         'created_at',
-        'is_read'
+        'is_read',
+        'type'
     ];
 }

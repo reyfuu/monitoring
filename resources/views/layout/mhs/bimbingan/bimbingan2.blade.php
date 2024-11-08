@@ -37,7 +37,8 @@
                     <th>Tanggal</th>
                     <th>Dosen Pembimbing</th>
                     <th>Bahasan</th>
-                    <th>Disetujui</th>
+                    <th>Komentar</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                   </thead>
                   <tbody>
@@ -49,13 +50,17 @@
       word-wrap: break-word;">{{ $name }}</td>
                         <td style="      white-space: pre-wrap;
       word-wrap: break-word;">{{ $d->isi }}</td>
+                      <td style="      white-space: pre-wrap;
+      word-wrap: break-word;">@if ($d->komentar){{ $d->komentar }}@else belum ada komentar @endif
+                      </td>
                       <td>
                         @if ($d->status_domen)
                         {{ $d->status_domen }}  
                         @else
-                          belum dilihat
+                         submit
                         @endif
                       </td>
+
                       <td>          
                         @if ($d->status_domen == 'disetujui')
                             

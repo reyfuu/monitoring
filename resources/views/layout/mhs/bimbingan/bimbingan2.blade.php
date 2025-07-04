@@ -5,6 +5,14 @@
 {{-- dashboard bimbingan  --}}
 @endsection
 @section('content')
+@if (!$proposal || $proposal->status !== 'Finish')
+
+      <h3 class=" text2">Selesaikan Proposal Terlebih dahulu</h3>
+
+ 
+</div>
+
+@else
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <div class="content-header">
@@ -33,12 +41,17 @@
               <div class="table-responsive">
                 <table class="table table-hover text-nowrap">
                   <thead>
-                    <th>No </th>
-                    <th>Tanggal</th>
-                    <th>Dosen Pembimbing</th>
-                    <th>Bahasan</th>
+                    <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">No </th>
+                    <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">Tanggal</th>
+                    <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">Dosen Pembimbing</th>
+                    <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">Bahasan</th>
+                    <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">Status</th>
                     <th>Komentar</th>
-                    <th>Status</th>
                     <th>Aksi</th>
                   </thead>
                   <tbody>
@@ -50,15 +63,15 @@
       word-wrap: break-word;">{{ $name }}</td>
                         <td style="      white-space: pre-wrap;
       word-wrap: break-word;">{{ $d->isi }}</td>
-                      <td style="      white-space: pre-wrap;
-      word-wrap: break-word;">@if ($d->komentar){{ $d->komentar }}@else belum ada komentar @endif
-                      </td>
                       <td>
                         @if ($d->status_domen)
                         {{ $d->status_domen }}  
                         @else
                          submit
                         @endif
+                      </td>
+                      <td style="      white-space: pre-wrap;
+                      word-wrap: break-word;">@if ($d->komentar){{ $d->komentar }}@else belum ada komentar @endif
                       </td>
 
                       <td>          
@@ -130,4 +143,6 @@
               <!-- /.row (main row) -->
   </section>
 </div>
+@endif
+
 @endsection

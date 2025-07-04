@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\notifikasi;
 use Illuminate\Support\Facades\View;
+use App\Models\Bimbingan;
 class DosenMiddleware
 {
     /**
@@ -17,7 +18,7 @@ class DosenMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::guard('dosen')){
+        if(Auth::guard('dosen')){ 
             $domen_id= session('domen_id');
            $data= notifikasi::select('message')->
            where('domen_id',$domen_id)->where('receiver','dosen')->
@@ -29,6 +30,20 @@ class DosenMiddleware
            view::share('notifikasi_idd',$notifikasi_id);
            view::share('jumlah_notifikasi',$jumlah_notifikasi);
         }
+ // ambil data dosen yang sedang login
+        // $mahasiswaId = $request->route('id'); // ambil ID mahasiswa dari parameter route
+    
+        // // Cek apakah dosen tersebut adalah pembimbing dari mahasiswa
+        // $isAuthorized = Bimbingan::where('npm', $mahasiswaId)
+        //               ->where('domen_id', $domen_id)
+        //               ->exists();
+   
+        // if ($isAuthorized) {
+        //     return $next($request); // lanjutkan akses jika berwenang
+        // }
+    
+
+        
         return $next($request);
     }
 }

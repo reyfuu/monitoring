@@ -75,7 +75,7 @@ class DosenController extends Controller
         $countSubmit= count($bimbingan);
         $dt_mahasiswa = User::wherehas('bimbingan',function($query){
             $domen_id= session('domen_id');
-            $query->where('domen_id',$domen_id);
+            $query->where('domen_id',$domen_id)->where('type','Tugas Akhir');
 
         })->withCount('bimbingan')->having('bimbingan_count','>=',14)->get();
         $dt_mahasiswa= count($dt_mahasiswa);
@@ -207,15 +207,14 @@ class DosenController extends Controller
    
         $domen_id= session('domen_id');
     
-       
+        $eval = evaluasi::where('domen_id',$domen_id)->where('type','Proposal')->get();
         $data= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
         ->join('domen', 'domen.domen_id','=','laporan.domen_id')->where('laporan.type','like','%Proposal%')
         ->where('laporan.domen_id','like','%'.$domen_id.'%')
         ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
         'laporan.dokumen as dokumen','laporan.laporan_id','laporan.status_domen','mahasiswa.npm as npm']);
- 
-        // dd($data);
-        return view('layout.dsn.dashboardp',compact('data'));
+  
+        return view('layout.dsn.dashboardp',compact('data','eval'));
     }
     public function rekapp($id){
         $domen_id = session('domen_id');
@@ -271,14 +270,14 @@ class DosenController extends Controller
     public function ta(){
         $domen_id= FacadesSession::get('domen_id');
     
-       
+        $eval = evaluasi::where('domen_id',$domen_id)->where('type','Tugas Akhir')->get();
         $data= laporan::join('mahasiswa','mahasiswa.npm','=','laporan.npm')
         ->join('domen', 'domen.domen_id','=','laporan.domen_id')->where('laporan.type','like','%Tugas Akhir%')
         ->where('laporan.domen_id','like','%'.$domen_id.'%')
         ->get(['mahasiswa.name as mahasiswa','laporan.judul as judul','laporan.status',
         'laporan.dokumen as dokumen','laporan.laporan_id','mahasiswa.npm as npm']);
 
-        return view('layout.dsn.dashboardt',compact('data'));
+        return view('layout.dsn.dashboardt',compact('data','eval'));
     }
     public function rekapt($id){
         $domen_id= FacadesSession::get('domen_id');
@@ -491,7 +490,7 @@ class DosenController extends Controller
             $data3['message']='Bimbingan Tugas Akhir sudah disetujui oleh dosen pembimbing';
         }elseif($data['status_domen'] !== 'disetujui' && $type=='Tugas Akhir'){
             $data['status']= 'sudah dilihat';
-            $data3['message']='Bimbingan Tugas Akhir sudah telah direvisi oleh dosen pembimbing';
+            $data3['message']='Bimbingan Tugas Akhir telah direvisi oleh dosen pembimbing';
         }
 
         if($data2 == ''){

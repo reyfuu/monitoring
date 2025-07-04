@@ -33,13 +33,20 @@
               <div class="table-responsive">
                 <table class="table table-hover text-nowrap">
                   <thead>
-                    <th>No </th>
-                    <th>Tanggal</th>
-                    <th>Dosen Pembimbing</th>
-                    <th>Bahasan</th>
-                    <th>Status</th>
-                    <th>Komentar</th>
-                    <th>Aksi</th>
+                    <th  style="      white-space: pre-wrap;
+      word-wrap: break-word;">No </th>
+                    <th  style="      white-space: pre-wrap;
+      word-wrap: break-word;">Tanggal</th>
+                    <th  style="      white-space: pre-wrap;
+      word-wrap: break-word;">Dosen Pembimbing</th>
+                    <th  style="      white-space: pre-wrap;
+      word-wrap: break-word;">Bahasan</th>
+                    <th  style="      white-space: pre-wrap;
+      word-wrap: break-word;">Status</th>
+                    <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">Komentar</th>
+                    <th style="      white-space: pre-wrap;
+      word-wrap: break-word;">Aksi</th> 
                   </thead>
                   <tbody>
                     @foreach ($bimbingan as $d)

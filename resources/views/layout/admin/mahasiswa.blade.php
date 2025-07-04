@@ -43,6 +43,7 @@
                     <th>Nama</th>
                     <th>Email</th>
                     <th>Status</th>
+                    <th>Aksi</th>
                   </tr>
                 </thead>
                 <tbody>

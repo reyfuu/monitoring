@@ -47,11 +47,8 @@
                 <td>{{ $d->name }}</td>
                 <td>{{ $d->topik }}</td>
                 <td>
-                @if ($d->status == 'disetujui')
                   {{ $d->status }}
-                @else
                 </td>
-                @endif
               </tr>
             @endforeach
           </tbody>

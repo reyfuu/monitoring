@@ -75,6 +75,8 @@
 
                       </td>
                       <td>
+                        <a data-toggle="modal" data-target="#modalInfo{{ $d->npm }}" class="btn btn-info">Lihat Status Proposal</a>
+                        
                         @if ($d->status == 'Finish' || $d->status == 'belum submit')
                             
                         @else
@@ -86,8 +88,32 @@
                       
                       </td>
                     </tr>
+                    <div class="modal fade " id="modalInfo{{ $d->npm }}" tabindex="-1" aria-labelledby="modalInfo" aria-hidden="true">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="eventModalLabel">Status Proposal</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+              
+                          <label for="">Daftar Revisi</label>
+                          @foreach ($eval as $c)
+                          @if ($c->npm ==  $d->npm )
+                          <p>{{ $c->isi }}</p>
+                          @endif
+                        
+                          @endforeach
+  
+                       
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   @endforeach
-
+                  
                   
                 </tbody>
               </table>

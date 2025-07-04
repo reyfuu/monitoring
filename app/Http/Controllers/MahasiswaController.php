@@ -228,6 +228,7 @@ class MahasiswaController extends Controller
             $status= laporan::select('status_domen')->where('npm',$npm)->where('type','Proposal')->first();
             $data= laporan::join('mahasiswa', 'mahasiswa.npm', '=', 'laporan.npm')->
             join('domen', 'domen.domen_id', '=', 'laporan.domen_id')->
+           
             select('mahasiswa.name as name','mahasiswa.npm as npm','laporan.judul as judul',
             'laporan.dokumen as dokumen','domen.name as domen','Laporan.deskripsi as deskripsi',
             'laporan.laporan_id')->
@@ -465,7 +466,6 @@ class MahasiswaController extends Controller
         where('status','disetujui')->get();
         $bimbingan = count($bimbingan);
         $proposal= laporan::where('npm',$npm)->where('type','Proposal')->where('status','Finish')->first();
-    
         if(!$dokumen->dokumen){
             return view('layout.mhs.ta.ta',compact('proposal'));
         }
@@ -480,7 +480,7 @@ class MahasiswaController extends Controller
             'laporan.laporan_id')->
             where('laporan.npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
             $id= $dokumen->laporan_id;
-            return view('layout.mhs.ta.ta',compact('eval','data','status','id','proposal'));
+            return view('layout.mhs.ta.ta2',compact('eval','data','status','id','proposal'));
         }
         elseif($dokumen->status == "Revisi" ){
  
@@ -578,7 +578,7 @@ class MahasiswaController extends Controller
         $bimbingan = Bimbingan::where('npm','like','%'.$npm.'%')->where('type','Proposal')->get();
         $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
         $name= dosen::select('name')->where('domen_id',$domen_id)->first()->name;
-    
+        
 
         return view('layout.mhs.bimbingan.bimbingan',compact('bimbingan','name'));
     }
@@ -587,9 +587,9 @@ class MahasiswaController extends Controller
         $bimbingan = Bimbingan::where('npm','like','%'.$npm.'%')->where('type','Tugas Akhir')->get();
         $domen_id= laporan::select('domen_id')->where('npm',$npm)->first()->domen_id;
         $name= dosen::select('name')->where('domen_id',$domen_id)->first()->name;
- 
-      
-        return view('layout.mhs.bimbingan.bimbingan2',compact('bimbingan','name'));
+        $proposal= laporan::where('npm',$npm)->where('type','Proposal')->where('status','Finish')->first();
+        
+        return view('layout.mhs.bimbingan.bimbingan2',compact('bimbingan','name','proposal'));
     }
     // function to store proposal or laporan
     public function store(Request $request){

@@ -25,7 +25,7 @@ if (Session::has('npm')) {
       width: 200px;
     }
   </style>
-  <link rel="stylesheet" href="{{asset('')}}">
+ <link rel="stylesheet" href="{{asset('css/app.css?v=1.0.1')}}">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -68,7 +68,6 @@ if (Session::has('npm')) {
      
 
       <!-- chat menu need add  -->
-    
       {{-- logout & user --}}
       <li class="nav-item dropdown">
         <a href="" class="nav-link" data-toggle="dropdown">
@@ -161,15 +160,14 @@ if (Session::has('npm')) {
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-  <script src="{{asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
 <!-- jQuery -->
 <script src="{{asset('lte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset('lte/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script src="{{asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- Bootstrap 4 -->
 
 <!-- ChartJS -->

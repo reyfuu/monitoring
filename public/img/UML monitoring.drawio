@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36" version="28.1.2">
-  <diagram name="Page-1" id="4V5J1smxXN-jhWWsk9tZ">
-    <mxGraphModel dx="1062" dy="676" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36" version="28.1.2" pages="2">
+  <diagram name="Use case dosen" id="4V5J1smxXN-jhWWsk9tZ">
+    <mxGraphModel dx="625" dy="398" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -20,10 +20,20 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GZ_3eoc9SKTKV_-44H5e-17" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" parent="1" source="GZ_3eoc9SKTKV_-44H5e-1" target="GZ_3eoc9SKTKV_-44H5e-10" edge="1">
+        <mxCell id="OxlJugrVLgIAPGP-NuMg-4" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="GZ_3eoc9SKTKV_-44H5e-1" target="OxlJugrVLgIAPGP-NuMg-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="OxlJugrVLgIAPGP-NuMg-5" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="GZ_3eoc9SKTKV_-44H5e-1" target="OxlJugrVLgIAPGP-NuMg-2">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="130" y="300" />
+              <mxPoint x="230" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="OxlJugrVLgIAPGP-NuMg-7" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1" source="GZ_3eoc9SKTKV_-44H5e-1" target="GZ_3eoc9SKTKV_-44H5e-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="160" y="290" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -40,8 +50,35 @@
           <mxGeometry x="230" y="290" width="90" height="40" as="geometry" />
         </mxCell>
         <mxCell id="GZ_3eoc9SKTKV_-44H5e-11" value="View&lt;br&gt;Student Progress" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="210" y="340" width="110" height="50" as="geometry" />
+          <mxGeometry x="220" y="350" width="110" height="50" as="geometry" />
         </mxCell>
+        <mxCell id="OxlJugrVLgIAPGP-NuMg-1" value="Create&lt;br&gt;Lecturer" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="185" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="OxlJugrVLgIAPGP-NuMg-2" value="Update&amp;nbsp;&lt;br&gt;Lecturer" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="255" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="OxlJugrVLgIAPGP-NuMg-3" value="Delete&lt;br&gt;Lecturer" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="315" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="OxlJugrVLgIAPGP-NuMg-6" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.059;entryY=0.712;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=12;startSize=8;endSize=8;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="110" y="243.57142857142856" as="sourcePoint" />
+            <mxPoint x="375.31000000000006" y="338.4799999999999" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="150" y="320" />
+              <mxPoint x="200" y="340" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="9qkVem0CL8ImbowPlDJc" name="Use case mahasiswa">
+    <mxGraphModel dx="531" dy="338" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
       </root>
     </mxGraphModel>
   </diagram>
